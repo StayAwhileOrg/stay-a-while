@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import {createBrowserRouter, RouterProvider, Outlet} from "react-router-dom";
+import {RenderHome, RenderListing, RenderCheckout, RenderBookingSuccessful, RenderRegister, RenderLogin} from "./routes";
 
 const Layout = () => (
     <>
@@ -20,11 +21,27 @@ const router = createBrowserRouter([
         children: [
             {
                 index:true,
-                element:
+                element: <RenderHome />
             },
             {
-               path: "",
-               element:
+               path: "/listing",
+               element: <RenderListing />
+            },
+            {
+                path: "/checkout",
+                element: <RenderCheckout />
+            },
+            {
+                path: "/bookingsuccess",
+                element: <RenderBookingSuccessful />
+            },
+            {
+                path: "/register",
+                element: <RenderRegister />
+            },
+            {
+                path: "/login",
+                element: <RenderLogin />
             },
         ]
     }
