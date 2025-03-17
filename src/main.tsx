@@ -2,7 +2,18 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import {createBrowserRouter, RouterProvider, Outlet, RouteObject} from "react-router-dom";
-import {RenderHome, RenderListing, RenderCheckout, RenderBookingSuccessful, RenderRegister, RenderLogin} from "./routes";
+import {
+    RenderHome,
+    RenderCabin,
+    RenderCheckout,
+    RenderBookingSuccessful,
+    RenderRegister,
+    RenderLogin,
+    RenderAdminDashboard,
+    RenderEditCabin,
+    RenderManageBookings,
+    RenderPostCabin,
+} from "./routes";
 import {Header, Footer} from "./components/Layout";
 
 const Layout = () => (
@@ -25,8 +36,8 @@ const router = createBrowserRouter([
                 element: <RenderHome />
             },
             {
-                path: "/listing",
-                element: <RenderListing />
+                path: "/cabin",
+                element: <RenderCabin />
             },
             {
                 path: "/checkout",
@@ -43,6 +54,22 @@ const router = createBrowserRouter([
             {
                 path: "/login",
                 element: <RenderLogin />
+            },
+            {
+                path: "/admin",
+                element: <RenderAdminDashboard />
+            },
+            {
+                path: "/cabin/edit",
+                element: <RenderEditCabin />
+            },
+            {
+                path: "/manageBookings",
+                element: <RenderManageBookings />
+            },
+            {
+                path: "/cabin/post",
+                element: <RenderPostCabin />
             },
         ]
     }

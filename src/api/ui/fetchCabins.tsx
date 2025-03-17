@@ -1,4 +1,4 @@
-import {API_BASE} from "../utility/constants.tsx";
+import {API_BASE} from "../../utility/constants.tsx";
 
 export async function getCabins (){
     try {
