@@ -1,5 +1,7 @@
 import {useEffect, useState} from "react";
 import {getCabins} from "../api/fetchCabins.tsx";
+import {Link} from "react-router-dom";
+import {CabinCard} from "../components/Cards/CabinCard.tsx";
 
 export function RenderHome(){
     const [cabins, setCabins] = useState([]);
@@ -15,16 +17,25 @@ export function RenderHome(){
     },[]);
 
     return(
-        <>
+        <div className={"flex flex-wrap p-[74px]"}>
             {cabins.length ? (
                 cabins.map((cabin) => (
-                    <div key={cabin._id}>
-                        <h1>{cabin.location.city}, {cabin.location.country}</h1>
-                    </div>
+                   <Link to={"/"}
+                   key={cabin._id}
+                   >
+                       <CabinCard
+                            image={cabin.images[0].imgURL}
+                            capacity={cabin.capacity}
+                            city={cabin.location.city}
+                            country={cabin.location.country}
+                            title={cabin.title}
+                            price={cabin.pricePerNight}
+                       />
+                   </Link>
                 ))
             ): (
                 "loading"
             )}
-        </>
+        </div>
     )
 }
