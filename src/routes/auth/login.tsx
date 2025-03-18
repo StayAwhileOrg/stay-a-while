@@ -1,5 +1,7 @@
+import {LoginForm} from "../../components/forms/LoginForm.tsx";
+
 export function RenderLogin(){
     return(
-        <h1>success</h1>
+        <LoginForm />
     )
 }
