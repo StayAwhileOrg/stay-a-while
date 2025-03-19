@@ -36,7 +36,7 @@ const router = createBrowserRouter([
                 element: <RenderHome />
             },
             {
-                path: "/cabin",
+                path: "/cabin/:id",
                 element: <RenderCabin />
             },
             {
