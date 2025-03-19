@@ -1,5 +1,7 @@
+import {RegisterForm} from "../../components/forms/RegisterFrom.tsx";
+
 export function RenderRegister(){
     return(
-        <h1>register</h1>
+        <RegisterForm />
     )
 }
