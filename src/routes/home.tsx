@@ -20,7 +20,7 @@ export function RenderHome(){
         <div className={"flex flex-wrap p-[74px] gap-[46px] "}>
             {cabins.length ? (
                 cabins.map((cabin) => (
-                   <Link to={"/"}
+                   <Link to={"/cabin/" + cabin._id}
                    key={cabin._id}
                    >
                        <CabinCard
