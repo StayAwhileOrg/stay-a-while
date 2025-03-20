@@ -13,7 +13,7 @@ export async function fetchSingleCabin(id: string) {
 
         const data = await res.json();
         console.log("Fetched cabin:", data);
-        return data;
+        return data.data;
     } catch (error) {
         console.error("Error fetching single cabin:", error);
         throw error;

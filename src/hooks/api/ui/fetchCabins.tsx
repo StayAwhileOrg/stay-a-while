@@ -5,7 +5,7 @@ export async function getCabins(){
         const res:Response = await fetch(`${API_BASE}/cabin`);
         const data = await res.json();
         console.log(data)
-        return data;
+        return data.data;
     }catch (error) {
         console.error("There was an error fetching cabins", error)
         throw error;
