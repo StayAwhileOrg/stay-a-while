@@ -18,7 +18,18 @@ export async function fetchLogin(email: string, password: string){
         }
 
         const data =  await res.json();
-        console.log(data)
+        const user = {
+            firstName: data.user.name.firstName,
+            lastName: data.user.name.lastName,
+            email: data.user.email,
+            bio: data.user.bio,
+            imgUrl: data.user.images.imgUrl,
+            userId: data.user.userId,
+            averageRating: data.user.averageRating
+        };
+
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("token", data.token);
         return data;
     }catch (error){
         console.error(error)
