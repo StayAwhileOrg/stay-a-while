@@ -15,6 +15,7 @@ import {
     RenderPostCabin,
 } from "./routes";
 import {Header, Footer} from "./components/Layout";
+import {FilterResults} from "./components/UI/filterResults.tsx";
 
 const Layout = () => (
     <>
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
             {
                 path: "/cabin/post",
                 element: <RenderPostCabin />
+            },
+            {
+                path: "/filterResults",
+                element: <FilterResults />
             },
         ]
     }
