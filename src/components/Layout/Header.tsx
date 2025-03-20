@@ -4,13 +4,14 @@ import {Search} from "../UI/Search.tsx";
 
 export function Header() {
     return (
-        <header className={"flex items-center justify-between p-4 bg-[#A1B19E30]"}>
-            <div>LOGO</div>
+        <header className={"flex items-center justify-between p-4 bg-amber-50"}>
+            <Link to={"/"}>LOGO</Link>
             <Search/>
-            <div className={"flex gap-4 items-center"}>
-                <span>User name</span>
-                <img className={"bg-amber-600 rounded-full w-8 h-8"} src="" alt=""/>
-            </div>
+            <Link to={"/admin"}>
+                <div className={"flex gap-4 items-center"}>
+                    <span>Username</span>
+                </div>
+            </Link>
         </header>
     )
 }

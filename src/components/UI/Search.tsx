@@ -1,13 +1,73 @@
 import {Calendar} from "./Calendar.tsx";
+import {useEffect, useState} from "react";
+import {getCabins} from "../../hooks/api/ui/fetchCabins.tsx";
 
 export function Search() {
+    const [cabins, setCabins] = useState([]);
+    const [query, setQuery] = useState("");
+    const [filteredLocations, setFilteredLocations] = useState([]);
+    const [showDropdown, setShowDropdown] = useState(false);
+
+    useEffect(() => {
+        getCabins()
+            .then((data) => {
+                setCabins(data);
+            })
+            .catch((error) => {
+                console.error("Error getting cabins")
+            });
+    }, []);
+
+    useEffect(() => {
+        if (!query.trim()) {
+            setShowDropdown(false);
+            return;
+        }
+
+        const filtered = Array.isArray(cabins)
+            ? cabins
+            .filter(cabin => cabin.location?.city && cabin.location?.country)
+            .map(cabin => `${cabin.location.city}, ${cabin.location.country}`)
+            .filter(location => location.toLowerCase().includes(query.toLowerCase()))
+        : [];
+
+        setFilteredLocations(filtered);
+        setShowDropdown(filtered.length > 0);
+    }, [query, cabins]);
+
+
+    const handleSelectedLocation = (location) => {
+        setQuery(location);
+        setShowDropdown(false);
+    };
+
     return (
-        <form className={"flex gap-2 bg-white"}>
-            <div className={"flex border-2 border-[#2D4B4880] rounded-full"}>
+        <form className={"flex gap-2"}>
+            <div className={"flex border-2 border-[#2D4B4880] rounded-full bg-white"}>
                 <div className={"flex flex-col py-1 px-4 w-[220px]"}>
                     <label className={"text-xs text-[#2D4B4898] font-medium"}>Location</label>
-                    <input className={"cursor-pointer outline-none text-sm text-[#2D4B48]"}
-                           placeholder={"Select Location"} type="text"/>
+                    <input
+                        type="search"
+                        id="search"
+                        value={query}
+                        autoComplete="off"
+                        className="cursor-pointer outline-none text-sm text-[#2D4B48]"
+                        placeholder="Select Location"
+                        onChange={(e) => setQuery(e.target.value)}
+                        onFocus={() => setShowDropdown(true)}
+                    />
+                    {showDropdown && (
+                        <ul className="absolute top-full left-0 w-full bg-white border border-[#2D4B4880] rounded-md shadow-md max-h-40 overflow-y-auto z-10">
+                            {filteredLocations.map((location, index) => (
+                                <li
+                                key={index}
+                                onClick={() => handleSelectedLocation(location)}
+                                >
+                                    {location}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
                 </div>
                 <div className={"h-full w-[2px] bg-[#2D4B4880]"}></div>
                 <div className={"flex flex-col py-1 px-4 w-[250px] justify-between relative"}>
@@ -22,7 +82,6 @@ export function Search() {
                             <span className={"text-xs text-[#2D4B4898] font-medium"}>Check Out</span>
                             <Calendar></Calendar>
                         </div>
-
                     </div>
                 </div>
                 <div className={"h-full w-[2px] bg-[#2D4B4880]"}></div>
@@ -39,10 +98,14 @@ export function Search() {
                         <option value="6">6 guests</option>
                         <option value="7">7 guests</option>
                         <option value="8">8 guests</option>
+                        <option value="9">9 guests</option>
+                        <option value="10">10 guests</option>
                     </select>
                 </div>
             </div>
-            <button className={"border-2 border-[#2D4B4880] rounded-full p-2 cursor-pointer text-[#2D4B48]"}>OK</button>
+            <button
+                className={"bg-white border-2 border-[#2D4B4880] rounded-full p-2 cursor-pointer text-[#2D4B48]"}>OK
+            </button>
         </form>
     )
 }
