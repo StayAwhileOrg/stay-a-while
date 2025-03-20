@@ -1,7 +1,7 @@
 import { Calendar } from "./Calendar.tsx";
 import DatePicker from "react-datepicker";
 
-export function BookingCard({ checkIn, setCheckIn, checkOut, setCheckOut, onSubmit, price, id }) {
+export function BookingCard({ checkIn, setCheckIn, checkOut, setCheckOut, onSubmit, totalPrice, price, id }) {
     return (
         <div className={"flex flex-col gap-[44px]"}>
             <div className={"w-[338px] h-[389px] border rounded-[12px] flex flex-col justify-center items-center gap-[26px]"}>
@@ -31,7 +31,7 @@ export function BookingCard({ checkIn, setCheckIn, checkOut, setCheckOut, onSubm
                 </div>
                 <div className={"flex justify-between w-[119px]"}>
                     <p>Total</p>
-                    <p>Price</p>
+                    <p>{totalPrice !== null ? `${totalPrice} NOK` : "N/A"}</p>
                 </div>
                 <button
                     onClick={onSubmit}

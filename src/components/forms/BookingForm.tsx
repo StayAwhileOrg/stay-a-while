@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { postBooking } from "../../hooks/api/post/postBooking";
 import { BookingCard } from "../UI/BookingCard";
+import { useTotalPrice } from "../../hooks/calculation/useTotalPrice.tsx";
+import {Link} from "react-router-dom";
 
 export function BookingForm({ id, price }) {
     const [checkIn, setCheckIn] = useState<Date | null>(null);
     const [checkOut, setCheckOut] = useState<Date | null>(null);
+
+    const totalPrice = useTotalPrice(checkIn, checkOut, price);
 
     const handleSubmit = async () => {
         if (!checkIn || !checkOut) {
@@ -14,7 +18,6 @@ export function BookingForm({ id, price }) {
 
         try {
             await postBooking(checkIn, checkOut, id, totalPrice);
-            alert("Booking successful!");
         } catch (error) {
             alert("Booking failed. Please try again.");
         }
@@ -28,6 +31,7 @@ export function BookingForm({ id, price }) {
             setCheckOut={setCheckOut}
             onSubmit={handleSubmit}
             price={price}
+            totalPrice={totalPrice}
             id={id}
         />
     );
