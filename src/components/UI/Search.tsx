@@ -1,8 +1,15 @@
 import {Calendar} from "./Calendar.tsx";
 import {useEffect, useState} from "react";
 import {getCabins} from "../../hooks/api/ui/fetchCabins.tsx";
+import {useLocation, Link} from "react-router-dom";
 
 export function Search() {
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+
+    const initialQuery = searchParams.get("location") || "";
+    const initialGuests = searchParams.get("guests") || "";
+
     const [cabins, setCabins] = useState([]);
     const [query, setQuery] = useState("");
     const [filteredLocations, setFilteredLocations] = useState([]);
@@ -14,9 +21,10 @@ export function Search() {
                 setCabins(data);
             })
             .catch((error) => {
-                console.error("Error getting cabins")
+                console.error("Error getting cabins in Search:", error);
             });
     }, []);
+
 
     useEffect(() => {
         if (!query.trim()) {
@@ -26,10 +34,10 @@ export function Search() {
 
         const filtered = Array.isArray(cabins)
             ? cabins
-            .filter(cabin => cabin.location?.city && cabin.location?.country)
-            .map(cabin => `${cabin.location.city}, ${cabin.location.country}`)
-            .filter(location => location.toLowerCase().includes(query.toLowerCase()))
-        : [];
+                .filter(cabin => cabin.location?.city && cabin.location?.country)
+                .map(cabin => `${cabin.location.city}, ${cabin.location.country}`)
+                .filter(location => location.toLowerCase().includes(query.toLowerCase()))
+            : [];
 
         setFilteredLocations(filtered);
         setShowDropdown(filtered.length > 0);
@@ -44,7 +52,7 @@ export function Search() {
     return (
         <form className={"flex gap-2"}>
             <div className={"flex border-2 border-[#2D4B4880] rounded-full bg-white"}>
-                <div className={"flex flex-col py-1 px-4 w-[220px]"}>
+                <div className={" relative flex flex-col py-1 px-4 w-[220px]"}>
                     <label className={"text-xs text-[#2D4B4898] font-medium"}>Location</label>
                     <input
                         type="search"
@@ -55,13 +63,15 @@ export function Search() {
                         placeholder="Select Location"
                         onChange={(e) => setQuery(e.target.value)}
                         onFocus={() => setShowDropdown(true)}
+                        onBlur={() => setTimeout(() => setShowDropdown(false), 100)}
                     />
                     {showDropdown && (
-                        <ul className="absolute top-full left-0 w-full bg-white border border-[#2D4B4880] rounded-md shadow-md max-h-40 overflow-y-auto z-10">
+                        <ul className="absolute top-full right-0 w-full bg-white border border-[#2D4B4880] rounded-md shadow-md max-h-40 overflow-y-auto z-50">
                             {filteredLocations.map((location, index) => (
                                 <li
                                 key={index}
                                 onClick={() => handleSelectedLocation(location)}
+                                className={"p-2 cursor-pointer"}
                                 >
                                     {location}
                                 </li>
@@ -76,11 +86,11 @@ export function Search() {
                         <span className={"text-xs text-[#2D4B4898] font-medium"}>
                             Check In
                         </span>
-                            <Calendar></Calendar>
+                            <Calendar/>
                         </div>
                         <div className={"flex flex-col"}>
                             <span className={"text-xs text-[#2D4B4898] font-medium"}>Check Out</span>
-                            <Calendar></Calendar>
+                            <Calendar/>
                         </div>
                     </div>
                 </div>
@@ -103,9 +113,11 @@ export function Search() {
                     </select>
                 </div>
             </div>
-            <button
-                className={"bg-white border-2 border-[#2D4B4880] rounded-full p-2 cursor-pointer text-[#2D4B48]"}>OK
-            </button>
+            <Link to={`/filterResults/?location=${encodeURIComponent(query)}`}>
+                <button
+                    className={"bg-white border-2 border-[#2D4B4880] rounded-full p-2 cursor-pointer text-[#2D4B48]"}>OK
+                </button>
+            </Link>
         </form>
     )
 }

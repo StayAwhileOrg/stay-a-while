@@ -8,6 +8,7 @@ import {RenderAdminDashboard} from "./user/adminDashboard.tsx";
 import {RenderEditCabin} from "./user/editCabin.tsx";
 import {RenderManageBookings} from "./user/manageBookings.tsx";
 import {RenderPostCabin} from "./user/postCabin.tsx";
+import {RenderFilterResults} from "./filter/filterResults.tsx";
 
 export {
     RenderHome,
@@ -19,5 +20,6 @@ export {
     RenderAdminDashboard,
     RenderEditCabin,
     RenderManageBookings,
-    RenderPostCabin
+    RenderPostCabin,
+    RenderFilterResults,
 }
