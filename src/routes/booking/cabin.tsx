@@ -13,6 +13,7 @@ import {
     LiaWifiSolid
 } from "react-icons/lia";
 import {BookingForm} from "../../components/forms/BookingForm.tsx";
+import {Facilities} from "../../components/UI/Facilities.tsx";
 export function RenderCabin() {
     const { id } = useParams();
     const [cabin, setCabin] = useState(null);
@@ -56,48 +57,17 @@ export function RenderCabin() {
                         </div>
                         <p className={"pt-[20px]"}>{cabin.description}</p>
 
-                        <div>
-                            <ul className="w-[575px] flex justify-between overflow-clip pt-[20px] flex-wrap gap-[16px]">
-                                <li className="text-[16px] font-light flex items-center gap-[4px]">
-                                    <LiaBedSolid /> <span className="text-[10px]">{cabin.facilities.beds} Beds</span>
-                                </li>
-                                <li className="text-[16px] font-light flex items-center gap-[4px]">
-                                    {cabin.facilities.smokingAllowed ? (
-                                        <>
-                                            <LiaSmokingSolid /> <span className="text-[10px]">Smoking Allowed</span>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <LiaSmokingBanSolid /> <span className="text-[10px]">Smoking Not Allowed</span>
-                                        </>
-                                    )}
-                                </li>
-                                <li className="text-[16px] font-light flex items-center gap-[4px]">
-                                    <LiaPawSolid />
-                                    {cabin.facilities.petsAllowed ? (
-                                        <span className="text-[10px]">Pets Allowed</span>
-                                    ) : (
-                                        <span className="text-[10px]">Pets Not Allowed</span>
-                                    )}
-                                </li>
-                                <li className="text-[16px] font-light flex items-center gap-[4px]">
-                                    <LiaWifiSolid />
-                                    {cabin.facilities.wifi ? (
-                                        <span className="text-[10px]">WiFi Available</span>
-                                    ) : (
-                                        <span className="text-[10px]">No WiFi</span>
-                                    )}
-                                </li>
-                                <li className="text-[16px] font-light flex items-center gap-[4px]">
-                                    <LiaBoltSolid />
-                                    {cabin.facilities.electricity ? (
-                                        <span className="text-[10px]">Electricity Available</span>
-                                    ) : (
-                                        <span className="text-[10px]">No Electricity</span>
-                                    )}
-                                </li>
-                            </ul>
-                        </div>
+                        <Facilities
+                        beds={cabin.facilities.beds}
+                        capacity={cabin.facilities.capacity}
+                        electricity={cabin.facilities.electricity}
+                        jacuzzi={cabin.facilities.jacuzzi}
+                        petsAllowed={cabin.facilities.petsAllowed}
+                        smokingAllowed={cabin.facilities.smokingAllowed}
+                        water={cabin.facilities.water}
+                        wifi={cabin.facilities.wifi}
+                        />
+
                     </div>
                     <BookingForm
                         price={cabin.pricePerNight}
