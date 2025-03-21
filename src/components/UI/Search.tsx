@@ -2,7 +2,7 @@ import {Calendar} from "./Calendar.tsx";
 import {useEffect, useState} from "react";
 import {getCabins} from "../../hooks/api/ui/fetchCabins.tsx";
 import {useLocation, Link} from "react-router-dom";
-import { IoFilterOutline } from "react-icons/io5";
+import {IoFilterOutline} from "react-icons/io5";
 
 export function Search() {
     const location = useLocation();
@@ -52,7 +52,7 @@ export function Search() {
 
     return (
         <form className={"flex gap-2 items-center"}>
-            <div className={"flex border-2 border-[#2D4B4880] rounded-full bg-white"}>
+            <div className={"flex border-2 border-[#2D4B4880] rounded-full bg-white px-2"}>
                 <div className={" relative flex flex-col py-1 px-4 w-[220px]"}>
                     <label className={"text-xs text-[#2D4B4898] font-medium"}>Location</label>
                     <input
@@ -70,9 +70,9 @@ export function Search() {
                         <ul className="absolute top-full right-0 w-full bg-white border border-[#2D4B4880] rounded-md shadow-md max-h-40 overflow-y-auto z-50">
                             {filteredLocations.map((location, index) => (
                                 <li
-                                key={index}
-                                onClick={() => handleSelectedLocation(location)}
-                                className={"p-2 cursor-pointer"}
+                                    key={index}
+                                    onClick={() => handleSelectedLocation(location)}
+                                    className={"p-2 cursor-pointer"}
                                 >
                                     {location}
                                 </li>
@@ -82,7 +82,7 @@ export function Search() {
                 </div>
                 <div className={"h-full w-[2px] bg-[#2D4B4880]"}></div>
                 <div className={"flex flex-col py-1 px-4 w-[250px] justify-between relative"}>
-                    <div className={"Search flex flex-row"}>
+                    <div className={"Search flex flex-row gap-2 justify-between"}>
                         <div className={"flex flex-col"}>
                         <span className={"text-xs text-[#2D4B4898] font-medium"}>
                             Check In
@@ -117,7 +117,7 @@ export function Search() {
             <Link to={`/filterResults/?location=${encodeURIComponent(query)}`}>
                 <button
                     className={"bg-white border-2 border-[#2D4B4880] rounded-full p-2 cursor-pointer"}>
-                    <IoFilterOutline />
+                    <IoFilterOutline/>
                 </button>
             </Link>
         </form>
