@@ -4,7 +4,7 @@ import { BookingCard } from "../UI/BookingCard";
 import { useTotalPrice } from "../../hooks/calculation/useTotalPrice.tsx";
 import {Link} from "react-router-dom";
 
-export function BookingForm({ id, price }) {
+export function BookingForm({ id, price, ownerFirst, ownerLast }) {
     const [checkIn, setCheckIn] = useState<Date | null>(null);
     const [checkOut, setCheckOut] = useState<Date | null>(null);
 
@@ -33,6 +33,8 @@ export function BookingForm({ id, price }) {
             price={price}
             totalPrice={totalPrice}
             id={id}
+            ownerFirst={ownerFirst}
+            ownerLast={ownerLast}
         />
     );
 }
