@@ -102,6 +102,8 @@ export function RenderCabin() {
                     <BookingForm
                         price={cabin.pricePerNight}
                         id={id}
+                        ownerFirst={cabin.owner.name.firstName}
+                        ownerLast={cabin.owner.name.lastName}
                     />
                 </div>
             ) : (
