@@ -1,6 +1,6 @@
 import { GrInstagram } from 'react-icons/gr';
 import { FaFacebookSquare } from 'react-icons/fa';
-import { FaXTwitter } from 'react-icons/fa6';
+import { FaLinkedin } from 'react-icons/fa6';
 
 export function Footer() {
   return (
@@ -33,7 +33,7 @@ export function Footer() {
           <div className="flex justify-between mt-2 flex-row">
             <GrInstagram className="text-2xl cursor-pointer" />
             <FaFacebookSquare className="text-2xl ml-2 cursor-pointer" />
-            <FaXTwitter className="text-2xl ml-2 cursor-pointer" />
+            <FaLinkedin className="text-2xl ml-2 cursor-pointer" />
           </div>
         </div>
       </div>
