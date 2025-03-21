@@ -1,16 +1,18 @@
-import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
-import {fetchSingleCabin} from "../../hooks/api/ui/fetchSingleCabin.tsx";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { fetchSingleCabin } from "../../hooks/api/ui/fetchSingleCabin.tsx";
 import {
     LiaBanSolid,
-    LiaBedSolid, LiaBoltSolid,
+    LiaBedSolid,
+    LiaBoltSolid,
     LiaCheckSolid,
     LiaPawSolid,
     LiaSmokingBanSolid,
     LiaSmokingSolid,
-    LiaStar, LiaWifiSolid
+    LiaStar,
+    LiaWifiSolid
 } from "react-icons/lia";
-
+import {BookingForm} from "../../components/forms/BookingForm.tsx";
 export function RenderCabin() {
     const { id } = useParams();
     const [cabin, setCabin] = useState(null);
@@ -32,13 +34,25 @@ export function RenderCabin() {
 
     return (
         <div className={"w-screen flex justify-center pt-[120px]"}>
-            {cabin ?
+            {cabin ? (
                 <div className={"flex gap-[61px]"}>
                     <div>
-                        <img src={cabin.images[0].imgURL} alt="" className={"w-[580px] h-[389px] object-cover rounded-[12px]"}/>
+                        <img
+                            src={cabin.images[0].imgURL}
+                            alt=""
+                            className={"w-[580px] h-[389px] object-cover rounded-[12px]"}
+                        />
                         <div className={"flex justify-between max-w-[580px] pt-[44px] items-center"}>
-                            <h2 className={"text-[36px] font-semibold"}>{cabin.location.city}, {cabin.location.country}</h2>
-                            <div className={"flex"}><LiaStar /><LiaStar /><LiaStar /><LiaStar /><LiaStar /></div>
+                            <h2 className={"text-[36px] font-semibold"}>
+                                {cabin.location.city}, {cabin.location.country}
+                            </h2>
+                            <div className={"flex"}>
+                                <LiaStar />
+                                <LiaStar />
+                                <LiaStar />
+                                <LiaStar />
+                                <LiaStar />
+                            </div>
                         </div>
                         <p className={"pt-[20px]"}>{cabin.description}</p>
 
@@ -47,7 +61,6 @@ export function RenderCabin() {
                                 <li className="text-[16px] font-light flex items-center gap-[4px]">
                                     <LiaBedSolid /> <span className="text-[10px]">{cabin.facilities.beds} Beds</span>
                                 </li>
-
                                 <li className="text-[16px] font-light flex items-center gap-[4px]">
                                     {cabin.facilities.smokingAllowed ? (
                                         <>
@@ -59,7 +72,6 @@ export function RenderCabin() {
                                         </>
                                     )}
                                 </li>
-
                                 <li className="text-[16px] font-light flex items-center gap-[4px]">
                                     <LiaPawSolid />
                                     {cabin.facilities.petsAllowed ? (
@@ -68,7 +80,6 @@ export function RenderCabin() {
                                         <span className="text-[10px]">Pets Not Allowed</span>
                                     )}
                                 </li>
-
                                 <li className="text-[16px] font-light flex items-center gap-[4px]">
                                     <LiaWifiSolid />
                                     {cabin.facilities.wifi ? (
@@ -77,7 +88,6 @@ export function RenderCabin() {
                                         <span className="text-[10px]">No WiFi</span>
                                     )}
                                 </li>
-
                                 <li className="text-[16px] font-light flex items-center gap-[4px]">
                                     <LiaBoltSolid />
                                     {cabin.facilities.electricity ? (
@@ -86,18 +96,17 @@ export function RenderCabin() {
                                         <span className="text-[10px]">No Electricity</span>
                                     )}
                                 </li>
-
                             </ul>
                         </div>
-
-
                     </div>
-                    <div className={"flex flex-col gap-[44px]"}>
-                        <div className={"w-[338px] h-[389px] border rounded-[12px]"}></div>
-                        <div className={"w-[338px] h-[126px] border rounded-[12px]"}></div>
-                    </div>
+                    <BookingForm
+                        price={cabin.pricePerNight}
+                        id={id}
+                    />
                 </div>
-                : <p>Loading...</p>}
+            ) : (
+                <p>Loading...</p>
+            )}
         </div>
     );
 }
