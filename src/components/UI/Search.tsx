@@ -2,6 +2,7 @@ import {Calendar} from "./Calendar.tsx";
 import {useEffect, useState} from "react";
 import {getCabins} from "../../hooks/api/ui/fetchCabins.tsx";
 import {useLocation, Link} from "react-router-dom";
+import { IoFilterOutline } from "react-icons/io5";
 
 export function Search() {
     const location = useLocation();
@@ -50,7 +51,7 @@ export function Search() {
     };
 
     return (
-        <form className={"flex gap-2"}>
+        <form className={"flex gap-2 items-center"}>
             <div className={"flex border-2 border-[#2D4B4880] rounded-full bg-white"}>
                 <div className={" relative flex flex-col py-1 px-4 w-[220px]"}>
                     <label className={"text-xs text-[#2D4B4898] font-medium"}>Location</label>
@@ -115,7 +116,8 @@ export function Search() {
             </div>
             <Link to={`/filterResults/?location=${encodeURIComponent(query)}`}>
                 <button
-                    className={"bg-white border-2 border-[#2D4B4880] rounded-full p-2 cursor-pointer text-[#2D4B48]"}>OK
+                    className={"bg-white border-2 border-[#2D4B4880] rounded-full p-2 cursor-pointer"}>
+                    <IoFilterOutline />
                 </button>
             </Link>
         </form>
