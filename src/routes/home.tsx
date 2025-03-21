@@ -17,7 +17,7 @@ export function RenderHome(){
     },[]);
 
     return(
-        <div className={"flex flex-wrap p-[74px] gap-[46px] "}>
+        <div className={"flex flex-wrap p-[74px] gap-[46px]"}>
             {cabins.length ? (
                 cabins.map((cabin) => (
                    <Link to={"/cabin/" + cabin._id}
