@@ -31,7 +31,7 @@ export async function fetchRegister(firstName: string, lastName: string, email: 
             email: data.user.email,
             bio: data.user.bio,
             imgUrl: data.user.images.imgUrl,
-            userId: data.user.userId,
+            userId: data.userId,
             averageRating: data.user.averageRating
         };
 
