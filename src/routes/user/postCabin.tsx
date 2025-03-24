@@ -1,5 +1,5 @@
-export function RenderPostCabin(){
-    return(
-        <h1>post cabin</h1>
-    )
+import { CabinForm } from "../../components/forms/CreateCabinForm"; // Matches file name
+
+export function RenderPostCabin() {
+    return <CabinForm />;
 }
