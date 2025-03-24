@@ -2,18 +2,11 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchSingleCabin } from "../../hooks/api/ui/fetchSingleCabin.tsx";
 import {
-    LiaBanSolid,
-    LiaBedSolid,
-    LiaBoltSolid,
-    LiaCheckSolid,
-    LiaPawSolid,
-    LiaSmokingBanSolid,
-    LiaSmokingSolid,
     LiaStar,
-    LiaWifiSolid
 } from "react-icons/lia";
 import {BookingForm} from "../../components/forms/BookingForm.tsx";
 import {Facilities} from "../../components/UI/Facilities.tsx";
+import {ImageCarousel} from "../../components/UI/ImageCarousel.tsx";
 export function RenderCabin() {
     const { id } = useParams();
     const [cabin, setCabin] = useState(null);
@@ -38,12 +31,10 @@ export function RenderCabin() {
             {cabin ? (
                 <div className={"flex gap-[61px]"}>
                     <div>
-                        <img
-                            src={cabin.images[0].imgURL}
-                            alt=""
-                            className={"w-[580px] h-[389px] object-cover rounded-[12px]"}
+                        <ImageCarousel
+                        images={cabin.images}
                         />
-                        <div className={"flex justify-between max-w-[580px] pt-[44px] items-center"}>
+                        <div className={"flex justify-between max-w-[580px] pt-[52px] items-center"}>
                             <h2 className={"text-[36px] font-semibold"}>
                                 {cabin.location.city}, {cabin.location.country}
                             </h2>
