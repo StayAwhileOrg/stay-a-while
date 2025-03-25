@@ -14,6 +14,14 @@ export function FilterResults() {
     const queryLocation = searchParams.get("location") || "";
     const queryGuests = searchParams.get("guests") || "";
 
+    const queryPets = searchParams.get("petsAllowed") === "true";
+    const querySmoking = searchParams.get("smokingAllowed") === "true";
+    const queryElectricity = searchParams.get("electricity") === "true";
+    const queryWater = searchParams.get("water") === "true";
+    const queryWifi = searchParams.get("wifi") === "true";
+    const queryJacuzzi = searchParams.get("jacuzzi") === "true";
+
+
     useEffect(() => {
         getCabins()
             .then((data) => setCabins(data))
@@ -32,11 +40,45 @@ export function FilterResults() {
         }
 
         if (queryGuests) {
-            filtered = filtered.filter((cabin) => cabin.maxGuests >= parseInt(queryGuests));
+            const guests = parseInt(queryGuests);
+            filtered = filtered.filter((cabin) => {
+                const capacity = cabin.facilities?.capacity ?? 0;
+                return capacity >= guests;
+            });
+        }
+
+        if (queryPets) {
+            filtered = filtered.filter((cabin) => cabin.facilities?.petsAllowed === true);
+        }
+        if (querySmoking) {
+            filtered = filtered.filter((cabin) => cabin.facilities?.smokingAllowed === true);
+        }
+        if (queryElectricity) {
+            filtered = filtered.filter((cabin) => cabin.facilities?.electricity === true);
+        }
+        if (queryWater) {
+            filtered = filtered.filter((cabin) => cabin.facilities?.water === true);
+        }
+        if (queryWifi) {
+            filtered = filtered.filter((cabin) => cabin.facilities?.wifi === true);
+        }
+        if (queryJacuzzi) {
+            filtered = filtered.filter((cabin) => cabin.facilities?.jacuzzi === true);
         }
 
         setFilteredCabins(filtered);
-    }, [queryLocation, queryGuests, cabins]);
+    }, [
+        queryLocation,
+        queryGuests,
+        queryPets,
+        querySmoking,
+        queryElectricity,
+        queryWater,
+        queryWifi,
+        queryJacuzzi,
+        cabins,
+    ]);
+
 
     return (
         <>

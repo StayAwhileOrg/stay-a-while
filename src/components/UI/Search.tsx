@@ -1,20 +1,40 @@
 import {Calendar} from "./Calendar.tsx";
-import {useEffect, useState} from "react";
+import { useRef, useEffect, useState } from "react";
 import {getCabins} from "../../hooks/api/ui/fetchCabins.tsx";
 import {useLocation, Link} from "react-router-dom";
 import {IoFilterOutline} from "react-icons/io5";
+import {CiSearch} from "react-icons/ci";
+
+const formatDate = (date) => {
+    if (!date) return "";
+    return date.toLocaleDateString("sv-SE");
+};
 
 export function Search() {
+
+    const filterDropdownRef = useRef(null);
+
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
 
     const initialQuery = searchParams.get("location") || "";
     const initialGuests = searchParams.get("guests") || "";
 
+    const [showMenuDropdown, setShowMenuDropdown] = useState(false);
+    const [showFilterDropdown, setShowFilterDropdown] = useState(false);
+
     const [cabins, setCabins] = useState([]);
     const [query, setQuery] = useState("");
     const [filteredLocations, setFilteredLocations] = useState([]);
-    const [showDropdown, setShowDropdown] = useState(false);
+    const [guests, setGuests] = useState("");
+    const [checkInDate, setCheckInDate] = useState<Date | null>(null);
+    const [checkOutDate, setCheckOutDate] = useState<Date | null>(null);
+    const [petsAllowed, setPetsAllowed] = useState(false);
+    const [smokingAllowed, setSmokingAllowed] = useState(false);
+    const [electricity, setElectricity] = useState(false);
+    const [water, setWater] = useState(false);
+    const [wifi, setWifi] = useState(false);
+    const [jacuzzi, setJacuzzi] = useState(false);
 
     useEffect(() => {
         getCabins()
@@ -26,10 +46,9 @@ export function Search() {
             });
     }, []);
 
-
     useEffect(() => {
         if (!query.trim()) {
-            setShowDropdown(false);
+            setShowMenuDropdown(false);
             return;
         }
 
@@ -41,13 +60,26 @@ export function Search() {
             : [];
 
         setFilteredLocations(filtered);
-        setShowDropdown(filtered.length > 0);
+        setShowMenuDropdown(filtered.length > 0);
     }, [query, cabins]);
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (filterDropdownRef.current && !filterDropdownRef.current.contains(event.target)) {
+                setShowFilterDropdown(false);
+            }
+        };
+
+        document.addEventListener("click", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
+        };
+    }, []);
 
     const handleSelectedLocation = (location) => {
         setQuery(location);
-        setShowDropdown(false);
+        setShowMenuDropdown(false);
     };
 
     return (
@@ -63,11 +95,11 @@ export function Search() {
                         className="cursor-pointer outline-none text-sm text-[#2D4B48]"
                         placeholder="Select Location"
                         onChange={(e) => setQuery(e.target.value)}
-                        onFocus={() => setShowDropdown(true)}
-                        onBlur={() => setTimeout(() => setShowDropdown(false), 100)}
+                        onFocus={() => setShowMenuDropdown(true)}
+                        onBlur={() => setTimeout(() => setShowMenuDropdown(false), 100)}
                     />
-                    {showDropdown && (
-                        <ul className="absolute top-full right-0 w-full bg-white border border-[#2D4B4880] rounded-md shadow-md max-h-40 overflow-y-auto z-50">
+                    {showMenuDropdown && (
+                        <ul className="absolute top-full -right-3 w-full bg-white border border-[#2D4B4880] rounded-md shadow-md max-h-40 overflow-y-auto z-50">
                             {filteredLocations.map((location, index) => (
                                 <li
                                     key={index}
@@ -87,11 +119,11 @@ export function Search() {
                         <span className={"text-xs text-[#2D4B4898] font-medium"}>
                             Check In
                         </span>
-                            <Calendar/>
+                            <Calendar value={checkInDate} onChange={setCheckInDate}/>
                         </div>
                         <div className={"flex flex-col"}>
                             <span className={"text-xs text-[#2D4B4898] font-medium"}>Check Out</span>
-                            <Calendar/>
+                            <Calendar value={checkOutDate} onChange={setCheckOutDate}/>
                         </div>
                     </div>
                 </div>
@@ -99,6 +131,8 @@ export function Search() {
                 <div className={"flex flex-col py-1 px-4 w-[220px]"}>
                     <label className={"text-xs text-[#2D4B4898] font-medium"}>Guests</label>
                     <select className={"cursor-pointer outline-none text-sm text-[#2D4B48]"}
+                            value={guests}
+                            onChange={(e) => setGuests(e.target.value)}
                             placeholder={"Select Amount of Guests"}>
                         <option disabled>Select amount of guests</option>
                         <option value="1">1 guest</option>
@@ -110,14 +144,55 @@ export function Search() {
                         <option value="7">7 guests</option>
                         <option value="8">8 guests</option>
                         <option value="9">9 guests</option>
-                        <option value="10">10 guests</option>
+                        <option value="10">10+ guests</option>
                     </select>
                 </div>
             </div>
-            <Link to={`/filterResults/?location=${encodeURIComponent(query)}`}>
+            <button
+                type={"button"}
+                onClick={() => setShowFilterDropdown(!showFilterDropdown)}
+                className={"bg-white border-2 border-[#2D4B4880] rounded-full p-2 cursor-pointer relative"}>
+                <IoFilterOutline className={"h-[22px] w-[22px]"}/>
+            </button>
+            {showFilterDropdown && (
+                <div
+                    ref={filterDropdownRef}
+                    className={"absolute flex flex-col top-full right-80 border border-[#2D4B4850] h-[200px] w-[300px] z-10 bg-white rounded-lg p-6 gap-4"}>
+                    <p className={"text-gray-600"}>Filter</p>
+                    <ul className={"flex flex-wrap gap-4 items-center "}>
+                        <li className={"flex gap-2 cursor-pointer"}>
+                            <input type="checkbox" checked={petsAllowed} onChange={(e) => setPetsAllowed(e.target.checked)} />
+                            <label>Pets Allowed</label>
+                        </li>
+                        <li className={"flex gap-2"}>
+                            <input type="checkbox" checked={smokingAllowed} onChange={(e) => setSmokingAllowed(e.target.checked)} />
+                            <label>Smoking Allowed</label>
+                        </li>
+                        <li className={"flex gap-2"}>
+                            <input type="checkbox" checked={water} onChange={(e) => setWater(e.target.checked)} />
+                            <label>Water</label>
+                        </li>
+                        <li className={"flex gap-2"}>
+                            <input type="checkbox" checked={electricity} onChange={(e) => setElectricity(e.target.checked)} />
+                            <label>Electricity</label>
+                        </li>
+                        <li className={"flex gap-2"}>
+                            <input type="checkbox" checked={wifi} onChange={(e) => setWifi(e.target.checked)} />
+                            <label>Wifi</label>
+                        </li>
+                        <li className={"flex gap-2"}>
+                            <input type="checkbox" checked={jacuzzi} onChange={(e) => setJacuzzi(e.target.checked)} />
+                            <label>Jacuzzi</label>
+                        </li>
+                    </ul>
+                </div>
+            )}
+            <Link
+                to={`/filterResults/?location=${encodeURIComponent(query)}&guests=${guests}&checkInDate=${formatDate(checkInDate)}&checkOutDate=${formatDate(checkOutDate)}&petsAllowed=${petsAllowed}&smokingAllowed=${smokingAllowed}&electricity=${electricity}&water=${water}&wifi=${wifi}&jacuzzi=${jacuzzi}`}>
                 <button
-                    className={"bg-white border-2 border-[#2D4B4880] rounded-full p-2 cursor-pointer"}>
-                    <IoFilterOutline/>
+                    type="button"
+                    className={"bg-[#2D4B48] border-2 border-[#2D4B4880] rounded-full p-2 cursor-pointer hover:bg-[#2D4B4870]"}>
+                    <CiSearch className={"h-[22px] w-[22px] text-white bg-transparent"}/>
                 </button>
             </Link>
         </form>
