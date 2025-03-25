@@ -47,7 +47,7 @@ export function CabinForm() {
         },
     });
 
-    const { fields, append, remove } = useFieldArray({
+    const { fields, append, remove } = useFieldArray<CabinFormData, "images">({
         control,
         name: "images",
     });
