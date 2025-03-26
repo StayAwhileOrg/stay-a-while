@@ -33,16 +33,16 @@ export function CabinForm() {
             description: "",
             images: [{ imgURL: "", imgAlt: "" }],
             location: { street: "", city: "", postalCode: "", country: "" },
-            pricePerNight: 0,
+            pricePerNight: "",
             facilities: {
-                capacity: 0,
+                capacity: "",
                 petsAllowed: false,
                 smokingAllowed: false,
                 electricity: false,
                 water: false,
                 wifi: false,
                 jacuzzi: false,
-                beds: 0,
+                beds: "",
             },
         },
     });
@@ -145,7 +145,7 @@ export function CabinForm() {
                     <button
                         type="button"
                         onClick={() => append({ imgURL: "", imgAlt: "" })}
-                        className="bg-blue-500 text-white p-2 rounded"
+                        className="px-8 py-2 rounded-[12px] hover:bg-[#2D4B4870] hover:cursor-pointer bg-[#2D4B48] text-white"
                     >
                         Add Image
                     </button>
@@ -256,7 +256,7 @@ export function CabinForm() {
                 </div>
 
                 {/* Submit */}
-                <button type="submit" className="bg-green-500 text-white p-2 rounded w-full">
+                <button type="submit" className="px-8 py-2 rounded-[12px] hover:bg-[#2D4B4870] hover:cursor-pointer bg-[#2D4B48] text-white w-full">
                     Create Cabin
                 </button>
             </form>
