@@ -4,13 +4,43 @@ import {useLocation} from "react-router-dom";
 import {CabinCard} from "../Cards/CabinCard.tsx";
 import {Link} from "react-router-dom";
 
-export function FilterResults() {
+interface Location {
+    city: string;
+    country: string;
+}
 
-    const [cabins, setCabins] = useState([]);
-    const [filteredCabins, setFilteredCabins] = useState([]);
+interface Image {
+    imgURL: string;
+}
+
+interface Facilities {
+    beds: number;
+    capacity: number;
+    petsAllowed?: boolean;
+    smokingAllowed?: boolean;
+    electricity?: boolean;
+    water?: boolean;
+    wifi?: boolean;
+    jacuzzi?: boolean;
+}
+
+interface Cabin {
+    _id: string;
+    title: string;
+    pricePerNight: number;
+    location: Location;
+    images: Image[];
+    facilities: Facilities;
+}
+
+export function FilterResults() {
+    const [cabins, setCabins] = useState<Cabin[]>([]);
+    const [filteredCabins, setFilteredCabins] = useState<Cabin[]>([]);
+
 
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
+
     const queryLocation = searchParams.get("location") || "";
     const queryGuests = searchParams.get("guests") || "";
 
@@ -20,7 +50,6 @@ export function FilterResults() {
     const queryWater = searchParams.get("water") === "true";
     const queryWifi = searchParams.get("wifi") === "true";
     const queryJacuzzi = searchParams.get("jacuzzi") === "true";
-
 
     useEffect(() => {
         getCabins()

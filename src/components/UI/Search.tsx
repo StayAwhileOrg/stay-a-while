@@ -6,21 +6,35 @@ import {IoFilterOutline} from "react-icons/io5";
 import {CiSearch} from "react-icons/ci";
 import {useClickOutside} from "../../hooks/useClickOutside/useClickOutside.tsx";
 
+interface Location {
+    city: string;
+    country: string;
+}
 
-const formatDate = (date) => {
+interface Cabin {
+    location?: Location;
+}
+
+interface Filters {
+    petsAllowed: boolean;
+    smokingAllowed: boolean;
+    electricity: boolean;
+    water: boolean;
+    wifi: boolean;
+    jacuzzi: boolean;
+}
+
+const formatDate = (date: Date | null): string => {
     if (!date) return "";
     return date.toLocaleDateString("sv-SE");
 };
 
 export function Search() {
-
     const filterDropdownRef = useRef<HTMLDivElement | null>(null);
-
     useClickOutside(filterDropdownRef, () => setShowFilterDropdown(false));
 
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
-
     const initialQuery = searchParams.get("location") || "";
     const initialGuests = searchParams.get("guests") || "";
 
@@ -33,6 +47,7 @@ export function Search() {
     const [guests, setGuests] = useState("");
     const [checkInDate, setCheckInDate] = useState<Date | null>(null);
     const [checkOutDate, setCheckOutDate] = useState<Date | null>(null);
+
     const [filters, setFilters] = useState({
         petsAllowed: false,
         smokingAllowed: false,
@@ -51,7 +66,7 @@ export function Search() {
         {key: "jacuzzi", label: "Jacuzzi"},
     ];
 
-    const buildSearchParams = () => {
+    const buildSearchParams = (): string => {
         const params = new URLSearchParams();
 
         if (query) params.append("location", query);
@@ -83,7 +98,7 @@ export function Search() {
             return;
         }
 
-        const filtered = Array.isArray(cabins)
+        const filtered : string[] = Array.isArray(cabins)
             ? cabins
                 .filter(cabin => cabin.location?.city && cabin.location?.country)
                 .map(cabin => `${cabin.location.city}, ${cabin.location.country}`)
@@ -95,7 +110,7 @@ export function Search() {
     }, [query, cabins]);
 
 
-    const handleSelectedLocation = (location) => {
+    const handleSelectedLocation = (location : string) => {
         setQuery(location);
         setShowLocationDropdown(false);
     };
