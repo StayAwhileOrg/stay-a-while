@@ -31,7 +31,6 @@ export function RenderProfile() {
 
     return (
         <div>
-            <h1>User Profile</h1>
             <Profile profile={profile} />
         </div>
     );
