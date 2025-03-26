@@ -15,6 +15,7 @@ export function BookingForm({
   price,
   ownerFirst,
   ownerLast,
+  ownerImg
 }: BookingFormProps) {
   const [checkIn, setCheckIn] = useState<Date | null>(null);
   const [checkOut, setCheckOut] = useState<Date | null>(null);
@@ -46,6 +47,7 @@ export function BookingForm({
       id={id}
       ownerFirst={ownerFirst}
       ownerLast={ownerLast}
+      ownerImg = {ownerImg}
     />
   );
 }
