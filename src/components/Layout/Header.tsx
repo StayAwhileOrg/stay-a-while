@@ -1,12 +1,12 @@
 import {Link} from "react-router-dom";
 import {Search} from "../UI/Search.tsx";
-import {useAuth} from "../../hooks/auth/useAuth.tsx";
 import {useState, useEffect, useRef} from "react";
 import {useLogout} from "../../hooks/api/auth/logout.tsx";
 import {useClickOutside} from "../../hooks/useClickOutside/useClickOutside.tsx";
 
 export function Header() {
-    const isAuthenticated = useAuth();
+    const token = localStorage.getItem("token");
+    const isAuthenticated = !!token;
     const user = JSON.parse(localStorage.getItem("user") || "{}");
 
     const [dropdownVisible, setDropdownVisible] = useState(false);
