@@ -1,5 +1,6 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { fetchRegister } from '../../hooks/api/auth/fetchRegister.tsx';
+import { useNavigate } from 'react-router-dom';
 
 type RegisterFormInputs = {
   firstName: string;
@@ -11,6 +12,8 @@ type RegisterFormInputs = {
   bio: string;
 };
 
+const navigate = useNavigate();
+
 export function RegisterForm() {
   const {
     register,
@@ -18,16 +21,28 @@ export function RegisterForm() {
     formState: { errors },
   } = useForm<RegisterFormInputs>();
 
-  const onSubmit: SubmitHandler<RegisterFormInputs> = (data) => {
-    fetchRegister(
-      data.firstName,
-      data.lastName,
-      data.email,
-      data.password,
-      data.phone,
-      data.imgUrl,
-      data.bio
-    );
+  const onSubmit: SubmitHandler<RegisterFormInputs> = async (data) => {
+      try {
+          const response = fetchRegister(
+              data.firstName,
+              data.lastName,
+              data.email,
+              data.password,
+              data.phone,
+              data.imgUrl,
+              data.bio
+          );
+
+          if (!response) {
+              throw new Error('No response from fetch');
+          }
+          navigate('/');
+      } catch (error) {
+          console.error(
+              'Something went wrong with fetching:',
+              (error as Error).message
+          );
+      }
   };
 
   return (
