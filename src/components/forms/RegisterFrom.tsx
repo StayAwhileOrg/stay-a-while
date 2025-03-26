@@ -31,10 +31,10 @@ export function RegisterForm() {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
+    <div className={"flex flex-col h-[90vh] items-center justify-center"}>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className={"w-[400px] drop-shadow-lg border border-[#D9D9D9] p-[40px] rounded-[20px] flex flex-col gap-[32px]"}>
+        <h2 className={"w-full text-center font-bold text-xl"}>Register</h2>
         <div className={'flex gap-[8px]'}>
           <div>
             <label className="block font-medium">First Name</label>
@@ -145,9 +145,9 @@ export function RegisterForm() {
 
         <button
           type="submit"
-          className="px-8 py-2 rounded-lg bg-[#EA9A36] text-[#FFEDBD] hover:bg-[#FFEDBD] hover:text-[#EA9A36] hover:cursor-pointer"
+          className="px-8 py-2 rounded-[12px] hover:bg-[#2D4B4870] hover:cursor-pointer bg-[#2D4B48] text-white"
         >
-          Submit
+          Register
         </button>
       </form>
     </div>

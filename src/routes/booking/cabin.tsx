@@ -96,6 +96,7 @@ export function RenderCabin() {
             id={id!}
             ownerFirst={cabin.owner.name.firstName}
             ownerLast={cabin.owner.name.lastName}
+            ownerImg={cabin.owner.image.imgUrl}
           />
         </div>
       ) : (

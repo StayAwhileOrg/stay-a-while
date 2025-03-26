@@ -23,6 +23,7 @@ export function BookingCard({
   price,
   ownerFirst,
   ownerLast,
+  ownerImg,
 }: BookingCardProps) {
   return (
     <div className={'flex flex-col gap-[44px]'}>
@@ -70,7 +71,7 @@ export function BookingCard({
         </div>
         <button
           onClick={onSubmit}
-          className="mt-4 bg-yellow-300 text-black px-4  w-[253px] py-2 rounded-[12px] hover:bg-yellow-400"
+          className="mt-4 bg-[#2D4B48] text-white px-4  w-[253px] py-2 rounded-[12px] hover:bg-[#2D4B4870] hover:cursor-pointer"
         >
           Book Now
         </button>
@@ -80,10 +81,15 @@ export function BookingCard({
           'w-[338px] h-[126px] border rounded-[12px] flex items-center justify-center flex-col'
         }
       >
-        <h3 className={'font-bold'}>Your Host</h3>
-        <p className={'font-light'}>
-          {ownerFirst} {ownerLast}
-        </p>
+        <div className={"flex items-center gap-[16px]"}>
+          <img src={ownerImg} alt="" className={"w-[40px] h-[40px] rounded-[50px] object-cover"}/>
+          <div>
+            <h3 className={'font-bold'}>Your Host</h3>
+            <p className={'font-light'}>
+              {ownerFirst} {ownerLast}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

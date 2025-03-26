@@ -57,9 +57,9 @@ export function ImageCarousel({ images }: ImageCarouselProps) {
             <img
               src={image.imgURL}
               alt={image.imgAlt || 'Thumbnail'}
-              className={`h-[50px] w-[75px] object-cover rounded-[12px] ${
+              className={`h-[50px] w-[75px] object-cover rounded-[12px] hover:cursor-pointer ${
                 index === imageIndex
-                  ? 'scale-105 border-2 border-yellow-300'
+                  ? 'scale-105 border-2 border-[##2D4B48]'
                   : 'border-2 border-transparent'
               }`}
             />
