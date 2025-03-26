@@ -9,7 +9,7 @@ import {
     RenderBookingSuccessful,
     RenderRegister,
     RenderLogin,
-    RenderAdminDashboard,
+    RenderProfile,
     RenderEditCabin,
     RenderManageBookings,
     RenderPostCabin,
@@ -57,8 +57,8 @@ const router = createBrowserRouter([
                 element: <RenderLogin />
             },
             {
-                path: "/admin",
-                element: <RenderAdminDashboard />
+                path: "/profile",
+                element: <RenderProfile />
             },
             {
                 path: "/cabin/edit",
