@@ -1,9 +1,11 @@
 import {Calendar} from "./Calendar.tsx";
-import { useRef, useEffect, useState } from "react";
+import {useRef, useEffect, useState} from "react";
 import {getCabins} from "../../hooks/api/ui/fetchCabins.tsx";
 import {useLocation, Link} from "react-router-dom";
 import {IoFilterOutline} from "react-icons/io5";
 import {CiSearch} from "react-icons/ci";
+import {useClickOutside} from "../../hooks/useClickOutside/useClickOutside.tsx";
+
 
 const formatDate = (date) => {
     if (!date) return "";
@@ -12,7 +14,9 @@ const formatDate = (date) => {
 
 export function Search() {
 
-    const filterDropdownRef = useRef(null);
+    const filterDropdownRef = useRef<HTMLDivElement | null>(null);
+
+    useClickOutside(filterDropdownRef, () => setShowFilterDropdown(false));
 
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
@@ -29,12 +33,39 @@ export function Search() {
     const [guests, setGuests] = useState("");
     const [checkInDate, setCheckInDate] = useState<Date | null>(null);
     const [checkOutDate, setCheckOutDate] = useState<Date | null>(null);
-    const [petsAllowed, setPetsAllowed] = useState(false);
-    const [smokingAllowed, setSmokingAllowed] = useState(false);
-    const [electricity, setElectricity] = useState(false);
-    const [water, setWater] = useState(false);
-    const [wifi, setWifi] = useState(false);
-    const [jacuzzi, setJacuzzi] = useState(false);
+    const [filters, setFilters] = useState({
+        petsAllowed: false,
+        smokingAllowed: false,
+        electricity: false,
+        water: false,
+        wifi: false,
+        jacuzzi: false,
+    });
+
+    const filterOptions = [
+        {key: "petsAllowed", label: "Pets Allowed"},
+        {key: "smokingAllowed", label: "Smoking Allowed"},
+        {key: "electricity", label: "Electricity"},
+        {key: "water", label: "Water"},
+        {key: "wifi", label: "Wifi"},
+        {key: "jacuzzi", label: "Jacuzzi"},
+    ];
+
+    const buildSearchParams = () => {
+        const params = new URLSearchParams();
+
+        if (query) params.append("location", query);
+        if (guests) params.append("guests", guests);
+        if (checkInDate) params.append("checkInDate", formatDate(checkInDate));
+        if (checkOutDate) params.append("checkOutDate", formatDate(checkOutDate));
+
+        Object.entries(filters).forEach(([key, value]) => {
+            if (value) params.append(key, "true");
+        });
+
+        return `/filterResults/?${params.toString()}`;
+    };
+
 
     useEffect(() => {
         getCabins()
@@ -64,18 +95,21 @@ export function Search() {
     }, [query, cabins]);
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (filterDropdownRef.current && !filterDropdownRef.current.contains(event.target)) {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                filterDropdownRef.current &&
+                !filterDropdownRef.current.contains(event.target as Node)
+            ) {
                 setShowFilterDropdown(false);
             }
         };
 
-        document.addEventListener("click", handleClickOutside);
-
+        document.addEventListener("mousedown", handleClickOutside);
         return () => {
-            document.removeEventListener("click", handleClickOutside);
+            document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
+
 
     const handleSelectedLocation = (location) => {
         setQuery(location);
@@ -157,38 +191,27 @@ export function Search() {
             {showFilterDropdown && (
                 <div
                     ref={filterDropdownRef}
-                    className={"absolute flex flex-col top-full right-80 border border-[#2D4B4850] h-[200px] w-[300px] z-10 bg-white rounded-lg p-6 gap-4"}>
-                    <p className={"text-gray-600"}>Filter</p>
-                    <ul className={"flex flex-wrap gap-4 items-center "}>
-                        <li className={"flex gap-2 cursor-pointer"}>
-                            <input type="checkbox" checked={petsAllowed} onChange={(e) => setPetsAllowed(e.target.checked)} />
-                            <label>Pets Allowed</label>
-                        </li>
-                        <li className={"flex gap-2"}>
-                            <input type="checkbox" checked={smokingAllowed} onChange={(e) => setSmokingAllowed(e.target.checked)} />
-                            <label>Smoking Allowed</label>
-                        </li>
-                        <li className={"flex gap-2"}>
-                            <input type="checkbox" checked={water} onChange={(e) => setWater(e.target.checked)} />
-                            <label>Water</label>
-                        </li>
-                        <li className={"flex gap-2"}>
-                            <input type="checkbox" checked={electricity} onChange={(e) => setElectricity(e.target.checked)} />
-                            <label>Electricity</label>
-                        </li>
-                        <li className={"flex gap-2"}>
-                            <input type="checkbox" checked={wifi} onChange={(e) => setWifi(e.target.checked)} />
-                            <label>Wifi</label>
-                        </li>
-                        <li className={"flex gap-2"}>
-                            <input type="checkbox" checked={jacuzzi} onChange={(e) => setJacuzzi(e.target.checked)} />
-                            <label>Jacuzzi</label>
-                        </li>
+                    className="absolute flex flex-col right-80 top-full border border-[#2D4B4850] h-[200px] w-[300px] z-10 bg-white rounded-lg p-4 gap-4"
+                >
+                    <p className="text-gray-600">Filter</p>
+                    <ul className="flex flex-wrap gap-4 items-center">
+                        {filterOptions.map(({key, label}) => (
+                            <li key={key} className="flex gap-2 cursor-pointer">
+                                <input className={"cursor-pointer"}
+                                    type="checkbox"
+                                    checked={filters[key as keyof typeof filters]}
+                                    onChange={(e) =>
+                                        setFilters((prev) => ({...prev, [key]: e.target.checked}))
+                                    }
+                                />
+                                <label>{label}</label>
+                            </li>
+                        ))}
                     </ul>
                 </div>
             )}
             <Link
-                to={`/filterResults/?location=${encodeURIComponent(query)}&guests=${guests}&checkInDate=${formatDate(checkInDate)}&checkOutDate=${formatDate(checkOutDate)}&petsAllowed=${petsAllowed}&smokingAllowed=${smokingAllowed}&electricity=${electricity}&water=${water}&wifi=${wifi}&jacuzzi=${jacuzzi}`}>
+                to={buildSearchParams()}>
                 <button
                     type="button"
                     className={"bg-[#2D4B48] border-2 border-[#2D4B4880] rounded-full p-2 cursor-pointer hover:bg-[#2D4B4870]"}>
