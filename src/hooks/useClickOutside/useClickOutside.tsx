@@ -1,4 +1,3 @@
-// src/hooks/useClickOutside.ts
 import { useEffect } from "react";
 
 export function useClickOutside(
