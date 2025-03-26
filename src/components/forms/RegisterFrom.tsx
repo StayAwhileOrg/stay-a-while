@@ -24,7 +24,7 @@ export function RegisterForm() {
 
   const onSubmit: SubmitHandler<RegisterFormInputs> = async (data) => {
       try {
-          const response = fetchRegister(
+          const response = await fetchRegister(
               data.firstName,
               data.lastName,
               data.email,
