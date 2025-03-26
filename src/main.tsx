@@ -61,7 +61,7 @@ const router = createBrowserRouter([
                 element: <RenderProfile />
             },
             {
-                path: "/cabin/edit",
+                path: "/cabin/edit/:id",
                 element: <RenderEditCabin />
             },
             {
