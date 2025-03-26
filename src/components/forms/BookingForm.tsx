@@ -8,6 +8,7 @@ type BookingFormProps = {
   price: number;
   ownerFirst: string;
   ownerLast: string;
+  ownerImg: string;
 };
 
 export function BookingForm({
@@ -15,7 +16,7 @@ export function BookingForm({
   price,
   ownerFirst,
   ownerLast,
-  ownerImg
+  ownerImg,
 }: BookingFormProps) {
   const [checkIn, setCheckIn] = useState<Date | null>(null);
   const [checkOut, setCheckOut] = useState<Date | null>(null);
@@ -47,7 +48,7 @@ export function BookingForm({
       id={id}
       ownerFirst={ownerFirst}
       ownerLast={ownerLast}
-      ownerImg = {ownerImg}
+      ownerImg={ownerImg}
     />
   );
 }
