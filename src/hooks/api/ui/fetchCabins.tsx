@@ -1,8 +1,9 @@
 import {API_BASE} from "../../../utility/constants.tsx";
 
-export async function getCabins(){
+export async function getCabins(params){
     try {
-        const res:Response = await fetch(`${API_BASE}/cabin`);
+        const searchParams = new URLSearchParams(params).toString();
+        const res:Response = await fetch(`${API_BASE}/cabin?${searchParams}`);
         const data = await res.json();
         console.log(data)
         return data.data;
