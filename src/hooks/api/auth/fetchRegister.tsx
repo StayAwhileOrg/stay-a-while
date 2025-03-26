@@ -37,6 +37,7 @@ export async function fetchRegister(firstName: string, lastName: string, email: 
 
         localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("token", data.token);
+        localStorage.setItem('justLoggedIn', 'true');
 
         return data;
     }catch (error){
