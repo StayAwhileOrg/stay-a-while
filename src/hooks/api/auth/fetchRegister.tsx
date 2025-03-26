@@ -12,7 +12,7 @@ export async function fetchRegister(firstName: string, lastName: string, email: 
                 "email": email,
                 "password": password,
                 "phone": phone,
-                "images": { "imgUrl": imgUrl || "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541",
+                "image": { "imgUrl": imgUrl || "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541",
                     "imgAlt": "Profile picture",
                 },
                 "bio": bio
@@ -30,7 +30,7 @@ export async function fetchRegister(firstName: string, lastName: string, email: 
             lastName: data.user.name.lastName,
             email: data.user.email,
             bio: data.user.bio,
-            imgUrl: data.user.images.imgUrl,
+            imgUrl: data.user.image.imgUrl,
             userId: data.userId,
             averageRating: data.user.averageRating
         };

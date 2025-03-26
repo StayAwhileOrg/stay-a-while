@@ -23,7 +23,7 @@ export async function fetchLogin(email: string, password: string){
             lastName: data.user.name.lastName,
             email: data.user.email,
             bio: data.user.bio,
-            imgUrl: data.user.images.imgUrl,
+            imgUrl: data.user.image.imgUrl,
             userId: data.userId,
             averageRating: data.user.averageRating
         };
