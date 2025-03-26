@@ -24,7 +24,7 @@ export function Search() {
     const initialQuery = searchParams.get("location") || "";
     const initialGuests = searchParams.get("guests") || "";
 
-    const [showMenuDropdown, setShowMenuDropdown] = useState(false);
+    const [showLocationDropdown, setShowLocationDropdown] = useState(false);
     const [showFilterDropdown, setShowFilterDropdown] = useState(false);
 
     const [cabins, setCabins] = useState([]);
@@ -79,7 +79,7 @@ export function Search() {
 
     useEffect(() => {
         if (!query.trim()) {
-            setShowMenuDropdown(false);
+            setShowLocationDropdown(false);
             return;
         }
 
@@ -91,29 +91,13 @@ export function Search() {
             : [];
 
         setFilteredLocations(filtered);
-        setShowMenuDropdown(filtered.length > 0);
+        setShowLocationDropdown(filtered.length > 0);
     }, [query, cabins]);
-
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (
-                filterDropdownRef.current &&
-                !filterDropdownRef.current.contains(event.target as Node)
-            ) {
-                setShowFilterDropdown(false);
-            }
-        };
-
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
 
 
     const handleSelectedLocation = (location) => {
         setQuery(location);
-        setShowMenuDropdown(false);
+        setShowLocationDropdown(false);
     };
 
     return (
@@ -129,10 +113,10 @@ export function Search() {
                         className="cursor-pointer outline-none text-sm text-[#2D4B48]"
                         placeholder="Select Location"
                         onChange={(e) => setQuery(e.target.value)}
-                        onFocus={() => setShowMenuDropdown(true)}
-                        onBlur={() => setTimeout(() => setShowMenuDropdown(false), 100)}
+                        onFocus={() => setShowLocationDropdown(true)}
+                        onBlur={() => setTimeout(() => setShowLocationDropdown(false), 100)}
                     />
-                    {showMenuDropdown && (
+                    {showLocationDropdown && (
                         <ul className="absolute top-full -right-3 w-full bg-white border border-[#2D4B4880] rounded-md shadow-md max-h-40 overflow-y-auto z-50">
                             {filteredLocations.map((location, index) => (
                                 <li
