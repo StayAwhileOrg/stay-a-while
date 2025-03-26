@@ -24,6 +24,9 @@ type Cabin = {
       firstName: string;
       lastName: string;
     };
+    image: {
+      imgUrl: string;
+    };
   };
   facilities: {
     beds: number;

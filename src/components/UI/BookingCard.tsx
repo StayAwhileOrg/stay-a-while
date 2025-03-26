@@ -11,6 +11,7 @@ type BookingCardProps = {
   id: string;
   ownerFirst: string;
   ownerLast: string;
+  ownerImg: string;
 };
 
 export function BookingCard({
@@ -81,8 +82,12 @@ export function BookingCard({
           'w-[338px] h-[126px] border rounded-[12px] flex items-center justify-center flex-col'
         }
       >
-        <div className={"flex items-center gap-[16px]"}>
-          <img src={ownerImg} alt="" className={"w-[40px] h-[40px] rounded-[50px] object-cover"}/>
+        <div className={'flex items-center gap-[16px]'}>
+          <img
+            src={ownerImg}
+            alt=""
+            className={'w-[40px] h-[40px] rounded-[50px] object-cover'}
+          />
           <div>
             <h3 className={'font-bold'}>Your Host</h3>
             <p className={'font-light'}>
