@@ -1,5 +1,6 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { fetchLogin } from '../../hooks/api/auth/fetchLogin.tsx';
+import { useNavigate } from 'react-router-dom';
 
 type LoginFormInputs = {
   email: string;
@@ -13,8 +14,21 @@ export function LoginForm() {
     formState: { errors },
   } = useForm<LoginFormInputs>();
 
-  const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
-    fetchLogin(data.email, data.password);
+  const navigate = useNavigate();
+
+  const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
+      try {
+          const response = await fetchLogin(data.email, data.password);
+          if (!response) {
+              throw new Error('No response from fetch');
+          }
+          navigate('/');
+      } catch (error) {
+          console.error(
+              'Something went wrong with fetching:',
+              (error as Error).message
+          );
+      }
   };
 
   return (
