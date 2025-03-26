@@ -4,9 +4,15 @@ import {useState, useEffect, useRef} from "react";
 import {useLogout} from "../../hooks/api/auth/logout.tsx";
 import {useClickOutside} from "../../hooks/useClickOutside/useClickOutside.tsx";
 
+interface User {
+    imgUrl: string;
+    firstName: string;
+    [key: string]: unknown;
+}
+
 export function Header() {
     const token = localStorage.getItem("token");
-    const isAuthenticated = !!token;
+    const isAuthenticated : boolean = !!token;
     const user = JSON.parse(localStorage.getItem("user") || "{}");
 
     const [dropdownVisible, setDropdownVisible] = useState(false);
