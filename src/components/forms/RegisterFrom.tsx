@@ -12,7 +12,6 @@ type RegisterFormInputs = {
   bio: string;
 };
 
-const navigate = useNavigate();
 
 export function RegisterForm() {
   const {
@@ -20,6 +19,8 @@ export function RegisterForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterFormInputs>();
+
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<RegisterFormInputs> = async (data) => {
       try {
