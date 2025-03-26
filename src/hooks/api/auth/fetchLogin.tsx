@@ -30,7 +30,7 @@ export async function fetchLogin(email: string, password: string){
 
         localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("token", data.token);
-        window.location.reload();
+        localStorage.setItem('justLoggedIn', 'true');
         return data;
     }catch (error){
         console.error(error)

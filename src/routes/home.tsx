@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getCabins } from '../hooks/api/ui/fetchCabins.tsx';
 import { Link } from 'react-router-dom';
 import { CabinCard } from '../components/Cards/CabinCard.tsx';
@@ -26,16 +27,32 @@ type Cabin = {
 
 export function RenderHome() {
   const [cabins, setCabins] = useState<Cabin[]>([]);
+  const navigate = useNavigate();
+
+  const fetchCabins = () => {
+      getCabins()
+          .then((data: unknown) => {
+              setCabins(data as Cabin[]);
+          })
+          .catch((error: unknown) => {
+              console.error('Error getting cabins', error);
+          });
+  };
 
   useEffect(() => {
-    getCabins()
-      .then((data: unknown) => {
-        setCabins(data as Cabin[]);
-      })
-      .catch((error: unknown) => {
-        console.error('Error getting cabins', error);
-      });
-  }, []);
+      const token = localStorage.getItem('token');
+      if (token) {
+          const justLoggedIn = localStorage.getItem('justLoggedIn');
+          if (justLoggedIn === 'true') {
+              localStorage.removeItem('justLoggedIn');
+              window.location.reload();
+          } else {
+              fetchCabins();
+          }
+      } else {
+          fetchCabins();
+      }
+  }, [navigate]);
 
   return (
     <div className={'flex flex-wrap p-[74px] gap-[46px]'}>
