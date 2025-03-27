@@ -1,82 +1,59 @@
 import {Link} from "react-router-dom";
 import {Search} from "../UI/Search.tsx";
 import {useState, useEffect, useRef} from "react";
-import {useLogout} from "../../hooks/api/auth/logout.tsx";
-import {useClickOutside} from "../../hooks/useClickOutside/useClickOutside.tsx";
-
-interface User {
-    imgUrl: string;
-    firstName: string;
-    [key: string]: unknown;
-}
+import {UserAvatar} from "../UI/UserAvatar.tsx";
+import {CiSearch} from "react-icons/ci";
 
 export function Header() {
     const token = localStorage.getItem("token");
-    const isAuthenticated : boolean = !!token;
+    const isAuthenticated: boolean = !!token;
     const user = JSON.parse(localStorage.getItem("user") || "{}");
 
     const [dropdownVisible, setDropdownVisible] = useState(false);
-    const userDropdownRef = useRef<HTMLDivElement | null>(null);
-    useClickOutside(userDropdownRef, () => setDropdownVisible(false));
+    const [searchVisible, setSearchVisible] = useState(false); // <--- Add this
 
     useEffect(() => {
-        document.body.style.overflow = dropdownVisible ? "hidden" : "visible";
-    }, [dropdownVisible]);
-
-    const logout = useLogout();
+        document.body.style.overflow = dropdownVisible || searchVisible ? "hidden" : "visible";
+    }, [dropdownVisible, searchVisible]);
 
     return (
-        <header className={"flex flex-col px-6"}>
-            <div className={"flex items-center justify-between p-4 bg-white relative"}>
+        <header className={"flex flex-col lg:px-6 relative"}>
+            <div className={"flex items-center justify-between px-4 bg-white relative"}>
                 <Link to={"/"}>
                     <img src="/src/assets/Logo.png" alt="Stay A While Logo"/>
                 </Link>
-                <Search/>
-                {isAuthenticated ? (
-                    <div className={"flex gap-2 items-center relative"}>
-                        <button onClick={() => setDropdownVisible(!dropdownVisible)}
-                                className="flex items-center gap-2 cursor-pointer">
-                            <img className={"w-10 h-10 object-center rounded-full"} src={user.imgUrl}
-                                 alt="Image Avatar"/>
-                            <span>{user.firstName}</span>
-                        </button>
-                        {dropdownVisible && (
-                            <div ref={userDropdownRef}
-                                className={"absolute text-sm right-0 z-10 p-5 top-full mt-2 dropdown bg-white border border-[#2D4B4880] shadow-md rounded flex flex-col gap-4 w-[200px] items-center"}>
-                                <Link to={"/admin/"}>
-                                    <button
-                                        className="w-[110px] cursor-pointer flex justify-center text-left p-2 bg-white hover:bg-gray-100 border border-[#2D4B4880]">Profile
-                                        Page
-                                    </button>
-                                </Link>
-                                <Link to={"/manageBookings"}>
-                                    <button
-                                        className="w-[110px] cursor-pointer flex justify-center text-left p-2 bg-white hover:bg-gray-100 border border-[#2D4B4880]">My
-                                        Bookings
-                                    </button>
-                                </Link>
-                                <button
-                                    onClick={() => {
-                                        logout();
-                                        window.location.href = "/";
-                                    }}
-                                    className="flex w-[110px] justify-center items-center cursor-pointer text-left p-2 bg-white hover:bg-gray-100 border border-[#2D4B4880]">
-                                    Logout
-                                </button>
-                            </div>
-                        )}
+                <div className={"flex items-center gap-6"}>
+                    {/* Search toggle button (mobile only) */}
+                    <button
+                        onClick={() => setSearchVisible(prev => !prev)}
+                        type="button"
+                        className={"bg-[#2D4B48] border-2 border-[#2D4B4880] rounded-full p-2 cursor-pointer px-2 lg:hidden"}>
+                        <CiSearch className={"h-[22px] w-[22px] text-white bg-transparent"}/>
+                    </button>
+
+                    {/* Search bar (always visible on lg+, conditionally visible on mobile) */}
+                    <div className={`${searchVisible ? 'block' : 'hidden'} lg:block`}>
+                        <Search onClose={() => setSearchVisible(false)}/>
                     </div>
-                ) : (
-                    <Link to="/login">
-                        <button
-                            className="bg-[#2D4B48] text-white px-4 py-2 rounded hover:bg-[#3f6461] transition-colors">
-                            Login
-                        </button>
-                    </Link>
-                )}
+
+                    {/* User avatar or login button */}
+                    {isAuthenticated ? (
+                        <UserAvatar
+                            user={user}
+                            dropdownVisible={dropdownVisible}
+                            setDropdownVisible={setDropdownVisible}
+                        />
+                    ) : (
+                        <Link to="/login">
+                            <button
+                                className="bg-[#2D4B48] text-white px-4 py-2 rounded hover:bg-[#3f6461] transition-colors">
+                                Login
+                            </button>
+                        </Link>
+                    )}
+                </div>
             </div>
             <div className={"w-full h-[1px] bg-[#2D4B4860]"}></div>
         </header>
     )
 }
-

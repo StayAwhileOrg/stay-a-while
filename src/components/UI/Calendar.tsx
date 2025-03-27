@@ -7,7 +7,7 @@ export function Calendar({ value, onChange }) {
             selected={value}
             onChange={onChange}
             dateFormat={"dd-MM-yyyy"}
-            className={"text-[#2D4B48] w-[100px]"}
+            className={"text-[#2D4B48] w-[100px] text-sm"}
         />
     );
 }
