@@ -27,12 +27,12 @@ export function ImageCarousel({ images }: ImageCarouselProps) {
   };
 
   return (
-    <div className="relative w-[580px] h-[389px]">
+    <div className="relative lg:w-[580px] w-[70vw] h-[40vh] lg:h-[389px] flex flex-col items-center">
       <img
         key={images[imageIndex]._id || imageIndex}
         src={images[imageIndex].imgURL}
         alt={images[imageIndex].imgAlt || 'Cabin image'}
-        className="w-[580px] h-[389px] object-cover rounded-[12px]"
+        className="w-full h-full object-cover rounded-[12px]"
       />
       <button
         onClick={handlePrev}
