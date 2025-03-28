@@ -1,5 +1,5 @@
-export function RenderManageBookings(){
-    return(
-        <h1>manage bookings</h1>
-    )
+import { ManageBooking } from "../../components/UI/manageBookings";
+
+export function RenderManageBookings() {
+    return <ManageBooking />;
 }
