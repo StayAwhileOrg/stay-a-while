@@ -10,7 +10,7 @@ export function Header() {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
 
     const [dropdownVisible, setDropdownVisible] = useState(false);
-    const [searchVisible, setSearchVisible] = useState(false); // <--- Add this
+    const [searchVisible, setSearchVisible] = useState(false);
 
     useEffect(() => {
         document.body.style.overflow = dropdownVisible || searchVisible ? "hidden" : "visible";
@@ -32,7 +32,7 @@ export function Header() {
                     </button>
 
                     {/* Search bar (always visible on lg+, conditionally visible on mobile) */}
-                    <div className={`${searchVisible ? 'block' : 'hidden'} lg:block`}>
+                    <div className={`absolute top-full lg:relative ${searchVisible ? 'block' : 'hidden'} lg:block`}>
                         <Search onClose={() => setSearchVisible(false)}/>
                     </div>
 
@@ -46,7 +46,7 @@ export function Header() {
                     ) : (
                         <Link to="/login">
                             <button
-                                className="bg-[#2D4B48] text-white px-4 py-2 rounded hover:bg-[#3f6461] transition-colors">
+                                className="bg-[#2D4B48] text-white px-4 py-2 rounded-full hover:bg-[#3f6461]">
                                 Login
                             </button>
                         </Link>
