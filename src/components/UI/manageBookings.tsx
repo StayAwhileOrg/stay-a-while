@@ -75,7 +75,12 @@ export function ManageBooking() {
 
     function formatDate(dateString: string): string {
         const date = new Date(dateString);
-        return date.toLocaleString();
+        const day = String(date.getDate()).padStart(2, "0");
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const year = date.getFullYear();
+        const hours = String(date.getHours()).padStart(2, "0");
+        const minutes = String(date.getMinutes()).padStart(2, "0");
+        return `${day}/${month}/${year} ${hours}:${minutes}`;
     }
 
     return (
@@ -106,22 +111,27 @@ export function ManageBooking() {
                     </div>
 
                     <div className="flex gap-4 mt-4">
-                        {isOwner && (
-                            <button 
-                                onClick={() => {updateBookingStatus("confirmed");
-                                    navigate("/profile")
-                                }}
-                                className="px-6 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition"
-                            >
-                                Accept
-                            </button>
+                        {status !== "cancelled" && (
+                            <>
+                                {isOwner && status !== "confirmed" && (
+                                    <button 
+                                        onClick={() => {
+                                            updateBookingStatus("confirmed");
+                                            navigate("/profile");
+                                        }}
+                                        className="px-6 py-2 bg-green-700 text-white rounded-lg shadow-md hover:bg-green-600 transition cursor-pointer"
+                                    >
+                                        Accept
+                                    </button>
+                                )}
+                                <button 
+                                    onClick={() => updateBookingStatus("cancelled")}
+                                    className="px-6 py-2 bg-red-700 text-white rounded-lg shadow-md hover:bg-red-600 transition cursor-pointer"
+                                >
+                                    Cancel
+                                </button>
+                            </>
                         )}
-                        <button 
-                            onClick={() => updateBookingStatus("cancelled")}
-                            className="px-6 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 transition"
-                        >
-                            cancel
-                        </button>
                     </div>
                 </div>
             ) : (
