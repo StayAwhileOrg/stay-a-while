@@ -55,29 +55,6 @@ interface Cabin {
   };
 }
 
-interface BookingFormProps {
-  price: number;
-  id: string;
-  ownerFirst: string;
-  ownerLast: string;
-  ownerImg: string;
-}
-
-interface FacilitiesProps {
-  beds: number;
-  capacity: number;
-  electricity: boolean;
-  jacuzzi: boolean;
-  petsAllowed: boolean;
-  smokingAllowed: boolean;
-  water: boolean;
-  wifi: boolean;
-}
-
-interface ImageCarouselProps {
-  images: Cabin['images'];
-}
-
 export function RenderCabin() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();

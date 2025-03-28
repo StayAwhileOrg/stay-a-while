@@ -1,8 +1,7 @@
 import {Calendar} from "./Calendar.tsx";
 import {useEffect, useState} from "react";
 import {getCabins} from "../../hooks/api/ui/fetchCabins.tsx";
-import {useLocation, Link} from "react-router-dom";
-import {useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 import {IoFilterOutline} from "react-icons/io5";
 import {MdClose} from "react-icons/md";
@@ -17,15 +16,6 @@ interface Cabin {
     location?: Location;
 }
 
-interface Filters {
-    petsAllowed: boolean;
-    smokingAllowed: boolean;
-    electricity: boolean;
-    water: boolean;
-    wifi: boolean;
-    jacuzzi: boolean;
-}
-
 interface SearchProps {
     onClose: () => void;
 }
@@ -36,10 +26,6 @@ const formatDate = (date: Date | null): string => {
 };
 
 export function Search({onClose}: SearchProps) {
-    const location = useLocation();
-    const searchParams = new URLSearchParams(location.search);
-    const initialQuery = searchParams.get("location") || "";
-    const initialGuests = searchParams.get("guests") || "";
 
     const [showLocationDropdown, setShowLocationDropdown] = useState(false);
     const [showFilterDropdown, setShowFilterDropdown] = useState(false);

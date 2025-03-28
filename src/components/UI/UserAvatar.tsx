@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { useLogout } from "../../hooks/api/auth/logout.tsx";
 
@@ -14,8 +13,7 @@ interface UserAvatarProps {
     onClose: () => void;
 }
 
-export function UserAvatar({ user, dropdownVisible, setDropdownVisible, onClose }: UserAvatarProps) {
-   const userDropdownRef = useRef<HTMLDivElement | null>(null);
+export function UserAvatar({ user, dropdownVisible, setDropdownVisible }: UserAvatarProps) {
     const logout = useLogout();
     const handleClose = () => setDropdownVisible(false);
 
