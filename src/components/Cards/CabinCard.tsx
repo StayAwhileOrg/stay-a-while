@@ -58,25 +58,25 @@ export function CabinCard({
       </div>
       <ul
         className={
-          'max-w-[260px] flex gap-[24px] overflow-clip px-[10px] py-[8px]'
+          'max-w-[260px] flex gap-4 overflow-clip px-[10px] py-[8px]'
         }
       >
-        <li className={'text-[10px] font-light flex items-center gap-[4px]'}>
+        <li className={'text-[14px] font-light flex items-center gap-[4px]'}>
           <LiaBedSolid /> {beds}
         </li>
-        <li className={'text-[10px] font-light flex items-center gap-[4px]'}>
-          {smokingAllowed ? <LiaSmokingSolid /> : <LiaSmokingBanSolid />}
+        <li className={'text-[18px] font-light flex items-center gap-[2px]'}>
+          {smokingAllowed ? <LiaSmokingSolid /> : <LiaSmokingBanSolid className={"text-red-900"} />}
         </li>
-        <li className={'text-[10px] font-light flex items-center gap-[4px]'}>
+        <li className={'text-[20px] font-light flex items-center gap-[4px]'}>
           <LiaPawSolid />
-          {petsAllowed ? <LiaCheckSolid /> : <LiaBanSolid />}
+          {petsAllowed ? <LiaCheckSolid className={"text-[14px] text-green-800"} /> : <LiaBanSolid className={"text-[14px] text-red-900"} />}
         </li>
-        <li className={'text-[10px] font-light flex items-center gap-[4px]'}>
-          <LiaWifiSolid /> {wifi ? <LiaCheckSolid /> : <LiaBanSolid />}
+        <li className={'text-[20px] font-light flex items-center gap-[2px]'}>
+          <LiaWifiSolid /> {wifi ? <LiaCheckSolid className={"text-[14px] text-green-800"} /> : <LiaBanSolid className={"text-[14px] text-red-900"} />}
         </li>
-        <li className={'text-[10px] font-light flex items-center gap-[4px]'}>
+        <li className={'text-[20px] font-light flex items-center gap-[2px]'}>
           <LiaBoltSolid />
-          {electricity ? <LiaCheckSolid /> : <LiaBanSolid />}
+          {electricity ? <LiaCheckSolid className={"text-[14px] text-green-800"} /> : <LiaBanSolid className={"text-[14px] text-red-900"} />}
         </li>
       </ul>
       <div className={'flex flex-col p-[10px] gap-[10px]'}>

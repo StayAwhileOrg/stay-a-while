@@ -36,7 +36,6 @@ const formatDate = (date: Date | null): string => {
 };
 
 export function Search({onClose}: SearchProps) {
-    const navigate = useNavigate();
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const initialQuery = searchParams.get("location") || "";

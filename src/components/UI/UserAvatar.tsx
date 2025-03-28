@@ -39,12 +39,14 @@ export function UserAvatar({ user, dropdownVisible, setDropdownVisible, onClose 
                     </button>
                     <Link to={"/profile/"}>
                         <button
+                            onClick={handleClose}
                             className="w-[110px] cursor-pointer flex justify-center text-left hover:bg-gray-100 bg-white border-2 border-[#2D4B4880] rounded-full p-2 px-2 text-[#2D4B48]">
                             Profile Page
                         </button>
                     </Link>
                     <Link to={"/manageBookings"}>
                         <button
+                            onClick={handleClose}
                             className="w-[110px] cursor-pointer flex justify-center text-left p-2 bg-white border-2 border-[#2D4B4880] rounded-full px-2 text-[#2D4B48] hover:bg-gray-100">
                             My Bookings
                         </button>
