@@ -51,13 +51,6 @@ export function UserAvatar({ user, dropdownVisible, setDropdownVisible, onClose 
                             My Bookings
                         </button>
                     </Link>
-                    <Link to={"/cabin/post/"}>
-                        <button
-                            onClick={handleClose}
-                            className="w-[110px] cursor-pointer flex justify-center text-left p-2 bg-white border-2 border-[#2D4B4880] rounded-full px-2 text-[#2D4B48] hover:bg-gray-100">
-                            Create Cabin
-                        </button>
-                    </Link>
                     <button
                         onClick={() => {
                             logout();
