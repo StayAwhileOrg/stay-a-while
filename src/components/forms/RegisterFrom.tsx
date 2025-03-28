@@ -1,6 +1,7 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { fetchRegister } from '../../hooks/api/auth/fetchRegister.tsx';
-import { useNavigate } from 'react-router-dom';
+import  {Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
 
 type RegisterFormInputs = {
   firstName: string;
@@ -37,23 +38,28 @@ export function RegisterForm() {
           if (!response) {
               throw new Error('No response from fetch');
           }
-          navigate('/');
+
+          toast.success('Register successful!');
+          setTimeout(() => {
+            navigate('/');
+          }, 2000)
+
       } catch (error) {
-          console.error(
-              'Something went wrong with fetching:',
-              (error as Error).message
-          );
+          console.error('Something went wrong with fetching:', (error as Error).message);
+          toast.error('Something went wrong with the register form');
       }
   };
 
   return (
-    <div className={"flex flex-col h-[90vh] items-center justify-center"}>
+    <div className={"flex flex-col h-[120vh] items-center justify-center"}>
 
-      <form onSubmit={handleSubmit(onSubmit)} className={"w-[400px] drop-shadow-lg border border-[#D9D9D9] p-[40px] rounded-[20px] flex flex-col gap-[32px]"}>
+      <form
+          onSubmit={handleSubmit((onSubmit))}
+          className={"w-[400px] drop-shadow-lg border border-[#D9D9D9] p-[40px] rounded-[20px] flex flex-col gap-[26px]"}>
         <h2 className={"w-full text-center font-bold text-xl"}>Register</h2>
         <div className={'flex gap-[8px]'}>
           <div>
-            <label className="block font-medium">First Name</label>
+            <label className="block font-medium mb-2">First Name</label>
             <input
               type="text"
               {...register('firstName', { required: 'First name is required' })}
@@ -66,7 +72,7 @@ export function RegisterForm() {
           </div>
 
           <div>
-            <label className="block font-medium">Last Name</label>
+            <label className="block font-medium mb-2">Last Name</label>
             <input
               type="text"
               {...register('lastName', { required: 'Last name is required' })}
@@ -80,7 +86,7 @@ export function RegisterForm() {
         </div>
 
         <div>
-          <label className="block font-medium">Email</label>
+          <label className="block font-medium mb-2">Email</label>
           <input
             type="email"
             {...register('email', {
@@ -99,7 +105,7 @@ export function RegisterForm() {
         </div>
 
         <div>
-          <label className="block font-medium">Phone Number</label>
+          <label className="block font-medium mb-2">Phone Number</label>
           <input
             type="tel"
             {...register('phone', {
@@ -118,7 +124,7 @@ export function RegisterForm() {
         </div>
 
         <div>
-          <label className="block font-medium">Profile Picture</label>
+          <label className="block font-medium mb-2">Profile Picture</label>
           <input
             type="url"
             {...register('imgUrl', {
@@ -137,7 +143,7 @@ export function RegisterForm() {
         </div>
 
         <div>
-          <label className="block font-medium">Bio</label>
+          <label className="block font-medium mb-2">Bio</label>
           <input
             type="text"
             {...register('bio')}
@@ -147,7 +153,7 @@ export function RegisterForm() {
         </div>
 
         <div>
-          <label className="block font-medium">Password</label>
+          <label className="block font-medium mb-2">Password</label>
           <input
             type="password"
             {...register('password', { required: 'Password is required' })}
@@ -165,6 +171,13 @@ export function RegisterForm() {
         >
           Register
         </button>
+
+        <div className='flex flex-col items-center justify-center gap-2'>
+          <p>Or</p>
+          <p>Go back to <Link to='/login' className='text-blue-500'>login</Link></p>
+        </div>
+
+        <ToastContainer />
       </form>
     </div>
   );
