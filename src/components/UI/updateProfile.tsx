@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { updateProfile } from '../../hooks/api/profile/updateProfile';
-import ProfileFormComponent from '../../components/forms/ProfileForm';
+import ProfileFormComponent from '../forms/ProfileForm';
 
 interface ProfileFormData {
     image: {
@@ -52,6 +52,7 @@ export function ProfileForm() {
         setSuccess(null);
 
         try {
+            console.log("this is the form data:", formData)
             const result = await updateProfile(formData);
             setSuccess('Profile updated successfully!');
             setFormData({
