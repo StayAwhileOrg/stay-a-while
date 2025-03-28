@@ -28,10 +28,12 @@ const ProfileFormComponent: React.FC<ProfileFormComponentProps> = ({
     onSubmit,
 }) => {
     return (
-        <div className="profile-form-container">
-            <form onSubmit={onSubmit}>
-                <div className="form-group">
-                    <label htmlFor="imageUrl">Profile Image URL</label>
+        <div className="profile-form-container py-6">
+            <form onSubmit={onSubmit} className="flex flex-col gap-4">
+                <div className="form-group flex flex-col">
+                    <label htmlFor="imageUrl" className="text-gray-600">
+                        Profile Image URL
+                    </label>
                     <input
                         type="text"
                         id="imageUrl"
@@ -39,13 +41,15 @@ const ProfileFormComponent: React.FC<ProfileFormComponentProps> = ({
                         value={formData.image.imgUrl}
                         onChange={onChange}
                         placeholder="Enter image URL"
-                        className="form-input border"
+                        className="form-input border p-2 w-full rounded"
                         disabled={isSubmitting}
                     />
                 </div>
 
-                <div className="form-group">
-                    <label htmlFor="imageAlt">Image Alt Text</label>
+                <div className="form-group flex flex-col">
+                    <label htmlFor="imageAlt" className="text-gray-600">
+                        Image Alt Text
+                    </label>
                     <input
                         type="text"
                         id="imageAlt"
@@ -53,13 +57,15 @@ const ProfileFormComponent: React.FC<ProfileFormComponentProps> = ({
                         value={formData.image.imgAlt}
                         onChange={onChange}
                         placeholder="Enter image description"
-                        className="form-input border"
+                        className="form-input border p-2 w-full rounded"
                         disabled={isSubmitting}
                     />
                 </div>
 
-                <div className="form-group">
-                    <label htmlFor="bio">Bio</label>
+                <div className="form-group flex flex-col">
+                    <label htmlFor="bio" className="text-gray-600">
+                        Bio
+                    </label>
                     <textarea
                         id="bio"
                         name="bio"
@@ -68,7 +74,7 @@ const ProfileFormComponent: React.FC<ProfileFormComponentProps> = ({
                         placeholder="Tell us about yourself (max 400 characters)"
                         maxLength={400}
                         rows={4}
-                        className="form-textarea border"
+                        className="form-textarea border p-2 w-full rounded"
                         disabled={isSubmitting}
                     />
                     <small>{formData.bio.length}/400 characters</small>
@@ -80,7 +86,7 @@ const ProfileFormComponent: React.FC<ProfileFormComponentProps> = ({
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="submit-button">
+                    className="submit-button px-8 py-2 rounded-[12px] hover:bg-[#2D4B4870] hover:cursor-pointer bg-[#2D4B48] text-white">
                     {isSubmitting ? 'Updating...' : 'Update Profile'}
                 </button>
             </form>
