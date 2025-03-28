@@ -12,6 +12,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.0.14",
     "eslint-plugin-react": "^7.37.4",
+    "lucide-react": "^0.484.0",
     "react": "^19.0.0",
     "react-datepicker": "^8.2.1",
     "react-dom": "^19.0.0",

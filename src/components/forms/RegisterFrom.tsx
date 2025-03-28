@@ -2,6 +2,9 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { fetchRegister } from '../../hooks/api/auth/fetchRegister.tsx';
 import  {Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
+import { Mail, Phone, CircleUser, User, Edit, Key } from "lucide-react";
+
+
 
 type RegisterFormInputs = {
   firstName: string;
@@ -57,113 +60,129 @@ export function RegisterForm() {
           onSubmit={handleSubmit((onSubmit))}
           className={"w-[400px] drop-shadow-lg border border-[#D9D9D9] p-[40px] rounded-[20px] flex flex-col gap-[26px]"}>
         <h2 className={"w-full text-center font-bold text-xl"}>Register</h2>
+
+
         <div className={'flex gap-[8px]'}>
-          <div>
+          <div className='relative'>
             <label className="block font-medium mb-2">First Name</label>
-            <input
-              type="text"
-              {...register('firstName', { required: 'First name is required' })}
-              className="border p-2 w-full rounded"
-              placeholder="Enter your first name"
-            />
+            <div className="relative">
+              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+              <input
+                  type="text"
+                  {...register('firstName', { required: 'First name is required' })}
+                  className="border p-2 w-full rounded pl-10"
+                  placeholder="First name"
+              />
+            </div>
             {errors.firstName && (
-              <p className="text-red-500">{errors.firstName.message}</p>
+                <p className="text-red-500">{errors.firstName.message}</p>
             )}
           </div>
 
-          <div>
+          <div className='relative'>
             <label className="block font-medium mb-2">Last Name</label>
-            <input
-              type="text"
-              {...register('lastName', { required: 'Last name is required' })}
-              className="border p-2 w-full rounded"
-              placeholder="Enter your last name"
-            />
+            <div className="relative">
+              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+              <input
+                  type="text"
+                  {...register('lastName', { required: 'Last name is required' })}
+                  className="border p-2 w-full rounded pl-10"
+                  placeholder="Last name"
+              />
+            </div>
             {errors.lastName && (
-              <p className="text-red-500">{errors.lastName.message}</p>
+                <p className="text-red-500">{errors.lastName.message}</p>
             )}
           </div>
         </div>
 
         <div>
           <label className="block font-medium mb-2">Email</label>
-          <input
-            type="email"
-            {...register('email', {
-              required: 'Email is required',
-              pattern: {
-                value: /^[^@]+@[^@]+\.[^@]+$/,
-                message: 'Invalid email address',
-              },
-            })}
-            className="border p-2 w-full rounded"
-            placeholder="Enter your email"
-          />
-          {errors.email && (
-            <p className="text-red-500">{errors.email.message}</p>
-          )}
+          <div className="relative">
+            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+            <input
+                type="email"
+                {...register('email', {
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[^@]+@[^@]+\.[^@]+$/,
+                    message: 'Invalid email address',
+                  },
+                })}
+                className="border p-2 w-full rounded pl-10"
+                placeholder="Enter your email"
+            />
+          </div>
+          {errors.email && <p className="text-red-500">{errors.email.message}</p>}
         </div>
 
         <div>
           <label className="block font-medium mb-2">Phone Number</label>
-          <input
-            type="tel"
-            {...register('phone', {
-              required: 'Phone number is required',
-              pattern: {
-                value: /^[0-9]{8}$/, // Adjust regex for your needs
-                message: 'Invalid phone number',
-              },
-            })}
-            className="border p-2 w-full rounded"
-            placeholder="Enter your phone number"
-          />
-          {errors.phone && (
-            <p className="text-red-500">{errors.phone.message}</p>
-          )}
+          <div className="relative">
+            <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+            <input
+                type="tel"
+                {...register('phone', {
+                  required: 'Phone number is required',
+                  pattern: {
+                    value: /^[0-9]{8}$/, // Adjust regex for your needs
+                    message: 'Invalid phone number',
+                  },
+                })}
+                className="border p-2 w-full rounded pl-10"
+                placeholder="Enter your phone number"
+            />
+          </div>
+          {errors.phone && <p className="text-red-500">{errors.phone.message}</p>}
         </div>
 
         <div>
           <label className="block font-medium mb-2">Profile Picture</label>
-          <input
-            type="url"
-            {...register('imgUrl', {
-              required: 'Profile picture URL is required',
-              pattern: {
-                value: /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i,
-                message: 'Enter a valid image URL (png, jpg, jpeg, gif, webp)',
-              },
-            })}
-            className="border p-2 w-full rounded"
-            placeholder="Enter profile picture URL"
-          />
-          {errors.imgUrl && (
-            <p className="text-red-500">{errors.imgUrl.message}</p>
-          )}
+          <div className="relative">
+            <CircleUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+            <input
+                type="url"
+                {...register('imgUrl', {
+                  required: 'Profile picture URL is required',
+                  pattern: {
+                    value: /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i,
+                    message: 'Enter a valid image URL (png, jpg, jpeg, gif, webp)',
+                  },
+                })}
+                className="border p-2 w-full rounded pl-10"
+                placeholder="Enter profile picture URL"
+            />
+          </div>
+          {errors.imgUrl && <p className="text-red-500">{errors.imgUrl.message}</p>}
         </div>
 
         <div>
           <label className="block font-medium mb-2">Bio</label>
-          <input
-            type="text"
-            {...register('bio')}
-            className="border p-2 w-full rounded"
-            placeholder="Optional"
-          />
+          <div className="relative">
+            <Edit className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+            <input
+                type="text"
+                {...register('bio')}
+                className="border p-2 w-full rounded pl-10"
+                placeholder="Optional"
+            />
+          </div>
         </div>
 
         <div>
           <label className="block font-medium mb-2">Password</label>
-          <input
-            type="password"
-            {...register('password', { required: 'Password is required' })}
-            className="border p-2 w-full rounded"
-            placeholder="Enter your password"
-          />
-          {errors.password && (
-            <p className="text-red-500">{errors.password.message}</p>
-          )}
+          <div className="relative">
+            <Key className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+            <input
+                type="password"
+                {...register('password', { required: 'Password is required' })}
+                className="border p-2 w-full rounded pl-10"
+                placeholder="Enter your password"
+            />
+          </div>
+          {errors.password && <p className="text-red-500">{errors.password.message}</p>}
         </div>
+
 
         <button
           type="submit"
@@ -174,7 +193,7 @@ export function RegisterForm() {
 
         <div className='flex flex-col items-center justify-center gap-2'>
           <p>Or</p>
-          <p>Go back to <Link to='/login' className='text-blue-500'>login</Link></p>
+          <p>Go back to <Link to='/login' className='text-blue-500 hover:underline'>login</Link></p>
         </div>
 
         <ToastContainer />
