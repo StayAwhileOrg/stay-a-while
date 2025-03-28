@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import {Search} from "../UI/Search.tsx";
-import {useState, useEffect, useRef} from "react";
+import {useState, useEffect} from "react";
 import {UserAvatar} from "../UI/UserAvatar.tsx";
 import {CiSearch} from "react-icons/ci";
 
@@ -23,7 +23,6 @@ export function Header() {
                     <img src="/src/assets/Logo.png" alt="Stay A While Logo"/>
                 </Link>
                 <div className={"flex items-center gap-6"}>
-                    {/* Search toggle button (mobile only) */}
                     <button
                         onClick={() => setSearchVisible(prev => !prev)}
                         type="button"
@@ -36,13 +35,13 @@ export function Header() {
                         <Search onClose={() => setSearchVisible(false)}/>
                     </div>
 
-                    {/* User avatar or login button */}
                     {isAuthenticated ? (
                         <UserAvatar
                             user={user}
                             dropdownVisible={dropdownVisible}
-                            setDropdownVisible={setDropdownVisible}
-                        />
+                            setDropdownVisible={setDropdownVisible} onClose={function (): void {
+                                throw new Error("Function not implemented.");
+                            } }                        />
                     ) : (
                         <Link to="/login">
                             <button

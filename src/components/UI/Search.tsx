@@ -44,9 +44,9 @@ export function Search({onClose}: SearchProps) {
     const [showLocationDropdown, setShowLocationDropdown] = useState(false);
     const [showFilterDropdown, setShowFilterDropdown] = useState(false);
 
-    const [cabins, setCabins] = useState([]);
+    const [cabins, setCabins] = useState<Cabin[]>([]);
     const [query, setQuery] = useState("");
-    const [filteredLocations, setFilteredLocations] = useState([]);
+    const [filteredLocations, setFilteredLocations] = useState<string[]>([]);
     const [guests, setGuests] = useState("");
     const [checkInDate, setCheckInDate] = useState<Date | null>(null);
     const [checkOutDate, setCheckOutDate] = useState<Date | null>(null);
@@ -114,7 +114,8 @@ export function Search({onClose}: SearchProps) {
         const filtered: string[] = Array.isArray(cabins)
             ? cabins
                 .filter(cabin => cabin.location?.city && cabin.location?.country)
-                .map(cabin => `${cabin.location.city}, ${cabin.location.country}`)
+                .map(cabin => cabin.location ? `${cabin.location.city}, ${cabin.location.country}` : "")
+                .filter(location => location)
                 .filter(location => location.toLowerCase().includes(query.toLowerCase()))
             : [];
 
@@ -172,7 +173,7 @@ export function Search({onClose}: SearchProps) {
                         <div className={"Search flex flex-row gap-2 justify-between"}>
                             <div className={"flex flex-col"}>
                                 <span className={"text-xs text-[#2D4B4898] font-medium"}>Check In</span>
-                                <Calendar value={checkInDate} onChange={setCheckInDate} className={"text-xs"}/>
+                                <Calendar value={checkInDate} onChange={setCheckInDate}/>
                             </div>
                             <div className={"flex flex-col"}>
                                 <span className={"text-xs text-[#2D4B4898] font-medium"}>Check Out</span>
@@ -185,9 +186,8 @@ export function Search({onClose}: SearchProps) {
                         <label className={"text-xs text-[#2D4B4898] font-medium"}>Guests</label>
                         <select className={"cursor-pointer outline-none text-sm text-[#2D4B48]"}
                                 value={guests}
-                                onChange={(e) => setGuests(e.target.value)}
-                                placeholder={"Select Amount of Guests"}>
-                            <option disabled>Select amount of guests</option>
+                                onChange={(e) => setGuests(e.target.value)}>
+                            <option value="" disabled>Select amount of guests</option>
                             <option value="1">1 guest</option>
                             <option value="2">2 guests</option>
                             <option value="3">3 guests</option>

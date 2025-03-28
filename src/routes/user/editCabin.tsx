@@ -5,8 +5,9 @@ import { EditCabinForm } from "../../components/forms/EditCabinForm.tsx";
 
 type Cabin = {
     _id: string;
+    title: string;
     images: { _id?: string; imgURL: string; imgAlt?: string }[];
-    location: { city: string; country: string };
+    location: { city: string; street: string; country: string; postalCode: string };
     description: string;
     pricePerNight: number;
     owner: { name: { firstName: string; lastName: string } };

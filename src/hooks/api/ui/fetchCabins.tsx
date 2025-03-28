@@ -13,6 +13,7 @@ type Cabin = {
     imgAlt?: string;
   }[];
   facilities: {
+    capacity: number;
     beds: number;
     smokingAllowed: boolean;
     petsAllowed: boolean;
