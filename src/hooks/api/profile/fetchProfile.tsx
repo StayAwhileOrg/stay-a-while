@@ -22,6 +22,7 @@ export async function fetchProfile(){
             throw new Error(`HTTP error! Status: ${res.status}`);
         }
         const data =  await res.json();
+        console.log(data);
         
         return data;
     }catch (error){

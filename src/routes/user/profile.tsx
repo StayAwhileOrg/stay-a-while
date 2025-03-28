@@ -13,6 +13,7 @@ export function RenderProfile() {
             try {
                 const data = await fetchProfile();                
                 setProfile(data);
+                console.log("Profile Data:", data);
             } catch (err) {
                 setError("Failed to load profile.");
                 console.error(err);

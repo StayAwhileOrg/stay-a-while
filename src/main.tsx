@@ -66,8 +66,8 @@ const router = createBrowserRouter([
                 element: <RenderEditCabin />,
             },
             {
-                path: '/manageBookings',
-                element: <RenderManageBookings />,
+                path: "/manageBookings/:bookingId",
+                element: <RenderManageBookings />
             },
             {
                 path: '/cabin/post',
