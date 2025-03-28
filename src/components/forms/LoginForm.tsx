@@ -2,6 +2,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { fetchLogin } from '../../hooks/api/auth/fetchLogin.tsx';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
+import {Key, Mail} from "lucide-react";
 
 type LoginFormInputs = {
   email: string;
@@ -41,10 +42,11 @@ export function LoginForm() {
             className="w-[400px] drop-shadow-lg border border-[#D9D9D9] p-[40px] rounded-[20px] flex flex-col gap-[32px]"
         >
         <h2 className={"w-full text-center font-bold text-xl"}>Login</h2>
-        <div>
+        <div className='relative w-full'>
           <label className="block font-medium mb-2">Email</label>
+          <Mail className='absolute left-3 top-13/18 transform -translate-y-1/2 text-gray-400' size={20} />
           <input
-            type="email"
+            type="email" placeholder='Email'
             {...register('email', {
               required: 'Email is required',
               pattern: {
@@ -52,27 +54,29 @@ export function LoginForm() {
                 message: 'Invalid email address',
               },
             })}
-            className="border p-2 w-full rounded"
+            className="border p-2 w-full rounded pl-10"
           />
           {errors.email && (
             <p className="text-red-500">{errors.email.message}</p>
           )}
         </div>
 
-        <div>
+        <div className='relative w-full'>
           <label className="block font-medium mb-2">Password</label>
+          <Key className='absolute left-3 top-13/18 transform -translate-y-1/2 text-gray-400' size={20} />
           <input
             type="password"
+            placeholder='Password'
             {...register('password', { required: 'Password is required' })}
-            className="border p-2 w-full rounded"
+            className="border p-2 w-full rounded pl-10"
           />
           {errors.password && (
             <p className="text-red-500">{errors.password.message}</p>
           )}
         </div>
 
-          <div>
-              <p>Don't have an account? Register <Link to='/register' className='text-blue-400'>here</Link> </p>
+          <div className='flex justify-center'>
+              <p>Don't have an account? Register <Link to='/register' className='text-blue-400 hover:underline'>here</Link> </p>
           </div>
 
         <button
