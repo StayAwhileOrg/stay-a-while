@@ -27,7 +27,7 @@ export async function updateProfile(profileData: ProfileData) {
             ...(profileData.bio && { bio: profileData.bio }),
         };
 
-        const response = await fetch(`${API_PROFILE}/${userId}`, {
+        const response = await fetch(`${API_PROFILE}${userId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
