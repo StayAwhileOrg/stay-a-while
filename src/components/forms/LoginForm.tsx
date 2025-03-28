@@ -1,6 +1,7 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { fetchLogin } from '../../hooks/api/auth/fetchLogin.tsx';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
 
 type LoginFormInputs = {
   email: string;
@@ -22,21 +23,26 @@ export function LoginForm() {
           if (!response) {
               throw new Error('No response from fetch');
           }
-          navigate('/');
+
+          toast.success('Login successful');
+          setTimeout(() => {
+              navigate('/');
+          }, 2000)
       } catch (error) {
-          console.error(
-              'Something went wrong with fetching:',
-              (error as Error).message
-          );
+          console.error('Something went wrong with fetching:', (error as Error).message);
+          toast.error('Something went wrong with the login');
       }
   };
 
   return (
     <div className={"flex flex-col h-[90vh] items-center justify-center"}>
-      <form onSubmit={handleSubmit(onSubmit)} className={"w-[400px] drop-shadow-lg border border-[#D9D9D9] p-[40px] rounded-[20px] flex flex-col gap-[32px]"}>
+        <form
+            onSubmit={handleSubmit((onSubmit))}
+            className="w-[400px] drop-shadow-lg border border-[#D9D9D9] p-[40px] rounded-[20px] flex flex-col gap-[32px]"
+        >
         <h2 className={"w-full text-center font-bold text-xl"}>Login</h2>
         <div>
-          <label className="block font-medium">Email</label>
+          <label className="block font-medium mb-2">Email</label>
           <input
             type="email"
             {...register('email', {
@@ -54,7 +60,7 @@ export function LoginForm() {
         </div>
 
         <div>
-          <label className="block font-medium">Password</label>
+          <label className="block font-medium mb-2">Password</label>
           <input
             type="password"
             {...register('password', { required: 'Password is required' })}
@@ -65,12 +71,17 @@ export function LoginForm() {
           )}
         </div>
 
+          <div>
+              <p>Don't have an account? Register <Link to='/register' className='text-blue-400'>here</Link> </p>
+          </div>
+
         <button
           type="submit"
           className="px-8 py-2 rounded-[12px] hover:bg-[#2D4B4870] hover:cursor-pointer bg-[#2D4B48] text-white"
         >
           Login
         </button>
+        <ToastContainer position='top-center' autoClose={1900} />
       </form>
     </div>
   );

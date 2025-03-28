@@ -1,12 +1,23 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import {useParams, useNavigate, Link} from 'react-router-dom'; // Added useNavigate
 import { fetchSingleCabin } from '../../hooks/api/ui/fetchSingleCabin.tsx';
-import { LiaStar } from 'react-icons/lia';
+import {LiaPencilAltSolid, LiaStar, LiaTrashAlt} from 'react-icons/lia';
 import { BookingForm } from '../../components/forms/BookingForm.tsx';
 import { Facilities } from '../../components/UI/Facilities.tsx';
 import { ImageCarousel } from '../../components/UI/ImageCarousel.tsx';
+import { deleteCabin } from '../../hooks/api/delete/deleteCabin.tsx';
 
-type Cabin = {
+interface User {
+  userId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  bio: string;
+  averageRating: number | null;
+  imgUrl: string;
+}
+
+interface Cabin {
   _id: string;
   images: {
     _id?: string;
@@ -20,6 +31,7 @@ type Cabin = {
   description: string;
   pricePerNight: number;
   owner: {
+    _id: string;
     name: {
       firstName: string;
       lastName: string;
@@ -38,14 +50,42 @@ type Cabin = {
     water: boolean;
     wifi: boolean;
   };
-};
+}
+
+interface BookingFormProps {
+  price: number;
+  id: string;
+  ownerFirst: string;
+  ownerLast: string;
+  ownerImg: string;
+}
+
+interface FacilitiesProps {
+  beds: number;
+  capacity: number;
+  electricity: boolean;
+  jacuzzi: boolean;
+  petsAllowed: boolean;
+  smokingAllowed: boolean;
+  water: boolean;
+  wifi: boolean;
+}
+
+interface ImageCarouselProps {
+  images: Cabin['images'];
+}
 
 export function RenderCabin() {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate(); // For redirecting after deletion
   const [cabin, setCabin] = useState<Cabin | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!id) return;
+    if (!id) {
+      setError("No cabin ID provided");
+      return;
+    }
 
     const fetchCabin = async () => {
       try {
@@ -53,58 +93,91 @@ export function RenderCabin() {
         setCabin(data);
       } catch (error) {
         console.error('Error fetching cabin:', error);
+        setError("Failed to load cabin data");
       }
     };
 
     fetchCabin();
   }, [id]);
 
-  return (
-    <div className={'w-screen flex justify-center pt-[120px]'}>
-      {cabin ? (
-        <div className={'flex gap-[61px]'}>
-          <div>
-            <ImageCarousel images={cabin.images} />
-            <div
-              className={
-                'flex justify-between max-w-[580px] pt-[52px] items-center'
-              }
-            >
-              <h2 className={'text-[36px] font-semibold'}>
-                {cabin.location.city}, {cabin.location.country}
-              </h2>
-              <div className={'flex'}>
-                <LiaStar />
-                <LiaStar />
-                <LiaStar />
-                <LiaStar />
-                <LiaStar />
-              </div>
-            </div>
-            <p className={'pt-[20px]'}>{cabin.description}</p>
+  const user: User = JSON.parse(localStorage.getItem("user") || "{}");
+  const userId: string = user.userId || "";
 
-            <Facilities
-              beds={cabin.facilities.beds}
-              capacity={cabin.facilities.capacity}
-              electricity={cabin.facilities.electricity}
-              jacuzzi={cabin.facilities.jacuzzi}
-              petsAllowed={cabin.facilities.petsAllowed}
-              smokingAllowed={cabin.facilities.smokingAllowed}
-              water={cabin.facilities.water}
-              wifi={cabin.facilities.wifi}
-            />
-          </div>
-          <BookingForm
-            price={cabin.pricePerNight}
-            id={id!}
-            ownerFirst={cabin.owner.name.firstName}
-            ownerLast={cabin.owner.name.lastName}
-            ownerImg={cabin.owner.image.imgUrl}
-          />
-        </div>
-      ) : (
-        <p>Loading...</p>
-      )}
-    </div>
+  const handleDelete = async () => {
+    if (!cabin?._id) return;
+
+    if (!window.confirm("Are you sure you want to delete this cabin?")) return;
+
+    try {
+      await deleteCabin(cabin._id);
+      window.alert("Cabin deleted successfully!");
+      setCabin(null);
+      setTimeout(() => navigate("/"), 1000);
+    } catch (error) {
+      console.error('Error deleting cabin:', error);
+      window.alert("Failed to delete cabin. Please try again.");
+    }
+  };
+
+  return (
+      <div className="w-screen flex justify-center pt-[120px]">
+        {error ? (
+            <p className="text-red-500">{error}</p>
+        ) : cabin ? (
+            <div className="flex gap-[61px]">
+              <div>
+                <div className="flex justify-between relative">
+                  <ImageCarousel images={cabin.images} />
+                  {userId && userId === cabin.owner._id && (
+                      <div className="absolute top-100 right-0 flex gap-[8px]">
+                        <Link to={`/cabin/edit/${cabin._id}`}>
+                          <LiaPencilAltSolid
+                              className={"cursor-pointer text-[#2D4B48]"}
+                          />
+                        </Link>
+                        <LiaTrashAlt
+                            onClick={handleDelete}
+                            className="text-lg text-red-500 cursor-pointer"
+                        />
+                      </div>
+                  )}
+                </div>
+                <div className="flex justify-between max-w-[580px] pt-[52px] items-center">
+                  <h2 className="text-[36px] font-semibold">
+                    {cabin.location.city}, {cabin.location.country}
+                  </h2>
+                  <div className="flex">
+                    <LiaStar />
+                    <LiaStar />
+                    <LiaStar />
+                    <LiaStar />
+                    <LiaStar />
+                  </div>
+                </div>
+                <p className="pt-[20px]">{cabin.description}</p>
+
+                <Facilities
+                    beds={cabin.facilities.beds}
+                    capacity={cabin.facilities.capacity}
+                    electricity={cabin.facilities.electricity}
+                    jacuzzi={cabin.facilities.jacuzzi}
+                    petsAllowed={cabin.facilities.petsAllowed}
+                    smokingAllowed={cabin.facilities.smokingAllowed}
+                    water={cabin.facilities.water}
+                    wifi={cabin.facilities.wifi}
+                />
+              </div>
+              <BookingForm
+                  price={cabin.pricePerNight}
+                  id={id!}
+                  ownerFirst={cabin.owner.name.firstName}
+                  ownerLast={cabin.owner.name.lastName}
+                  ownerImg={cabin.owner.image.imgUrl}
+              />
+            </div>
+        ) : (
+            <p>Loading...</p>
+        )}
+      </div>
   );
 }

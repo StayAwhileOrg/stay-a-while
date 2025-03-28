@@ -16,6 +16,7 @@ import {
 } from "./routes";
 import {Header, Footer} from "./components/Layout";
 import {FilterResults} from "./components/UI/filterResults.tsx";
+import { ProfileForm } from './routes/user/updateProfile.tsx';
 
 const Layout = () => (
     <>
@@ -29,55 +30,59 @@ const Layout = () => (
 
 const router = createBrowserRouter([
     {
-        path: "/",
+        path: '/',
         element: <Layout />,
         children: [
             {
                 index: true,
-                element: <RenderHome />
+                element: <RenderHome />,
             },
             {
-                path: "/cabin/:id",
-                element: <RenderCabin />
+                path: '/cabin/:id',
+                element: <RenderCabin />,
             },
             {
-                path: "/checkout",
-                element: <RenderCheckout />
+                path: '/checkout',
+                element: <RenderCheckout />,
             },
             {
-                path: "/bookingsuccess",
-                element: <RenderBookingSuccessful />
+                path: '/bookingsuccess',
+                element: <RenderBookingSuccessful />,
             },
             {
-                path: "/register",
-                element: <RenderRegister />
+                path: '/register',
+                element: <RenderRegister />,
             },
             {
-                path: "/login",
-                element: <RenderLogin />
+                path: '/login',
+                element: <RenderLogin />,
             },
             {
-                path: "/profile",
-                element: <RenderProfile />
+                path: '/profile',
+                element: <RenderProfile />,
             },
             {
-                path: "/cabin/edit/:id",
-                element: <RenderEditCabin />
+                path: '/cabin/edit/:id',
+                element: <RenderEditCabin />,
             },
             {
                 path: "/manageBookings/:bookingId",
                 element: <RenderManageBookings />
             },
             {
-                path: "/cabin/post",
-                element: <RenderPostCabin />
+                path: '/cabin/post',
+                element: <RenderPostCabin />,
             },
             {
-                path: "/filterResults",
-                element: <FilterResults />
+                path: '/filterResults',
+                element: <FilterResults />,
             },
-        ]
-    }
+            {
+                path: '/profile/update',
+                element: <ProfileForm />,
+            },
+        ],
+    },
 ] as RouteObject[]);
 
 createRoot(document.getElementById('root')!).render(
