@@ -1,4 +1,3 @@
-// containers/ProfileForm.tsx
 import { useState } from 'react';
 import { updateProfile } from '../../hooks/api/profile/updateProfile';
 import ProfileFormComponent from '../../components/forms/ProfileForm';
@@ -11,7 +10,7 @@ interface ProfileFormData {
     bio: string;
 }
 
-const ProfileForm = () => {
+export function ProfileForm() {
     const [formData, setFormData] = useState<ProfileFormData>({
         image: {
             imgUrl: '',
@@ -85,5 +84,3 @@ const ProfileForm = () => {
         />
     );
 };
-
-export default ProfileForm;

@@ -29,7 +29,6 @@ const ProfileFormComponent: React.FC<ProfileFormComponentProps> = ({
 }) => {
     return (
         <div className="profile-form-container">
-            .Concurrent
             <form onSubmit={onSubmit}>
                 <div className="form-group">
                     <label htmlFor="imageUrl">Profile Image URL</label>
@@ -40,7 +39,7 @@ const ProfileFormComponent: React.FC<ProfileFormComponentProps> = ({
                         value={formData.image.imgUrl}
                         onChange={onChange}
                         placeholder="Enter image URL"
-                        className="form-input"
+                        className="form-input border"
                         disabled={isSubmitting}
                     />
                 </div>
@@ -54,7 +53,7 @@ const ProfileFormComponent: React.FC<ProfileFormComponentProps> = ({
                         value={formData.image.imgAlt}
                         onChange={onChange}
                         placeholder="Enter image description"
-                        className="form-input"
+                        className="form-input border"
                         disabled={isSubmitting}
                     />
                 </div>
@@ -69,7 +68,7 @@ const ProfileFormComponent: React.FC<ProfileFormComponentProps> = ({
                         placeholder="Tell us about yourself (max 400 characters)"
                         maxLength={400}
                         rows={4}
-                        className="form-textarea"
+                        className="form-textarea border"
                         disabled={isSubmitting}
                     />
                     <small>{formData.bio.length}/400 characters</small>
