@@ -46,7 +46,7 @@ export function Header() {
                     ) : (
                         <Link to="/login">
                             <button
-                                className="bg-[#2D4B48] text-white px-4 py-2 rounded-full hover:bg-[#3f6461]">
+                                className="bg-[#2D4B48] text-white px-4 py-2 rounded-full cursor-pointer hover:bg-[#2D4B4870] border-2 border-[#2D4B48] hover:border-[#2D4B4870]">
                                 Login
                             </button>
                         </Link>
