@@ -4,6 +4,7 @@ import { getCabins } from '../hooks/api/ui/fetchCabins.tsx';
 import { Link } from 'react-router-dom';
 import { CabinCard } from '../components/Cards/CabinCard.tsx';
 import { Pagination } from "../components/UI/Pagination.tsx";
+import {Hero} from "../components/UI/Hero.tsx";
 
 type Cabin = {
     _id: string;
@@ -61,6 +62,7 @@ export function RenderHome() {
 
     return (
         <div>
+            <Hero />
             <div className={'flex flex-wrap p-[74px] gap-[46px] justify-center'}>
                 {cabins.length
                     ? cabins.map((cabin) => (
