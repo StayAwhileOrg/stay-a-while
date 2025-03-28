@@ -8,6 +8,7 @@ import {
   LiaCheckSolid,
   LiaBanSolid,
 } from 'react-icons/lia';
+import {RatingComponent} from "../UI/RatingComponent.tsx";
 
 type CabinCardProps = {
   image: string;
@@ -21,6 +22,7 @@ type CabinCardProps = {
   petsAllowed: boolean;
   wifi: boolean;
   electricity: boolean;
+  averageRating: number;
 };
 
 export function CabinCard({
@@ -35,6 +37,7 @@ export function CabinCard({
   petsAllowed,
   wifi,
   electricity,
+  averageRating,
 }: CabinCardProps) {
   return (
     <div className={'h-[407px] w-[280px] flex flex-col relative'}>
@@ -48,7 +51,10 @@ export function CabinCard({
           'bg-white absolute left-[20px] top-[20px] h-[24px] w-[96px] text-sm rounded-[4px] flex items-center justify-center'
         }
       >
-        RatingPlaceholder
+        <RatingComponent
+            rating={averageRating}
+            readOnly={true}
+        />
       </div>
       <ul
         className={

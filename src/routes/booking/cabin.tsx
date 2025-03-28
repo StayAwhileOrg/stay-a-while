@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import {useParams, useNavigate, Link} from 'react-router-dom'; // Added useNavigate
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { fetchSingleCabin } from '../../hooks/api/ui/fetchSingleCabin.tsx';
-import {LiaPencilAltSolid, LiaStar, LiaTrashAlt} from 'react-icons/lia';
+import { LiaPencilAltSolid, LiaTrashAlt } from 'react-icons/lia';
 import { BookingForm } from '../../components/forms/BookingForm.tsx';
 import { Facilities } from '../../components/UI/Facilities.tsx';
 import { ImageCarousel } from '../../components/UI/ImageCarousel.tsx';
 import { deleteCabin } from '../../hooks/api/delete/deleteCabin.tsx';
+import { RatingComponent } from '../../components/UI/RatingComponent.tsx';
+import { postRating } from '../../hooks/api/post/postRating.tsx';
 
 interface User {
   userId: string;
@@ -24,6 +26,7 @@ interface Cabin {
     imgURL: string;
     imgAlt?: string;
   }[];
+  averageRating: number;
   location: {
     city: string;
     country: string;
@@ -77,9 +80,11 @@ interface ImageCarouselProps {
 
 export function RenderCabin() {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate(); // For redirecting after deletion
+  const navigate = useNavigate();
   const [cabin, setCabin] = useState<Cabin | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [userRating, setUserRating] = useState<number | null>(null); // User's selected rating
+  const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
   useEffect(() => {
     if (!id) {
@@ -110,17 +115,44 @@ export function RenderCabin() {
 
     try {
       await deleteCabin(cabin._id);
-      window.alert("Cabin deleted successfully!");
+      setNotification({ message: "Cabin deleted successfully!", type: "success" });
       setCabin(null);
       setTimeout(() => navigate("/"), 1000);
     } catch (error) {
       console.error('Error deleting cabin:', error);
-      window.alert("Failed to delete cabin. Please try again.");
+      setNotification({ message: "Failed to delete cabin. Please try again.", type: "error" });
+    }
+  };
+
+  const handleRatingChange = async (newRating: number) => {
+    setUserRating(newRating);
+    if (!id) return;
+
+    try {
+      await postRating(id, newRating);
+      setNotification({ message: "Rating submitted successfully!", type: "success" });
+      // Optionally refetch cabin to update averageRating
+      const updatedCabin = await fetchSingleCabin(id);
+      setCabin(updatedCabin);
+    } catch (error) {
+      console.error('Error submitting rating:', error);
+      setNotification({ message: "Failed to submit rating. Please try again.", type: "error" });
+    } finally {
+      setTimeout(() => setNotification(null), 2000); // Clear notification after 2 seconds
     }
   };
 
   return (
-      <div className="w-screen flex justify-center pt-[120px]">
+      <div className="w-screen flex justify-center pt-[120px] relative">
+        {notification && (
+            <div
+                className={`fixed top-4 left-1/2 transform -translate-x-1/2 p-4 rounded shadow-lg text-white ${
+                    notification.type === "success" ? "bg-green-500" : "bg-red-500"
+                }`}
+            >
+              {notification.message}
+            </div>
+        )}
         {error ? (
             <p className="text-red-500">{error}</p>
         ) : cabin ? (
@@ -129,11 +161,9 @@ export function RenderCabin() {
                 <div className="flex justify-between relative">
                   <ImageCarousel images={cabin.images} />
                   {userId && userId === cabin.owner._id && (
-                      <div className="absolute top-100 right-0 flex gap-[8px]">
+                      <div className="absolute top-[100px] right-0 flex gap-[8px]">
                         <Link to={`/cabin/edit/${cabin._id}`}>
-                          <LiaPencilAltSolid
-                              className={"cursor-pointer text-[#2D4B48]"}
-                          />
+                          <LiaPencilAltSolid className="cursor-pointer text-[#2D4B48]" />
                         </Link>
                         <LiaTrashAlt
                             onClick={handleDelete}
@@ -146,12 +176,14 @@ export function RenderCabin() {
                   <h2 className="text-[36px] font-semibold">
                     {cabin.location.city}, {cabin.location.country}
                   </h2>
-                  <div className="flex">
-                    <LiaStar />
-                    <LiaStar />
-                    <LiaStar />
-                    <LiaStar />
-                    <LiaStar />
+                  <div className="flex flex-col items-end gap-2">
+                    {userId && (
+                        <RatingComponent
+                            rating={userRating || 0}
+                            onRatingChange={handleRatingChange}
+                            className="mt-2"
+                        />
+                    )}
                   </div>
                 </div>
                 <p className="pt-[20px]">{cabin.description}</p>
@@ -169,7 +201,7 @@ export function RenderCabin() {
               </div>
               <BookingForm
                   price={cabin.pricePerNight}
-                  id={id!}
+                  id={id as string}
                   ownerFirst={cabin.owner.name.firstName}
                   ownerLast={cabin.owner.name.lastName}
                   ownerImg={cabin.owner.image.imgUrl}
