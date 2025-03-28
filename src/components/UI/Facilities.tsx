@@ -13,7 +13,7 @@ import {
 export function Facilities({beds, capacity, electricity, jacuzzi, petsAllowed, smokingAllowed, water, wifi}) {
     return(
         <div>
-            <ul className="w-[575px] flex justify-between overflow-clip pt-[20px] flex-wrap gap-y-[16px] gap-x-[32px]">
+            <ul className="lg:w-[575px] w-[70vw] flex justify-between overflow-clip pt-[20px] flex-wrap gap-y-[16px] gap-x-[32px]">
                 <li className="text-[16px] font-light flex items-center gap-[4px]">
                     <LiaBedSolid /> <span className="text-[10px]">{beds} Beds</span>
                 </li>

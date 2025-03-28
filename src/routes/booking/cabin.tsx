@@ -131,7 +131,6 @@ export function RenderCabin() {
     try {
       await postRating(id, newRating);
       setNotification({ message: "Rating submitted successfully!", type: "success" });
-      // Optionally refetch cabin to update averageRating
       const updatedCabin = await fetchSingleCabin(id);
       setCabin(updatedCabin);
     } catch (error) {
@@ -156,12 +155,12 @@ export function RenderCabin() {
         {error ? (
             <p className="text-red-500">{error}</p>
         ) : cabin ? (
-            <div className="flex gap-[61px]">
+            <div className="flex gap-[61px] flex-col lg:flex-row">
               <div>
-                <div className="flex justify-between relative">
+                <div className="flex lg:justify-between justify-center relative">
                   <ImageCarousel images={cabin.images} />
                   {userId && userId === cabin.owner._id && (
-                      <div className="absolute top-[100px] right-0 flex gap-[8px]">
+                      <div className="absolute top-100 right-0 flex gap-[8px]">
                         <Link to={`/cabin/edit/${cabin._id}`}>
                           <LiaPencilAltSolid className="cursor-pointer text-[#2D4B48]" />
                         </Link>
@@ -172,8 +171,8 @@ export function RenderCabin() {
                       </div>
                   )}
                 </div>
-                <div className="flex justify-between max-w-[580px] pt-[52px] items-center">
-                  <h2 className="text-[36px] font-semibold">
+                <div className="flex justify-between w-full lg:max-w-[580px] pt-[52px] items-center">
+                  <h2 className="lg:text-[36px] text-[24px] font-semibold">
                     {cabin.location.city}, {cabin.location.country}
                   </h2>
                   <div className="flex flex-col items-end gap-2">

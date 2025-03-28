@@ -30,16 +30,16 @@ export function BookingCard({
     <div className={'flex flex-col gap-[44px]'}>
       <div
         className={
-          'w-[338px] h-[389px] border rounded-[12px] flex flex-col justify-center items-center gap-[26px]'
+          'lg:w-[338px] lg:h-[389px] lg:border rounded-[12px] flex flex-col justify-center items-center gap-[26px] w-full'
         }
       >
         <h2 className={'text-[24px]'}>{price} NOK / Night</h2>
         <div
           className={
-            'flex flex-col items-center w-[253px] border border-[#D9D9D9] rounded-[20px]'
+            'flex flex-col items-center lg:w-[253px] w-[70vw] border border-[#D9D9D9] rounded-[20px]'
           }
         >
-          <div className={'flex gap-2 border-b border-[#D9D9D9]'}>
+          <div className={'flex gap-2 border-b border-[#D9D9D9] w-full'}>
             <div
               className={'pl-[16px] py-[12px] w-full border-r border-[#D9D9D9]'}
             >
@@ -63,7 +63,7 @@ export function BookingCard({
               />
             </div>
           </div>
-          <div className={'flex justify-between w-[119px] py-[12px]'}>
+          <div className={'flex justify-between lg:w-[119px] py-[12px] gap-[8px]'}>
             <p className={'text-[14px]'}>Total:</p>
             <p className={'text-[14px]'}>
               {totalPrice !== null ? `${totalPrice} NOK` : '0 NOK'}
@@ -72,14 +72,14 @@ export function BookingCard({
         </div>
         <button
           onClick={onSubmit}
-          className="mt-4 bg-[#2D4B48] text-white px-4  w-[253px] py-2 rounded-[12px] hover:bg-[#2D4B4870] hover:cursor-pointer"
+          className="mt-4 bg-[#2D4B48] text-white px-4 w-[70vw] lg:w-[253px] py-2 rounded-[12px] hover:bg-[#2D4B4870] hover:cursor-pointer"
         >
           Book Now
         </button>
       </div>
       <div
         className={
-          'w-[338px] h-[126px] border rounded-[12px] flex items-center justify-center flex-col'
+          'lg:w-[338px] h-[126px] lg:border border-t lg:rounded-[12px] flex items-center justify-center flex-col w-full'
         }
       >
         <div className={'flex items-center gap-[16px]'}>
