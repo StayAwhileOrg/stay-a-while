@@ -8,6 +8,7 @@ type Cabin = {
   _id: string;
   title: string;
   pricePerNight: number;
+  averageRating: number;
   location: {
     city: string;
     country: string;
@@ -71,6 +72,7 @@ export function RenderHome() {
                 wifi={cabin.facilities.wifi}
                 electricity={cabin.facilities.electricity}
                 imageAlt={cabin.images[0].imgAlt || ''}
+                averageRating={cabin.averageRating}
               />
             </Link>
           ))
