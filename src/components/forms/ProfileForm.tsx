@@ -3,7 +3,6 @@ import React from 'react';
 interface ProfileFormData {
     image: {
         imgUrl: string;
-        imgAlt: string;
     };
     bio: string;
 }
@@ -41,22 +40,6 @@ const ProfileFormComponent: React.FC<ProfileFormComponentProps> = ({
                         value={formData.image.imgUrl}
                         onChange={onChange}
                         placeholder="Enter image URL"
-                        className="form-input border p-2 w-full rounded"
-                        disabled={isSubmitting}
-                    />
-                </div>
-
-                <div className="form-group flex flex-col">
-                    <label htmlFor="imageAlt" className="text-gray-600">
-                        Image Alt Text
-                    </label>
-                    <input
-                        type="text"
-                        id="imageAlt"
-                        name="image.imgAlt"
-                        value={formData.image.imgAlt}
-                        onChange={onChange}
-                        placeholder="Enter image description"
                         className="form-input border p-2 w-full rounded"
                         disabled={isSubmitting}
                     />
