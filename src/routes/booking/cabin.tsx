@@ -128,7 +128,7 @@ export function RenderCabin() {
   };
 
   return (
-      <div className="w-screen flex justify-center pt-[120px] relative">
+      <div className="w-screen flex justify-center pt-[120px] relative font-primary">
         {notification && (
             <div
                 className={`fixed top-4 left-1/2 transform -translate-x-1/2 p-4 rounded shadow-lg text-white ${
