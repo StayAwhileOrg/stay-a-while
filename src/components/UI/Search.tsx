@@ -2,7 +2,6 @@ import {Calendar} from "./Calendar.tsx";
 import {useEffect, useState} from "react";
 import {getCabins} from "../../hooks/api/ui/fetchCabins.tsx";
 import {useLocation, Link} from "react-router-dom";
-import {useNavigate} from "react-router-dom";
 
 import {IoFilterOutline} from "react-icons/io5";
 import {MdClose} from "react-icons/md";
@@ -98,7 +97,7 @@ export function Search({onClose}: SearchProps) {
     useEffect(() => {
         getCabins()
             .then((data) => {
-                setCabins(data);
+                setCabins(data.cabins);
             })
             .catch((error) => {
                 console.error("Error getting cabins in Search:", error);
@@ -112,10 +111,13 @@ export function Search({onClose}: SearchProps) {
         }
 
         const filtered: string[] = Array.isArray(cabins)
-            ? cabins
-                .filter(cabin => cabin.location?.city && cabin.location?.country)
-                .map(cabin => `${cabin.location.city}, ${cabin.location.country}`)
-                .filter(location => location.toLowerCase().includes(query.toLowerCase()))
+            ? Array.from(
+                new Set(
+                    cabins
+                        .filter(cabin => cabin.location?.city && cabin.location?.country)
+                        .map(cabin => `${cabin.location.city}, ${cabin.location.country}`)
+                )
+            ).filter(location => location.toLowerCase().includes(query.toLowerCase()))
             : [];
 
         setFilteredLocations(filtered);
@@ -129,8 +131,7 @@ export function Search({onClose}: SearchProps) {
     };
 
     return (
-        <div
-            className="z-10 bg-[#E2E7E1] fixed inset-0 top-20 lg:inset-auto lg:top-auto lg:z-auto lg:relative">
+        <>
             <button
                 onClick={onClose}
                 className={"absolute right-0 m-6 bg-[#2D4B48] text-lg text-white border-2 border-[#2D4B4880] rounded-full p-2 cursor-pointer"}>
@@ -151,7 +152,6 @@ export function Search({onClose}: SearchProps) {
                             placeholder="Select Location"
                             onChange={(e) => setQuery(e.target.value)}
                             onFocus={() => setShowLocationDropdown(true)}
-                            onBlur={() => setTimeout(() => setShowLocationDropdown(false), 100)}
                         />
                         {showLocationDropdown && (
                             <ul className="absolute top-full -right-3 w-full bg-white border border-[#2D4B4880] rounded-md shadow-md max-h-40 overflow-y-auto z-50">
@@ -237,18 +237,18 @@ export function Search({onClose}: SearchProps) {
                         </div>
                     )}
                 </div>
-                <Link
-                    to={buildSearchParams()}
-                >
-                    <button
-                        type="button"
-                        onClick={onClose}
-                        className={"bg-[#2D4B48] border-2 border-[#2D4B4880] rounded-full p-2 cursor-pointer hover:bg-[#2D4B4870] flex items-center justify-between px-4 w-[120px] lg:w-auto lg:px-2"}>
-                        <span className={"text-white font-light lg:hidden"}>Search</span>
-                        <CiSearch className={"h-[22px] w-[22px] text-white bg-transparent"}/>
-                    </button>
-                </Link>
+                <div className="w-full flex justify-end lg:static">
+                    <Link to={buildSearchParams()}>
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            className={"bg-[#2D4B48] border-2 border-[#2D4B4880] rounded-full p-2 cursor-pointer hover:bg-[#2D4B4870] flex items-center justify-between px-4 w-[120px] lg:w-auto lg:px-2"}>
+                            <span className={"text-white font-light lg:hidden"}>Search</span>
+                            <CiSearch className={"h-[22px] w-[22px] text-white bg-transparent"}/>
+                        </button>
+                    </Link>
+                </div>
             </form>
-        </div>
+        </>
     )
 }

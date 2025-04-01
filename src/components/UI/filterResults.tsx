@@ -53,7 +53,7 @@ export function FilterResults() {
 
     useEffect(() => {
         getCabins()
-            .then((data) => setCabins(data))
+            .then((data) => setCabins(data.cabins))
             .catch((error) => console.error("Error getting cabins:", error));
     }, []);
 
@@ -128,10 +128,11 @@ export function FilterResults() {
                                 country={cabin.location.country}
                                 title={cabin.title}
                                 price={cabin.pricePerNight}
-                                smokingAllowed={cabin.facilities.smokingAllowed}
-                                petsAllowed={cabin.facilities.petsAllowed}
-                                wifi={cabin.facilities.wifi}
-                                electricity={cabin.facilities.electricity}
+                                smokingAllowed={cabin.facilities.smokingAllowed ?? false}
+                                petsAllowed={cabin.facilities.petsAllowed ?? false}
+                                wifi={cabin.facilities.wifi ?? false}
+                                electricity={cabin.facilities.electricity ?? false}
+                                jacuzzi={cabin.facilities.jacuzzi ?? false}
                             />
                         </Link>
                     ))
