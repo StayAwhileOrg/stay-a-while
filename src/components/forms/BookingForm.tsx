@@ -5,8 +5,6 @@ import { useTotalPrice } from '../../hooks/calculation/useTotalPrice.tsx';
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 
-const navigate = useNavigate();
-
 type BookingFormProps = {
   id: string;
   price: number;
@@ -28,6 +26,9 @@ export function BookingForm({
   const totalPrice = useTotalPrice(checkIn, checkOut, price);
 
   const handleSubmit = async () => {
+
+    const navigate = useNavigate();
+
     if (!checkIn || !checkOut) {
       alert('Please select both check-in and check-out dates.');
       return;
