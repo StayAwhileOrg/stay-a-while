@@ -2,6 +2,10 @@ import { useState } from 'react';
 import { postBooking } from '../../hooks/api/post/postBooking';
 import { BookingCard } from '../UI/BookingCard';
 import { useTotalPrice } from '../../hooks/calculation/useTotalPrice.tsx';
+import { toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
+
+const navigate = useNavigate();
 
 type BookingFormProps = {
   id: string;
@@ -31,8 +35,12 @@ export function BookingForm({
 
     try {
       await postBooking(checkIn, checkOut, id, totalPrice);
+      toast.success('Booking successful!.');
+      setTimeout(() => {
+        navigate('/profile');
+      }, 2000);
     } catch (error) {
-      alert('Booking failed. Please try again.');
+      toast.error('Booking failed. Please try again.');
     }
   };
 
