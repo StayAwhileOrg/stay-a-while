@@ -38,46 +38,48 @@ export function LoginForm() {
   return (
     <div className={"flex flex-col h-[90vh] items-center justify-center"}>
         <form
-            onSubmit={handleSubmit((onSubmit))}
+            onSubmit={handleSubmit((onSubmit))} noValidate
             className="w-[400px] drop-shadow-lg border border-[#D9D9D9] p-[40px] rounded-[20px] flex flex-col gap-[32px]"
         >
         <h2 className={"w-full text-center font-bold text-xl"}>Login</h2>
-        <div className='relative w-full'>
-          <label className="block font-medium mb-2">Email</label>
-          <Mail className='absolute left-3 top-13/18 transform -translate-y-1/2 text-gray-400' size={20} />
-          <input
-            type="email" placeholder='Email'
-            {...register('email', {
-              required: 'Email is required',
-              pattern: {
-                value: /^[^@]+@[^@]+\.[^@]+$/,
-                message: 'Invalid email address',
-              },
-            })}
-            className="border p-2 w-full rounded pl-10"
-          />
-          {errors.email && (
-            <p className="text-red-500">{errors.email.message}</p>
-          )}
-        </div>
+            <div>
+                <label className="block font-medium mb-2">Email</label>
+                <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        {...register("email", {
+                            required: "Email is required",
+                            pattern: {
+                                value: /^[^@]+@[^@]+\.[^@]+$/,
+                                message: "Invalid email address",
+                            },
+                        })}
+                        className="border p-2 w-full rounded pl-10"
+                    />
+                </div>
+                {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+            </div>
 
-        <div className='relative w-full'>
-          <label className="block font-medium mb-2">Password</label>
-          <Key className='absolute left-3 top-13/18 transform -translate-y-1/2 text-gray-400' size={20} />
-          <input
-            type="password"
-            placeholder='Password'
-            {...register('password', { required: 'Password is required' })}
-            className="border p-2 w-full rounded pl-10"
-          />
-          {errors.password && (
-            <p className="text-red-500">{errors.password.message}</p>
-          )}
-        </div>
+            <div>
+                <label className="block font-medium mb-2">Password</label>
+                <div className="relative">
+                    <Key className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        {...register("password", { required: "Password is required" })}
+                        className="border p-2 w-full rounded pl-10"
+                    />
+                </div>
+                {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+            </div>
 
-          <div className='flex justify-center'>
+
+            <div className='flex justify-center'>
               <p>Don't have an account? Register <Link to='/register' className='text-blue-400 hover:underline'>here</Link> </p>
-          </div>
+            </div>
 
         <button
           type="submit"
