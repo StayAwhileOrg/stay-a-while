@@ -25,6 +25,14 @@ type CabinCardProps = {
   averageRating: number;
 };
 
+const capitalizeWords = (str):string => {
+  if (!str) return str;
+  return str
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+};
+
 export function CabinCard({
   image,
   imageAlt,
@@ -48,7 +56,7 @@ export function CabinCard({
       />
       <div
         className={
-          'bg-white absolute left-[20px] top-[20px] h-[24px] w-[96px] text-sm rounded-[4px] flex items-center justify-center'
+          'bg-white/85 absolute left-[20px] top-[20px] h-[24px] px-[8px] w-[112px] text-sm rounded-[4px] flex items-center justify-center'
         }
       >
         <RatingComponent
@@ -58,32 +66,30 @@ export function CabinCard({
       </div>
       <ul
         className={
-          'max-w-[260px] flex gap-4 overflow-clip px-[10px] py-[8px]'
+          'max-w-[260px] flex overflow-clip px-[10px] py-[8px]'
         }
       >
-        <li className={'text-[14px] font-light flex items-center gap-[4px]'}>
-          <LiaBedSolid /> {beds}
+        <li className={'text-[18px] font-light flex items-center mr-[16px]'}>
+          <LiaBedSolid /> <div className={"text-[14px]"}>{beds}</div>
         </li>
-        <li className={'text-[18px] font-light flex items-center gap-[2px]'}>
-          {smokingAllowed ? <LiaSmokingSolid /> : <LiaSmokingBanSolid className={"text-red-900"} />}
+        <li className={"flex items-center"}>
+          {smokingAllowed ? <LiaSmokingSolid className={'text-[18px] font-light flex items-center mr-[16px]'}/> : ""}
         </li>
-        <li className={'text-[20px] font-light flex items-center gap-[4px]'}>
-          <LiaPawSolid />
-          {petsAllowed ? <LiaCheckSolid className={"text-[14px] text-green-800"} /> : <LiaBanSolid className={"text-[14px] text-red-900"} />}
+        <li className={"flex items-center"}>
+          {petsAllowed ?  <LiaPawSolid className={'text-[18px] font-light mr-[16px]'} /> : ""}
         </li>
-        <li className={'text-[20px] font-light flex items-center gap-[2px]'}>
-          <LiaWifiSolid /> {wifi ? <LiaCheckSolid className={"text-[14px] text-green-800"} /> : <LiaBanSolid className={"text-[14px] text-red-900"} />}
+        <li className={"flex items-center"}>
+          {wifi ? <LiaWifiSolid className={'text-[18px] font-light flex items-center mr-[16px]'}/> : ""}
         </li>
-        <li className={'text-[20px] font-light flex items-center gap-[2px]'}>
-          <LiaBoltSolid />
-          {electricity ? <LiaCheckSolid className={"text-[14px] text-green-800"} /> : <LiaBanSolid className={"text-[14px] text-red-900"} />}
+        <li className={"flex items-center"}>
+          {electricity ? <LiaBoltSolid className={'text-[18px] font-light flex items-center mr-[16px]'}/> : ""}
         </li>
       </ul>
-      <div className={'flex flex-col p-[10px] gap-[10px]'}>
+      <div className={'flex flex-col p-[10px] gap-[10px] font-primary'}>
         <p className={'text-[15px] font-light'}>
-          {city}, {country}
+          {capitalizeWords(city)}, {capitalizeWords(country)}
         </p>
-        <h2 className={'text-[24px] font-md'}>{title}</h2>
+        <h2 className={'text-[24px] font-bold truncate'}>{capitalizeWords(title)}</h2>
         <p className={'text-[20px]'}>{price} NOK</p>
       </div>
     </div>
