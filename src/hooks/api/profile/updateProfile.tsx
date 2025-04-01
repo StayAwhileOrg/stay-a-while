@@ -3,26 +3,24 @@ import { API_PROFILE } from '../../../utility/constants';
 interface ProfileData {
     image?: {
         imgUrl?: string;
-        imgAlt?: string;
     };
     bio?: string;
 }
 
 export async function updateProfile(profileData: ProfileData) {
     try {
-        const user = JSON.parse(localStorage.getItem('user') || '{}');
-        const userId = user.userId;
+        const userFromStorage = JSON.parse(
+            localStorage.getItem('user') || '{}'
+        );
+        const userId = userFromStorage.userId;
 
         if (!userId) {
             throw new Error('You need to be logged in to change the profile');
         }
 
-        const payload: ProfileData = {
+        const payload = {
             ...(profileData.image?.imgUrl && {
-                image: {
-                    imgUrl: profileData.image.imgUrl,
-                    imgAlt: profileData.image.imgAlt || 'Profile image',
-                },
+                'image.imgUrl': profileData.image.imgUrl,
             }),
             ...(profileData.bio && { bio: profileData.bio }),
         };
@@ -42,7 +40,15 @@ export async function updateProfile(profileData: ProfileData) {
         }
 
         const result = await response.json();
-        console.log('Profile updated:', result);
+
+        const oldUser = localStorage.getItem('user');
+        let user = oldUser ? JSON.parse(oldUser) : {};
+        user.imgUrl = result.profile.image.imgUrl;
+        user.bio = result.profile.bio;
+        localStorage.setItem('user', JSON.stringify(user));
+
+        window.location.reload();
+
         return result;
     } catch (error) {
         console.error('Error updating profile:', error);
