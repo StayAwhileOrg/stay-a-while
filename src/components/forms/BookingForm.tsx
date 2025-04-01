@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { postBooking } from '../../hooks/api/post/postBooking';
 import { BookingCard } from '../UI/BookingCard';
 import { useTotalPrice } from '../../hooks/calculation/useTotalPrice.tsx';
+import {Link} from "react-router-dom";
 
 type BookingFormProps = {
   id: string;
@@ -23,18 +24,33 @@ export function BookingForm({
 
   const totalPrice = useTotalPrice(checkIn, checkOut, price);
 
-  const handleSubmit = async () => {
-    if (!checkIn || !checkOut) {
-      alert('Please select both check-in and check-out dates.');
-      return;
-    }
+    const handleSubmit = async () => {
+      if (!checkIn || !checkOut) {
+        alert('Please select both check-in and check-out dates.');
+        return;
+      }
 
-    try {
-      await postBooking(checkIn, checkOut, id, totalPrice);
-    } catch (error) {
-      alert('Booking failed. Please try again.');
-    }
-  };
+      try {
+        await postBooking(checkIn, checkOut, id, totalPrice);
+        alert('Booking successful!');
+        document.location.href = "/bookingsuccess"
+      } catch (error) {
+        let errorMessage = 'Booking failed. Please try again.';
+
+        if (error instanceof Error) {
+          errorMessage = `Booking failed: ${error.message}`;
+        }
+
+        if (error instanceof Response) {
+          const errorData = await error.json().catch(() => ({}));
+          errorMessage = `Booking failed (Status ${error.status}): ${
+              errorData.message || 'Unknown server error'
+          }`;
+        }
+
+        alert(errorMessage);
+      }
+    };
 
   return (
     <BookingCard

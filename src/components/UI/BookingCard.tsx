@@ -27,7 +27,7 @@ export function BookingCard({
   ownerImg,
 }: BookingCardProps) {
   return (
-    <div className={'flex flex-col gap-[44px]'}>
+    <div className={'flex flex-col gap-[90px]'}>
       <div
         className={
           'lg:w-[338px] lg:h-[389px] lg:border rounded-[12px] flex flex-col justify-center items-center gap-[26px] w-full'

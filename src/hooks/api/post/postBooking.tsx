@@ -20,7 +20,9 @@ export async function postBooking(checkIn: Date, checkOut: Date, id, totalPrice)
             body: JSON.stringify(bookingData),
         });
 
-        if (!response.ok) throw new Error("Failed to book");
+        if (!response.ok) {
+            throw response;
+        }
 
         const data = await response.json();
         console.log("Booking successful!", data);

@@ -21,6 +21,7 @@ interface User {
 
 interface Cabin {
   _id: string;
+  title: string;
   images: {
     _id?: string;
     imgURL: string;
@@ -55,28 +56,13 @@ interface Cabin {
   };
 }
 
-interface BookingFormProps {
-  price: number;
-  id: string;
-  ownerFirst: string;
-  ownerLast: string;
-  ownerImg: string;
-}
-
-interface FacilitiesProps {
-  beds: number;
-  capacity: number;
-  electricity: boolean;
-  jacuzzi: boolean;
-  petsAllowed: boolean;
-  smokingAllowed: boolean;
-  water: boolean;
-  wifi: boolean;
-}
-
-interface ImageCarouselProps {
-  images: Cabin['images'];
-}
+const capitalizeWords = (str):string => {
+  if (!str) return str;
+  return str
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+};
 
 export function RenderCabin() {
   const { id } = useParams<{ id: string }>();
@@ -156,22 +142,29 @@ export function RenderCabin() {
             <p className="text-red-500">{error}</p>
         ) : cabin ? (
             <div className="flex gap-[61px] flex-col lg:flex-row">
+              <title>{capitalizeWords(cabin.title)}</title>
               <div>
                 <div className="flex lg:justify-between justify-center relative">
                   <ImageCarousel images={cabin.images} />
                   {userId && userId === cabin.owner._id && (
-                      <div className="absolute top-100 right-0 flex gap-[8px]">
+                      <div className="absolute top-100 right-0 flex gap-[8px] h-full">
                         <Link to={`/cabin/edit/${cabin._id}`}>
-                          <LiaPencilAltSolid className="cursor-pointer text-[#2D4B48]" />
+                          <div className={"flex items-center gap-[8px]"}><LiaPencilAltSolid className="cursor-pointer text-[#2D4B48]" /> <p className={"text-[12px]"}>Edit</p></div>
                         </Link>
-                        <LiaTrashAlt
-                            onClick={handleDelete}
-                            className="text-lg text-red-500 cursor-pointer"
-                        />
+                        <div className={"cursor-pointer"}
+                             onClick={handleDelete}
+                        >
+                          <div className={"flex items-center gap-[8px]"}>
+                            <LiaTrashAlt
+                                className="text-lg text-red-500"
+                            />
+                            <p className={"text-[12px]"}>Delete</p>
+                          </div>
+                          </div>
                       </div>
                   )}
                 </div>
-                <div className="flex justify-between w-full lg:max-w-[580px] pt-[52px] items-center">
+                <div className="flex justify-between w-full lg:max-w-[580px] pt-[24px] items-center">
                   <h2 className="lg:text-[36px] text-[24px] font-semibold">
                     {cabin.location.city}, {cabin.location.country}
                   </h2>
