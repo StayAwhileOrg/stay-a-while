@@ -72,7 +72,7 @@ export function BookingCard({
         </div>
         <button
           onClick={onSubmit}
-          className="mt-4 bg-[#2D4B48] text-white px-4 w-[70vw] lg:w-[253px] py-2 rounded-[12px] hover:bg-[#2D4B4870] hover:cursor-pointer"
+          className="Book-now mt-4 bg-[#2D4B48] text-white px-4 w-[70vw] lg:w-[253px] py-2 rounded-[12px] hover:bg-[#2D4B4870] hover:cursor-pointer"
         >
           Book Now
         </button>
