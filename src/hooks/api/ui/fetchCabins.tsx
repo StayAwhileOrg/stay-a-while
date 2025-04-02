@@ -1,10 +1,11 @@
 import { API_BASE } from '../../../utility/constants.tsx';
 
-type Cabin = {
+export interface Cabin {
   _id: string;
   title: string;
   pricePerNight: number;
   averageRating: number;
+  capacity: number;
   location: {
     city: string;
     country: string;
@@ -19,6 +20,8 @@ type Cabin = {
     petsAllowed: boolean;
     wifi: boolean;
     electricity: boolean;
+    water: boolean;
+    jacuzzi: boolean;
   };
 };
 
@@ -30,11 +33,14 @@ export async function getCabins(
     params?: Record<string, string>
 ): Promise<{ cabins: Cabin[]; pagination: Pagination }> {
   try {
-    const searchParams = new URLSearchParams(params).toString();
+    const searchParams = params ? new URLSearchParams(params).toString() : "";
     const res: Response = await fetch(`${API_BASE}/cabin?${searchParams}`);
     const data = await res.json();
     console.log(data);
-    return { cabins: data.data, pagination: data.pagination };
+    return {
+      cabins: data.data as Cabin[],
+      pagination: data.pagination,
+    };
   } catch (error) {
     console.error('There was an error fetching cabins', error);
     throw error;

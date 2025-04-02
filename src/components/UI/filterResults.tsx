@@ -2,36 +2,8 @@ import {useEffect, useState} from "react";
 import {getCabins} from "../../hooks/api/ui/fetchCabins.tsx";
 import {useLocation} from "react-router-dom";
 import {CabinCard} from "../Cards/CabinCard.tsx";
+import {Cabin} from "../../hooks/api/ui/fetchCabins.tsx";
 import {Link} from "react-router-dom";
-
-interface Location {
-    city: string;
-    country: string;
-}
-
-interface Image {
-    imgURL: string;
-}
-
-interface Facilities {
-    beds: number;
-    capacity: number;
-    petsAllowed?: boolean;
-    smokingAllowed?: boolean;
-    electricity?: boolean;
-    water?: boolean;
-    wifi?: boolean;
-    jacuzzi?: boolean;
-}
-
-interface Cabin {
-    _id: string;
-    title: string;
-    pricePerNight: number;
-    location: Location;
-    images: Image[];
-    facilities: Facilities;
-}
 
 export function FilterResults() {
     const [cabins, setCabins] = useState<Cabin[]>([]);
@@ -71,7 +43,7 @@ export function FilterResults() {
         if (queryGuests) {
             const guests = parseInt(queryGuests);
             filtered = filtered.filter((cabin) => {
-                const capacity = cabin.facilities?.capacity ?? 0;
+                const capacity = cabin.capacity ?? 0;
                 return capacity >= guests;
             });
         }
@@ -124,6 +96,8 @@ export function FilterResults() {
                             <CabinCard
                                 beds={cabin.facilities.beds}
                                 image={cabin.images[0].imgURL}
+                                imageAlt={`Image of ${cabin.title}`}
+                                averageRating={cabin.averageRating}
                                 city={cabin.location.city}
                                 country={cabin.location.country}
                                 title={cabin.title}
