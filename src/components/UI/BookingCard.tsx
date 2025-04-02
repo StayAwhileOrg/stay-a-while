@@ -1,4 +1,4 @@
-import DatePicker from 'react-datepicker';
+import {Calendar} from "./Calendar.tsx";
 
 type BookingCardProps = {
   checkIn: Date | null;
@@ -44,23 +44,41 @@ export function BookingCard({
               className={'pl-[16px] py-[12px] w-full border-r border-[#D9D9D9]'}
             >
               <div className={'text-[14px]'}>Check in</div>
-              <DatePicker
-                selected={checkIn}
-                onChange={(date) => setCheckIn(date)}
-                dateFormat="dd/MM/yyyy"
-                className="w-full h-[20px] rounded text-[10px]"
-                placeholderText="Check in date"
+              {/*<DatePicker*/}
+              {/*  selected={checkIn}*/}
+              {/*  onChange={(date) => setCheckIn(date)}*/}
+              {/*  dateFormat="dd/MM/yyyy"*/}
+              {/*  className="w-full h-[20px] rounded text-[10px]"*/}
+              {/*  placeholderText="Check in date"*/}
+              {/*/>*/}
+              <Calendar
+                  value={checkIn}
+                  placeholderText="Check in date"
+                  onChange={(date) => {
+                    setCheckIn(date);
+                    if (checkOut && date && checkOut <= date) {
+                      const newCheckout = new Date(date);
+                      newCheckout.setDate(date.getDate() + 1);
+                      setCheckOut(newCheckout);
+                    }
+                  }}
+                  className={"text-[#2D4B48] w-[100px] text-sm outline-none"}
               />
             </div>
             <div className={'pr-[16px] py-[12px] w-full'}>
               <div className={'text-[14px]'}>Check out</div>
-              <DatePicker
-                selected={checkOut}
-                onChange={(date) => setCheckOut(date)}
-                dateFormat="dd/MM/yyyy"
-                className="w-full h-[20px] rounded text-[10px]"
-                placeholderText="Checkout date"
-              />
+              {/*<DatePicker*/}
+              {/*  selected={checkOut}*/}
+              {/*  onChange={(date) => setCheckOut(date)}*/}
+              {/*  dateFormat="dd/MM/yyyy"*/}
+              {/*  className="w-full h-[20px] rounded text-[10px]"*/}
+              {/*  placeholderText="Checkout date"*/}
+              {/*/>*/}
+              <Calendar value={checkOut}
+                        onChange={(date) => setCheckOut(date)}
+                        className={"text-[#2D4B48] w-[100px] text-sm outline-none"}
+                        placeholderText="Checkout date"
+                        minDate={checkIn ? new Date(checkIn.getTime() + 86400000) : new Date()}/>
             </div>
           </div>
           <div className={'flex justify-between lg:w-[119px] py-[12px] gap-[8px]'}>
