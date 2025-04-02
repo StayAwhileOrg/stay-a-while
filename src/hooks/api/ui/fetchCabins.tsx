@@ -4,6 +4,7 @@ type Cabin = {
   _id: string;
   title: string;
   pricePerNight: number;
+  averageRating: number;
   location: {
     city: string;
     country: string;
