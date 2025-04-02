@@ -15,7 +15,7 @@ export function Hero() {
                     </p>
                 </div>
             </div>
-            <h2 className="text-2xl flex justify-center pt-4">Browse our listings</h2>
+            <h2 className="text-3xl flex justify-center pt-12 font-semibold font-primary">Browse our listings</h2>
         </div>
 
     )

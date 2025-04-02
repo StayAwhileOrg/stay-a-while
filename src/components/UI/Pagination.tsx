@@ -1,3 +1,5 @@
+import { ArrowLeft, ArrowRight } from "lucide-react";
+
 type PaginationProps = {
     currentPage: number;
     totalPages: number;
@@ -15,25 +17,21 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
 
     return (
         <div className="flex justify-center gap-4 m-4 pt-4">
-            <button
+            <ArrowLeft
                 onClick={handlePrev}
-                disabled={currentPage === 1}
-                className="px-4 py-2 bg-[#2D4B48] text-white rounded-lg hover:bg-[#2D4B48] disabled:bg-gray-400 cursor-pointer"
-            >
-                Prev
-            </button>
+                className={`cursor-pointer ${currentPage === 1 ? "text-gray-400" : "text-black"}`}
+                size={24}
+            />
 
-            <span className='flex items-center'>
+            <span className="flex items-center">
                 Page {currentPage} of {totalPages}
             </span>
 
-            <button
+            <ArrowRight
                 onClick={handleNext}
-                disabled={currentPage === totalPages}
-                className="px-4 py-2 bg-[#2D4B48] text-white rounded-lg hover:bg-[#2D4B48] disabled:bg-gray-400 cursor-pointer"
-            >
-                Next
-            </button>
+                className={`cursor-pointer ${currentPage === totalPages ? "text-gray-400" : "text-black"}`}
+                size={24}
+            />
         </div>
     );
 }
