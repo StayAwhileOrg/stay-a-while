@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { postBooking } from '../../hooks/api/post/postBooking';
 import { BookingCard } from '../UI/BookingCard';
 import { useTotalPrice } from '../../hooks/calculation/useTotalPrice.tsx';
-import {Link} from "react-router-dom";
+
+import { toast, ToastContainer } from "react-toastify";
 
 type BookingFormProps = {
   id: string;
@@ -12,15 +14,10 @@ type BookingFormProps = {
   ownerImg: string;
 };
 
-export function BookingForm({
-  id,
-  price,
-  ownerFirst,
-  ownerLast,
-  ownerImg,
-}: BookingFormProps) {
+export function BookingForm({ id, price, ownerFirst, ownerLast, ownerImg, }: BookingFormProps) {
   const [checkIn, setCheckIn] = useState<Date | null>(null);
   const [checkOut, setCheckOut] = useState<Date | null>(null);
+  const navigate = useNavigate();
 
   const totalPrice = useTotalPrice(checkIn, checkOut, price);
 
@@ -52,19 +49,24 @@ export function BookingForm({
       }
     };
 
+
   return (
-    <BookingCard
-      checkIn={checkIn}
-      setCheckIn={setCheckIn}
-      checkOut={checkOut}
-      setCheckOut={setCheckOut}
-      onSubmit={handleSubmit}
-      price={price}
-      totalPrice={totalPrice}
-      id={id}
-      ownerFirst={ownerFirst}
-      ownerLast={ownerLast}
-      ownerImg={ownerImg}
-    />
+      <>
+        <BookingCard
+            checkIn={checkIn}
+            setCheckIn={setCheckIn}
+            checkOut={checkOut}
+            setCheckOut={setCheckOut}
+            onSubmit={handleSubmit}
+            price={price}
+            totalPrice={totalPrice}
+            id={id}
+            ownerFirst={ownerFirst}
+            ownerLast={ownerLast}
+            ownerImg={ownerImg}
+        />
+        <ToastContainer />
+      </>
   );
 }
+

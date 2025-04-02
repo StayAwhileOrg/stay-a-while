@@ -4,8 +4,6 @@ import  {Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import { Mail, Phone, CircleUser, User, Edit, Key } from "lucide-react";
 
-
-
 type RegisterFormInputs = {
   firstName: string;
   lastName: string;
@@ -15,7 +13,6 @@ type RegisterFormInputs = {
   imgUrl: string;
   bio: string;
 };
-
 
 export function RegisterForm() {
   const {
@@ -57,7 +54,7 @@ export function RegisterForm() {
     <div className={"flex flex-col h-[120vh] items-center justify-center"}>
 
       <form
-          onSubmit={handleSubmit((onSubmit))}
+          onSubmit={handleSubmit((onSubmit))} noValidate
           className={"w-[400px] drop-shadow-lg border border-[#D9D9D9] p-[40px] rounded-[20px] flex flex-col gap-[26px]"}>
         <h2 className={"w-full text-center font-bold text-xl"}>Register</h2>
 
@@ -126,7 +123,7 @@ export function RegisterForm() {
                   required: 'Phone number is required',
                   pattern: {
                     value: /^[0-9]{8}$/, // Adjust regex for your needs
-                    message: 'Invalid phone number',
+                    message: 'Invalid phone number or already in use',
                   },
                 })}
                 className="border p-2 w-full rounded pl-10"
