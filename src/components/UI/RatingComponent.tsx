@@ -18,11 +18,8 @@ export function RatingComponent({
                                     readOnly = false,
                                     onRatingChange,
                                 }: ReviewsProps) {
-    const [hoveredRating, setHoveredRating] = useState<number | null>(null); // For hover effect
+    const [hoveredRating, setHoveredRating] = useState<number | null>(null);
     const clampedRating = Math.max(0, Math.min(maxRating, rating));
-    const fullStars = Math.floor(clampedRating);
-    const hasHalfStar = clampedRating % 1 >= 0.5;
-    const emptyStars = maxRating - fullStars - (hasHalfStar ? 1 : 0);
 
     const handleStarClick = (starIndex: number) => {
         if (readOnly || !onRatingChange) return;
@@ -39,11 +36,9 @@ export function RatingComponent({
         setHoveredRating(null);
     };
 
-    // Determine displayed rating (hovered takes precedence if interactive)
     const displayRating = hoveredRating !== null ? hoveredRating : clampedRating;
     const displayFullStars = Math.floor(displayRating);
     const displayHasHalfStar = displayRating % 1 >= 0.5;
-    const displayEmptyStars = maxRating - displayFullStars - (displayHasHalfStar ? 1 : 0);
 
     return (
         <div

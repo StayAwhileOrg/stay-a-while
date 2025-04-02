@@ -1,12 +1,9 @@
 import {
   LiaBedSolid,
   LiaSmokingSolid,
-  LiaSmokingBanSolid,
   LiaPawSolid,
   LiaWifiSolid,
   LiaBoltSolid,
-  LiaCheckSolid,
-  LiaBanSolid,
 } from 'react-icons/lia';
 import {RatingComponent} from "../UI/RatingComponent.tsx";
 
@@ -25,7 +22,7 @@ type CabinCardProps = {
   averageRating: number;
 };
 
-const capitalizeWords = (str):string => {
+const capitalizeWords = (str: string): string => {
   if (!str) return str;
   return str
       .split(' ')
