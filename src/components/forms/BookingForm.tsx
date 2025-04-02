@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { postBooking } from '../../hooks/api/post/postBooking';
 import { BookingCard } from '../UI/BookingCard';
 import { useTotalPrice } from '../../hooks/calculation/useTotalPrice.tsx';
+
 import { toast, ToastContainer } from "react-toastify";
 
 type BookingFormProps = {
@@ -20,22 +21,34 @@ export function BookingForm({ id, price, ownerFirst, ownerLast, ownerImg, }: Boo
 
   const totalPrice = useTotalPrice(checkIn, checkOut, price);
 
-  const handleSubmit = async () => {
-    if (!checkIn || !checkOut) {
-      toast.error('Please select both check-in and check-out dates.');
-      return;
-    }
+    const handleSubmit = async () => {
+      if (!checkIn || !checkOut) {
+        alert('Please select both check-in and check-out dates.');
+        return;
+      }
 
-    try {
-      await postBooking(checkIn, checkOut, id, totalPrice);
-      toast.success('Booking successful!');
-      setTimeout(() => {
-        navigate('/profile');
-      }, 2000);
-    } catch (error) {
-      toast.error('Booking failed. Please try again.');
-    }
-  };
+      try {
+        await postBooking(checkIn, checkOut, id, totalPrice);
+        alert('Booking successful!');
+        document.location.href = "/bookingsuccess"
+      } catch (error) {
+        let errorMessage = 'Booking failed. Please try again.';
+
+        if (error instanceof Error) {
+          errorMessage = `Booking failed: ${error.message}`;
+        }
+
+        if (error instanceof Response) {
+          const errorData = await error.json().catch(() => ({}));
+          errorMessage = `Booking failed (Status ${error.status}): ${
+              errorData.message || 'Unknown server error'
+          }`;
+        }
+
+        alert(errorMessage);
+      }
+    };
+
 
   return (
       <>

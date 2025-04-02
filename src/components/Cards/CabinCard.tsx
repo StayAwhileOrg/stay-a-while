@@ -48,12 +48,14 @@ export function CabinCard({
   averageRating,
 }: CabinCardProps) {
   return (
-    <div className={'h-[407px] w-[280px] flex flex-col relative'}>
-      <img
-        src={image}
-        alt={imageAlt}
-        className={'min-h-[280px] w-[280px] object-cover rounded-[12px]'}
-      />
+    <div className={'h-[407px] w-[280px] flex flex-col relative group'}>
+      <div className={'w-[280px] h-[280px] overflow-hidden rounded-[12px]'}>
+        <img
+            src={image}
+            alt={imageAlt}
+            className={'min-h-[280px] w-[280px] object-cover transition-transform duration-300 group-hover:scale-105'}
+        />
+      </div>
       <div
         className={
           'bg-white/85 absolute left-[20px] top-[20px] h-[24px] px-[8px] w-[112px] text-sm rounded-[4px] flex items-center justify-center'
