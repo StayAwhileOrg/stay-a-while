@@ -25,7 +25,6 @@ export function ManageBooking() {
                 }
 
                 const data = await response.json();
-                console.log(data);
                 
                 setBooking(data);
                 setStatus(data.status);
@@ -64,7 +63,6 @@ export function ManageBooking() {
             }
     
             const updatedBooking = await response.json();
-            console.log("Updated Booking:", updatedBooking); 
             setStatus(updatedBooking.status); 
             
         } catch (error) {

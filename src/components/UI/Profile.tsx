@@ -71,7 +71,6 @@ export function Profile({ profile }: ProfileProps) {
 
     const averageRating = profile.profile.averageRating ?? 'N/A';
 
-    console.log(profile.profile);
 
     return (
         <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg my-16">
@@ -131,7 +130,7 @@ export function Profile({ profile }: ProfileProps) {
                     {profile.profile.bookedCabins.length > 0 ? (
                         <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-8">
                             {profile.profile.bookedCabins
-                                .filter((cabin) => cabin.cabin !== null)
+                                .filter((cabin) => cabin.cabin !== null && cabin.status !== 'cancelled')
                                 .map((cabin) => (
                                     <Link
                                         to={`/manageBookings/${cabin._id}`}
@@ -157,13 +156,9 @@ export function Profile({ profile }: ProfileProps) {
                                             </h4>
                                             <p className="text-gray-600 text-sm">
                                                 {' '}
-                                                {new Date(
-                                                    cabin.startDate
-                                                ).toLocaleDateString()}{' '}
+                                                {new Date(cabin.startDate).toLocaleDateString('en-GB')}{' '}
                                                 - {' '}
-                                                {new Date(
-                                                    cabin.endDate
-                                                ).toLocaleDateString()}
+                                                {new Date(cabin.endDate).toLocaleDateString('en-GB')}
                                             </p>
                                             <p className="text-gray-700 font-medium">
                                                 {cabin.totalPrice} Kr
@@ -186,7 +181,7 @@ export function Profile({ profile }: ProfileProps) {
                     {profile.profile.postedBookings.length > 0 ? (
                         <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-8">
                             {profile.profile.postedBookings
-                                .filter((booking) => booking.cabin !== null)
+                                .filter((booking) => booking.cabin !== null && booking.status !== 'cancelled')
                                 .map((booking) => (
                                     <Link
                                         to={`/manageBookings/${booking._id}`}
@@ -209,13 +204,9 @@ export function Profile({ profile }: ProfileProps) {
                                             </h4>
                                             <p className="text-gray-600 text-sm">
                                                 {' '}
-                                                {new Date(
-                                                    booking.startDate
-                                                ).toLocaleDateString()}{' '}
+                                                {new Date(booking.startDate).toLocaleDateString('en-GB')}{' '}
                                                 - {' '}
-                                                {new Date(
-                                                    booking.endDate
-                                                ).toLocaleDateString()}
+                                                {new Date(booking.endDate).toLocaleDateString('en-GB')}
                                             </p>
                                             <p className="text-gray-700 font-medium">
                                                 {booking.totalPrice} Kr
