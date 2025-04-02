@@ -1,12 +1,18 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { fetchSingleCabin } from "../../hooks/api/ui/fetchSingleCabin.tsx";
-import { EditCabinForm } from "../../components/forms/EditCabinForm.tsx";
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { fetchSingleCabin } from '../../hooks/api/ui/fetchSingleCabin.tsx';
+import { EditCabinForm } from '../../components/forms/EditCabinForm.tsx';
 
-type Cabin = {
+interface Cabin {
     _id: string;
+    title: string;
     images: { _id?: string; imgURL: string; imgAlt?: string }[];
-    location: { city: string; country: string };
+    location: {
+        street: string;
+        city: string;
+        postalCode: string;
+        country: string;
+    };
     description: string;
     pricePerNight: number;
     owner: { name: { firstName: string; lastName: string } };
@@ -20,12 +26,12 @@ type Cabin = {
         water: boolean;
         wifi: boolean;
     };
-};
+}
 
 export function RenderEditCabin() {
     const { id } = useParams<{ id: string }>();
     const [cabin, setCabin] = useState<Cabin | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         if (!id) return;
@@ -33,10 +39,10 @@ export function RenderEditCabin() {
         const fetchCabin = async () => {
             try {
                 setLoading(true);
-                const data = await fetchSingleCabin(id);
+                const data = (await fetchSingleCabin(id)) as Cabin;
                 setCabin(data);
             } catch (error) {
-                console.error("Error fetching cabin:", error);
+                console.error('Error fetching cabin:', error);
             } finally {
                 setLoading(false);
             }
