@@ -7,27 +7,53 @@ import {
     LiaSmokingSolid,
     LiaUserFriendsSolid,
     LiaWaterSolid,
-    LiaWifiSolid
-} from "react-icons/lia";
+    LiaWifiSolid,
+} from 'react-icons/lia';
 
-export function Facilities({beds, capacity, electricity, jacuzzi, petsAllowed, smokingAllowed, water, wifi}) {
-    return(
+interface FacilitiesProps {
+    beds: number;
+    capacity: number;
+    electricity: boolean;
+    jacuzzi: boolean;
+    petsAllowed: boolean;
+    smokingAllowed: boolean;
+    water: boolean;
+    wifi: boolean;
+}
+
+export function Facilities({
+    beds,
+    capacity,
+    electricity,
+    jacuzzi,
+    petsAllowed,
+    smokingAllowed,
+    water,
+    wifi,
+}:FacilitiesProps) {
+    return (
         <div>
             <ul className="lg:w-[575px] w-[70vw] flex justify-center overflow-clip pt-[20px] flex-wrap gap-y-[16px] gap-x-[32px]">
                 <li className="text-[16px] font-light flex items-center gap-[4px]">
-                    <LiaBedSolid /> <span className="text-[10px]">{beds} Beds</span>
+                    <LiaBedSolid />{' '}
+                    <span className="text-[10px]">{beds} Beds</span>
                 </li>
                 <li className="text-[16px] font-light flex items-center gap-[4px]">
-                    <LiaUserFriendsSolid /> <span className="text-[10px]">Capacity {capacity}</span>
+                    <LiaUserFriendsSolid />{' '}
+                    <span className="text-[10px]">Capacity {capacity}</span>
                 </li>
                 <li className="text-[16px] font-light flex items-center gap-[4px]">
                     {smokingAllowed ? (
                         <>
-                            <LiaSmokingSolid /> <span className="text-[10px]">Smoking Allowed</span>
+                            <LiaSmokingSolid />{' '}
+                            <span className="text-[10px]">Smoking Allowed</span>
                         </>
                     ) : (
                         <>
-                            <LiaSmokingBanSolid /> <span className="text-[10px]">Smoking Not Allowed</span>
+                            <LiaSmokingBanSolid />{' '}
+                            <span className="text-[10px]">
+                                Smoking Not Allowed
+                            </span>
                         </>
                     )}
                 </li>
@@ -58,7 +84,9 @@ export function Facilities({beds, capacity, electricity, jacuzzi, petsAllowed, s
                 <li className="text-[16px] font-light flex items-center gap-[4px]">
                     <LiaBoltSolid />
                     {electricity ? (
-                        <span className="text-[10px]">Electricity Available</span>
+                        <span className="text-[10px]">
+                            Electricity Available
+                        </span>
                     ) : (
                         <span className="text-[10px]">No Electricity</span>
                     )}
@@ -73,5 +101,5 @@ export function Facilities({beds, capacity, electricity, jacuzzi, petsAllowed, s
                 </li>
             </ul>
         </div>
-    )
+    );
 }
