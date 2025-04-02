@@ -14,7 +14,7 @@ interface UserAvatarProps {
     onClose: () => void;
 }
 
-export function UserAvatar({ user, dropdownVisible, setDropdownVisible, onClose }: UserAvatarProps) {
+export function UserAvatar({ user, dropdownVisible, setDropdownVisible }: UserAvatarProps) {
    const userDropdownRef = useRef<HTMLDivElement | null>(null);
     const logout = useLogout();
     const handleClose = () => setDropdownVisible(false);
