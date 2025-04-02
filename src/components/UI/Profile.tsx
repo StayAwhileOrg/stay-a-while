@@ -83,8 +83,8 @@ export function Profile({ profile }: ProfileProps) {
                             alt={profile.profile.image.imgAlt}
                             className="w-28 h-28 rounded-full object-cover border-2 border-gray-300"
                         />
-                        <div className='flex flex-col items-center md:items-baseline'>
-                            <h2 className="text-2xl font-bold text-gray-800">
+                        <div className="flex flex-col items-center md:items-baseline">
+                            <h2 className="text-2xl font-bold text-gray-800 text-center md:text-start">
                                 {profile.profile.name.firstName}{' '}
                                 {profile.profile.name.lastName}
                             </h2>
@@ -92,13 +92,13 @@ export function Profile({ profile }: ProfileProps) {
                                 {profile.profile.email}
                             </p>
                             <p className="text-gray-600">
-                                📞 {profile.profile.phone}
+                                {profile.profile.phone}
                             </p>
                             <p className="text-gray-600 italic">
                                 "{profile.profile.bio}"
                             </p>
                             <p className="mt-2 text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-md w-fit">
-                                ⭐ Average Rating: {averageRating}
+                                Average Rating: {averageRating}
                             </p>
                         </div>
                     </div>
@@ -120,16 +120,16 @@ export function Profile({ profile }: ProfileProps) {
                     className={isEditing ? 'block' : 'hidden'}>
                     <ProfileForm />
                 </div>
-                <div className='h-[1px] bg-black w-full'></div>
+                <div className="h-[1px] bg-black w-full"></div>
             </div>
 
-            <div className="mt-18">
-                <div className="flex flex-wrap md:px-[74px] gap-[46px] justify-center">
-                    <h3 className="text-xl font-semibold text-gray-800">
+            <div className="mt-18 flex flex-col items-center">
+                <div className="flex flex-col md:px-[74px] gap-[46px] justify-center">
+                    <h2 className="text-2xl font-semibold text-gray-800">
                         Upcoming trips
-                    </h3>
+                    </h2>
                     {profile.profile.bookedCabins.length > 0 ? (
-                        <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-8">
+                        <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-8">
                             {profile.profile.bookedCabins
                                 .filter((cabin) => cabin.cabin !== null)
                                 .map((cabin) => (
@@ -156,17 +156,17 @@ export function Profile({ profile }: ProfileProps) {
                                                     'No title available'}
                                             </h4>
                                             <p className="text-gray-600 text-sm">
-                                                📅{' '}
+                                                {' '}
                                                 {new Date(
                                                     cabin.startDate
                                                 ).toLocaleDateString()}{' '}
-                                                →{' '}
+                                                - {' '}
                                                 {new Date(
                                                     cabin.endDate
                                                 ).toLocaleDateString()}
                                             </p>
                                             <p className="text-gray-700 font-medium">
-                                                💰 {cabin.totalPrice} Kr
+                                                {cabin.totalPrice} Kr
                                             </p>
                                         </div>
                                     </Link>
@@ -178,13 +178,13 @@ export function Profile({ profile }: ProfileProps) {
                 </div>
             </div>
 
-            <div className="mt-18">
-                <div className="flex flex-wrap px-[74px] gap-[46px] justify-center">
-                    <h3 className="text-xl font-semibold text-gray-800">
+            <div className="mt-18 flex flex-col items-center">
+                <div className="flex flex-col md:px-[74px] gap-[46px] justify-center">
+                    <h2 className="text-2xl font-semibold text-gray-800">
                         Bookings
-                    </h3>
+                    </h2>
                     {profile.profile.postedBookings.length > 0 ? (
-                        <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-8">
+                        <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-8">
                             {profile.profile.postedBookings
                                 .filter((booking) => booking.cabin !== null)
                                 .map((booking) => (
@@ -208,17 +208,17 @@ export function Profile({ profile }: ProfileProps) {
                                                 {booking.cabin?.title}
                                             </h4>
                                             <p className="text-gray-600 text-sm">
-                                                📅{' '}
+                                                {' '}
                                                 {new Date(
                                                     booking.startDate
                                                 ).toLocaleDateString()}{' '}
-                                                →{' '}
+                                                - {' '}
                                                 {new Date(
                                                     booking.endDate
                                                 ).toLocaleDateString()}
                                             </p>
                                             <p className="text-gray-700 font-medium">
-                                                💰 {booking.totalPrice} Kr
+                                                {booking.totalPrice} Kr
                                             </p>
                                             <p>Status: {booking.status}</p>
                                         </div>
