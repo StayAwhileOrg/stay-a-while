@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import {Search} from "../UI/Search.tsx";
-import {useState, useEffect, useRef} from "react";
+import {useState, useEffect} from "react";
 import {UserAvatar} from "../UI/UserAvatar.tsx";
 import {CiSearch} from "react-icons/ci";
 
@@ -18,33 +18,35 @@ export function Header() {
 
     return (
         <header className={"flex flex-col lg:px-6 relative"}>
-            <div className={"flex items-center lg:justify-between px-4 bg-white relative"}>
+            <div className={"flex items-center justify-between px-4 bg-white relative"}>
                 <Link to={"/"}>
                     <img src="/src/assets/Logo.png" alt="Stay A While Logo"/>
                 </Link>
-                    <button
-                        onClick={() => setSearchVisible(prev => !prev)}
-                        type="button"
-                        className={"bg-[#2D4B48] border-2 border-[#2D4B4880] rounded-full p-2 cursor-pointer px-2 lg:hidden"}>
-                        <CiSearch className={"h-[22px] w-[22px] text-white bg-transparent"}/>
-                    </button>
-                    <div className={`absolute top-full lg:relative ${searchVisible ? 'block' : 'hidden'} lg:block`}>
-                        <Search onClose={() => setSearchVisible(false)}/>
+                        <div className={`absolute z-50 bg-[#E2E7E1] left-0 top-full lg:relative ${searchVisible ? 'block' : 'hidden'} lg:block`}>
+                            <Search onClose={() => setSearchVisible(false)}/>
+                        </div>
+                    <div className={"flex items-center"}>
+                        <button
+                            onClick={() => setSearchVisible(prev => !prev)}
+                            type="button"
+                            className={"bg-[#2D4B48] border-2 border-[#2D4B4880] rounded-full p-2 cursor-pointer mx-4 px-2  lg:hidden"}>
+                            <CiSearch className={"h-[22px] w-[22px] text-white bg-transparent"}/>
+                        </button>
+                        {isAuthenticated ? (
+                            <UserAvatar
+                                user={user}
+                                dropdownVisible={dropdownVisible}
+                                setDropdownVisible={setDropdownVisible}
+                            />
+                        ) : (
+                            <Link to="/login">
+                                <button
+                                    className="bg-[#2D4B48] text-white px-4 py-2 rounded-full cursor-pointer hover:bg-[#2D4B4870] border-2 border-[#2D4B48] hover:border-[#2D4B4870]">
+                                    Login
+                                </button>
+                            </Link>
+                        )}
                     </div>
-                    {isAuthenticated ? (
-                        <UserAvatar
-                            user={user}
-                            dropdownVisible={dropdownVisible}
-                            setDropdownVisible={setDropdownVisible}
-                        />
-                    ) : (
-                        <Link to="/login">
-                            <button
-                                className="bg-[#2D4B48] text-white px-4 py-2 rounded-full cursor-pointer hover:bg-[#2D4B4870] border-2 border-[#2D4B48] hover:border-[#2D4B4870]">
-                                Login
-                            </button>
-                        </Link>
-                    )}
                 </div>
             <div className={"w-full h-[1px] bg-[#2D4B4860]"}></div>
         </header>

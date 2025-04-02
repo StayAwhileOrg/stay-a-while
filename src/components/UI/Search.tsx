@@ -7,31 +7,13 @@ import {IoFilterOutline} from "react-icons/io5";
 import {MdClose} from "react-icons/md";
 import {CiSearch} from "react-icons/ci";
 
-interface Location {
-    city: string;
-    country: string;
-}
-
-interface Cabin {
-    location?: Location;
-}
-
-interface Filters {
-    petsAllowed: boolean;
-    smokingAllowed: boolean;
-    electricity: boolean;
-    water: boolean;
-    wifi: boolean;
-    jacuzzi: boolean;
-}
-
 interface SearchProps {
     onClose: () => void;
 }
 
 const formatDate = (date: Date | null): string => {
     if (!date) return "";
-    return date.toLocaleDateString("sv-SE");
+    return date.toLocaleDateString("no-NO");
 };
 
 export function Search({onClose}: SearchProps) {
@@ -44,9 +26,9 @@ export function Search({onClose}: SearchProps) {
     const [showFilterDropdown, setShowFilterDropdown] = useState(false);
 
     const [cabins, setCabins] = useState([]);
-    const [query, setQuery] = useState("");
+    const [query, setQuery] = useState(initialQuery);
+    const [guests, setGuests] = useState(initialGuests);
     const [filteredLocations, setFilteredLocations] = useState([]);
-    const [guests, setGuests] = useState("");
     const [checkInDate, setCheckInDate] = useState<Date | null>(null);
     const [checkOutDate, setCheckOutDate] = useState<Date | null>(null);
 
@@ -138,7 +120,7 @@ export function Search({onClose}: SearchProps) {
                 <MdClose/>
             </button>
             <form
-                className="flex flex-col items-center justify-center h-full gap-2 lg:p-6 lg:relative lg:flex-row lg:gap-2 lg:bg-white ">
+                className="flex flex-col items-center justify-center w-screen h-screen lg:w-full lg:h-full gap-2 lg:p-6 lg:relative lg:flex-row lg:gap-2 lg:bg-white ">
                 <div
                     className={"flex border-2 border-[#2D4B4880] rounded-xl gap-1 lg:gap-4 p-2 w-auto mx-10 lg:rounded-full bg-white lg:px-2 lg:py-0 lg:w-full flex-col lg:mx-auto lg:flex-row"}>
                     <div className={"relative flex flex-col py-1 px-4 lg:w-[180px] xl:w-[220px]"}>
@@ -237,17 +219,15 @@ export function Search({onClose}: SearchProps) {
                         </div>
                     )}
                 </div>
-                <div className="w-full flex justify-end lg:static">
-                    <Link to={buildSearchParams()}>
-                        <button
-                            type="button"
-                            onClick={onClose}
-                            className={"bg-[#2D4B48] border-2 border-[#2D4B4880] rounded-full p-2 cursor-pointer hover:bg-[#2D4B4870] flex items-center justify-between px-4 w-[120px] lg:w-auto lg:px-2"}>
-                            <span className={"text-white font-light lg:hidden"}>Search</span>
-                            <CiSearch className={"h-[22px] w-[22px] text-white bg-transparent"}/>
-                        </button>
-                    </Link>
-                </div>
+                <Link to={buildSearchParams()}>
+                    <button
+                        type="button"
+                        onClick={onClose}
+                        className={"bg-[#2D4B48] border-2 border-[#2D4B4880] rounded-full p-2 cursor-pointer hover:bg-[#2D4B4870] flex items-center justify-between px-4 w-[120px] lg:w-auto lg:px-2"}>
+                        <span className={"text-white font-light lg:hidden"}>Search</span>
+                        <CiSearch className={"h-[22px] w-[22px] text-white bg-transparent"}/>
+                    </button>
+                </Link>
             </form>
         </>
     )

@@ -12,6 +12,7 @@ interface UserAvatarProps {
     onClose?: () => void;
 }
 
+
 export function UserAvatar({ user, dropdownVisible, setDropdownVisible, onClose }: UserAvatarProps) {
 
     const logout = useLogout();
