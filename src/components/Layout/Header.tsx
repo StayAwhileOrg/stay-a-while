@@ -1,8 +1,9 @@
-import {Link} from "react-router-dom";
-import {Search} from "../UI/Search.tsx";
-import {useState, useEffect} from "react";
-import {UserAvatar} from "../UI/UserAvatar.tsx";
-import {CiSearch} from "react-icons/ci";
+import { Link } from "react-router-dom";
+import { Search } from "../UI/Search.tsx";
+import { useState, useEffect } from "react";
+import { UserAvatar } from "../UI/UserAvatar.tsx";
+import { CiSearch } from "react-icons/ci";
+import  logo  from "../../assets/Logo.png"
 
 export function Header() {
     const token = localStorage.getItem("token");
@@ -20,7 +21,7 @@ export function Header() {
         <header className={"flex flex-col lg:px-6 relative"}>
             <div className={"flex items-center justify-between px-4 bg-white relative"}>
                 <Link to={"/"}>
-                    <img src="/src/assets/Logo.png" alt="Stay A While Logo"/>
+                    <img src={logo} alt="Stay A While Logo"/>
                 </Link>
                         <div className={`absolute z-50 bg-[#E2E7E1] left-0 top-full lg:relative ${searchVisible ? 'block' : 'hidden'} lg:block`}>
                             <Search onClose={() => setSearchVisible(false)}/>
