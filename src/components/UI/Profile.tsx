@@ -108,14 +108,14 @@ export function Profile({ profile }: ProfileProps) {
                     </div>
                     <div className="flex flex-col gap-2 items-center md:items-end w-full">
                         <Link to={'/cabin/post'}>
-                            <button className="px-8 py-2 rounded-[12px] hover:bg-[#2D4B4870] hover:cursor-pointer bg-[#2D4B48] text-white w-30">
-                                Create
+                            <button className="px-8 py-2 rounded-[12px] hover:bg-[#2D4B4870] hover:cursor-pointer bg-[#2D4B48] text-white w-40">
+                                Create Cabin
                             </button>
                         </Link>
                         <button
-                            className="px-8 py-2 rounded-[12px] hover:bg-[#2D4B4870] hover:cursor-pointer bg-[#2D4B48] text-white w-30"
+                            className="px-8 py-2 rounded-[12px] hover:bg-[#2D4B4870] hover:cursor-pointer bg-[#2D4B48] text-white w-40"
                             onClick={handleButtonClick}>
-                            {isEditing ? 'Close' : 'Edit'}
+                            {isEditing ? 'Close' : 'Edit Profile'}
                         </button>
                     </div>
                 </div>
@@ -130,7 +130,7 @@ export function Profile({ profile }: ProfileProps) {
             <div className="mt-18 flex flex-col items-center">
                 <div className="flex flex-col md:px-[74px] gap-[46px] justify-center">
                     <h2 className="text-2xl font-semibold text-gray-800">
-                        Upcoming trips
+                        Upcomming trips
                     </h2>
                     {profile.profile.bookedCabins.length > 0 ? (
                         <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -185,7 +185,7 @@ export function Profile({ profile }: ProfileProps) {
             <div className="mt-18 flex flex-col items-center">
                 <div className="flex flex-col md:px-[74px] gap-[46px] justify-center">
                     <h2 className="text-2xl font-semibold text-gray-800">
-                        Bookings
+                        Bookings recived
                     </h2>
                     {profile.profile.postedBookings.length > 0 ? (
                         <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-8">
