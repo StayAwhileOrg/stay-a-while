@@ -34,10 +34,6 @@ export function FilterResults() {
     useEffect(() => {
         let filtered = cabins;
 
-        console.log("Cabins loaded:", cabins.length);
-        cabins.forEach(cabin => {
-        });
-
         if (queryGuests) {
             const guests = parseInt(queryGuests);
             if (!isNaN(guests)) {
