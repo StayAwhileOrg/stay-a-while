@@ -56,7 +56,7 @@ interface Cabin {
   };
 }
 
-const capitalizeWords = (str):string => {
+const capitalizeWords = (str: string) => {
   if (!str) return str;
   return str
       .split(' ')
@@ -69,7 +69,7 @@ export function RenderCabin() {
   const navigate = useNavigate();
   const [cabin, setCabin] = useState<Cabin | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [userRating, setUserRating] = useState<number | null>(null); // User's selected rating
+  const [userRating, setUserRating] = useState<number | null>(null);
   const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
   useEffect(() => {
@@ -123,7 +123,7 @@ export function RenderCabin() {
       console.error('Error submitting rating:', error);
       setNotification({ message: "Failed to submit rating. Please try again.", type: "error" });
     } finally {
-      setTimeout(() => setNotification(null), 2000); // Clear notification after 2 seconds
+      setTimeout(() => setNotification(null), 2000);
     }
   };
 

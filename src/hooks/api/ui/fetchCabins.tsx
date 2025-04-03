@@ -36,7 +36,6 @@ export async function getCabins(
     const searchParams = params ? new URLSearchParams(params).toString() : "";
     const res: Response = await fetch(`${API_BASE}/cabin?${searchParams}`);
     const data = await res.json();
-    console.log(data);
     return {
       cabins: data.data as Cabin[],
       pagination: data.pagination,
