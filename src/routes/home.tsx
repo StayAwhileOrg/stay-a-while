@@ -79,8 +79,8 @@ export function RenderHome() {
                                 wifi={cabin.facilities.wifi}
                                 electricity={cabin.facilities.electricity}
                                 imageAlt={cabin.images[0].imgAlt || ''}
-                                averageRating={cabin.averageRating}
-                            />
+                                averageRating={cabin.averageRating} 
+                                jacuzzi={false}                            />
                         </Link>
                     ))
                     : 'loading'}

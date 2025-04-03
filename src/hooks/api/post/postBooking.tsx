@@ -1,6 +1,6 @@
-import {API_BOOKING, API_CABIN} from "../../../utility/constants.tsx";
+import {API_BOOKING} from "../../../utility/constants.tsx";
 
-export async function postBooking(checkIn: Date, checkOut: Date, id, totalPrice) {
+export async function postBooking(checkIn: Date, checkOut: Date, id: Number, totalPrice: Number) {
     const token = localStorage.getItem("token");
 
     try {

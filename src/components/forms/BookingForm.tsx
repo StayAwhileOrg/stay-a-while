@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { postBooking } from '../../hooks/api/post/postBooking';
 import { BookingCard } from '../UI/BookingCard';
 import { useTotalPrice } from '../../hooks/calculation/useTotalPrice.tsx';
 
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 type BookingFormProps = {
   id: string;
@@ -17,7 +16,6 @@ type BookingFormProps = {
 export function BookingForm({ id, price, ownerFirst, ownerLast, ownerImg, }: BookingFormProps) {
   const [checkIn, setCheckIn] = useState<Date | null>(null);
   const [checkOut, setCheckOut] = useState<Date | null>(null);
-  const navigate = useNavigate();
 
   const totalPrice = useTotalPrice(checkIn, checkOut, price);
 
@@ -28,7 +26,11 @@ export function BookingForm({ id, price, ownerFirst, ownerLast, ownerImg, }: Boo
       }
 
       try {
-        await postBooking(checkIn, checkOut, id, totalPrice);
+        if (totalPrice === null) {
+          alert('Total price calculation failed. Please try again.');
+          return;
+        }
+        await postBooking(checkIn, checkOut, Number(id), totalPrice);
         alert('Booking successful!');
         document.location.href = "/bookingsuccess"
       } catch (error) {
