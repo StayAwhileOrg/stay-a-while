@@ -131,7 +131,7 @@ export function RenderCabin() {
       <div className="w-screen flex justify-center pt-[120px] relative font-primary">
         {notification && (
             <div
-                className={`fixed top-4 left-1/2 transform -translate-x-1/2 p-4 rounded shadow-lg text-white ${
+                className={`fixed top-4 left-1/2 transform -translate-x-1/2 p-4 rounded shadow-lg text-white z-[100] ${
                     notification.type === "success" ? "bg-green-500" : "bg-red-500"
                 }`}
             >
@@ -144,25 +144,27 @@ export function RenderCabin() {
             <div className="flex gap-[61px] flex-col lg:flex-row">
               <title>{capitalizeWords(cabin.title)}</title>
               <div>
-                <div className="flex lg:justify-between justify-center relative">
-                  <ImageCarousel images={cabin.images} />
-                  {userId && userId === cabin.owner._id && (
-                      <div className="absolute top-100 right-0 flex gap-[8px] h-full">
-                        <Link to={`/cabin/edit/${cabin._id}`}>
-                          <div className={"flex items-center gap-[8px]"}><LiaPencilAltSolid className="cursor-pointer text-[#2D4B48]" /> <p className={"text-[12px]"}>Edit</p></div>
-                        </Link>
-                        <div className={"cursor-pointer"}
-                             onClick={handleDelete}
-                        >
-                          <div className={"flex items-center gap-[8px]"}>
-                            <LiaTrashAlt
-                                className="text-lg text-red-500"
-                            />
-                            <p className={"text-[12px]"}>Delete</p>
+                <div className="flex lg:justify-between justify-center items-start">
+                  <div className="flex flex-col">
+                    <ImageCarousel images={cabin.images} />
+                    {userId && userId === cabin.owner._id && (
+                        <div className="flex gap-4 mt-4">
+                          <Link to={`/cabin/edit/${cabin._id}`}>
+                            <div className="flex items-center gap-[8px] border border-gray-300 p-2 rounded hover:bg-gray-100 transition">
+                              <LiaPencilAltSolid className="cursor-pointer text-[#2D4B48]" />
+                              <p className="text-[12px]">Edit</p>
+                            </div>
+                          </Link>
+                          <div
+                              className="cursor-pointer flex items-center gap-[8px] border border-gray-300 p-2 rounded hover:bg-red-100 transition"
+                              onClick={handleDelete}
+                          >
+                            <LiaTrashAlt className="text-lg text-red-500" />
+                            <p className="text-[12px]">Delete</p>
                           </div>
-                          </div>
-                      </div>
-                  )}
+                        </div>
+                    )}  
+                  </div>
                 </div>
                 <div className="flex justify-between w-full lg:max-w-[580px] pt-[24px] items-center">
                   <h2 className="lg:text-[36px] text-[24px] font-semibold">

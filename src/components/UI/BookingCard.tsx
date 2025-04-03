@@ -12,6 +12,8 @@ type BookingCardProps = {
   ownerFirst: string;
   ownerLast: string;
   ownerImg: string;
+  checkInError: boolean;
+  checkOutError: boolean;
 };
 
 export function BookingCard({
@@ -25,7 +27,11 @@ export function BookingCard({
   ownerFirst,
   ownerLast,
   ownerImg,
+  checkInError,
+  checkOutError,
 }: BookingCardProps) {
+  const isLoggedIn = Boolean(localStorage.getItem("token"));
+
   return (
     <div className={'flex flex-col gap-[90px]'}>
       <div
@@ -57,6 +63,9 @@ export function BookingCard({
                   }}
                   className={"text-[#2D4B48] w-[100px] text-sm outline-none"}
               />
+              {checkInError && (
+                <p className="text-red-500 text-sm mt-1">Please select a check-in date.</p>
+              )}
             </div>
             <div className={'pr-[16px] py-[12px] w-full'}>
               <div className={'text-[14px]'}>Check out</div>
@@ -65,6 +74,9 @@ export function BookingCard({
                         className={"text-[#2D4B48] w-[100px] text-sm outline-none"}
                         placeholderText="Checkout date"
                         minDate={checkIn ? new Date(checkIn.getTime() + 86400000) : new Date()}/>
+              {checkOutError && (
+                <p className="text-red-500 text-sm mt-1">Please select a check-out date.</p>
+              )}
             </div>
           </div>
           <div className={'flex justify-between lg:w-[119px] py-[12px] gap-[8px]'}>
@@ -76,7 +88,10 @@ export function BookingCard({
         </div>
         <button
           onClick={onSubmit}
-          className="Book-now mt-4 bg-[#2D4B48] text-white px-4 w-[70vw] lg:w-[253px] py-2 rounded-[12px] hover:bg-[#2D4B4870] hover:cursor-pointer"
+          disabled={!isLoggedIn}
+          className={`Book-now mt-4 bg-[#2D4B48] text-white px-4 w-[70vw] lg:w-[253px] py-2 rounded-[12px] hover:cursor-pointer ${
+            !isLoggedIn ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#2D4B4870]'
+          }`}
         >
           Book Now
         </button>
