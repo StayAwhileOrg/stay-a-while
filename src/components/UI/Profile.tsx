@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ProfileForm } from './updateProfile';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface Profile {
     _id: string;
@@ -62,7 +62,13 @@ interface ProfileProps {
     };
 }
 
+
+
 export function Profile({ profile }: ProfileProps) {
+    useEffect(() => {
+        document.title = 'Profile page';
+    })
+
     const [isEditing, setIsEditing] = useState(false);
 
     const handleButtonClick = () => {
@@ -70,8 +76,6 @@ export function Profile({ profile }: ProfileProps) {
     };
 
     const averageRating = profile.profile.averageRating ?? 'N/A';
-
-    console.log(profile.profile);
 
     return (
         <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg my-16">

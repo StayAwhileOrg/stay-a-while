@@ -17,7 +17,7 @@ export function Footer() {
   };
 
   return (
-    <div className={'md:mt-56 mt-36 '}>
+    <div className={'md:mt-56 mt-26 '}>
       <div className={'w-full h-[1px] bg-[#2D4B4860]'}></div>
       <footer className="mt-20 mb-10 flex flex-col max-w-[980px]  mx-auto">
         <div className="flex md:flex-row justify-between flex-col md:items-start items-center text-center gap-10">

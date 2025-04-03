@@ -5,7 +5,7 @@ import {
   LiaWifiSolid,
   LiaBoltSolid,
 } from 'react-icons/lia';
-import {RatingComponent} from "../UI/RatingComponent.tsx";
+import { RatingComponent } from "../UI/RatingComponent.tsx";
 
 type CabinCardProps = {
   image: string;
@@ -69,7 +69,7 @@ export function CabinCard({
         }
       >
         <li className={'text-[18px] font-light flex items-center mr-[16px]'}>
-          <LiaBedSolid /> <div className={"text-[14px]"}>{beds}</div>
+          <LiaBedSolid /> <div className={"text-[14px] pl-[6px]"}>{beds}</div>
         </li>
         <li className={"flex items-center"}>
           {smokingAllowed ? <LiaSmokingSolid className={'text-[18px] font-light flex items-center mr-[16px]'}/> : ""}
