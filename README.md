@@ -1,54 +1,82 @@
-# React + TypeScript + Vite
+## Stay A While
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Stay A While is a cabin booking platform . The platform allows
+users to search for cabins, filter options based on location and
+availability, and book stays. Users can also register, log in,
+manage their bookings, and list their own cabins for rent.
+All this is made possible by creating or own API.
 
-Currently, two official plugins are available:
+## 🚀 Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[Stay A While - Live Demo](https://stay-a-while-dev.netlify.app/)
 
-## Expanding the ESLint configuration
+## ✨ Figma design system
+[Design system](https://www.figma.com/design/vCOCuMGez6fdRsK9cEyYnW/StayAwhile?node-id=5-4&p=f&t=mYvWoGOq8lqhtuPY-0)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠 Technologies Used
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- **Frontend**: React, TypeScript, Tailwind CSS and Zustand
+- **Backend**: Custom API with MongoDB
+- **Hosting**: Netlify (Frontend), Backend has a separate README
+
+## 🔥 Features
+
+### Homepage
+- Search for cabins
+- Filtering options (location, date, facilities)
+- Displays available cabins
+- Pagination
+
+### Cabin Page
+- View cabin details and amenities
+- Book stays directly
+
+### User Profile
+- Edit profile
+- List cabins for rent
+- View past and upcoming bookings
+
+### Manage Bookings
+- View booking details (title, date, guests, price, status)
+- Approve or reject bookings
+- Delete or edit listings
+
+### Authentication
+- Register new users
+- Log in
+
+All features are implemented using API requests to our custom backend system.
+
+## 🏗 Set Up
+
+### 1. Clone the repository
+```
+git clone https://github.com/StayAwhileOrg/stay-a-while
+cd stay-a-while
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### 2. Install dependencies
 ```
+npm install
+```
+
+### 3. Start the development server
+```
+npm run dev
+```
+
+## 👥 Development Team
+
+- [Truls Johan Lamøy](https://github.com/TrulsJohan)
+- [Chris Berg](https://github.com/ChrisBerg03)
+- [Filip Husebø](https://github.com/Fillschjbo)
+- [Tom Christer Schöön](https://github.com/TomChrister)
+- [Julie Bertine Øyen](https://github.com/julieoyen)
+- [Ingrid Ornum](https://github.com/IngridOrnum)
+
+---
+_Backend has a separate README with more details about the API [here](https://github.com/StayAwhileOrg/StayAwhileAPI)._
+
+
+
+
