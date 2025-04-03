@@ -19,6 +19,7 @@ type CabinCardProps = {
   petsAllowed: boolean;
   wifi: boolean;
   electricity: boolean;
+  jacuzzi: boolean;
   averageRating: number;
 };
 

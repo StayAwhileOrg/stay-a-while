@@ -72,7 +72,6 @@ export function CabinForm() {
         try {
             const newCabin = await createCabin(payload);
             setSuccess("Cabin created successfully!");
-            console.log("New cabin:", newCabin);
             reset();
             setTimeout(() => setSuccess(null), 3000);
         } catch (err) {

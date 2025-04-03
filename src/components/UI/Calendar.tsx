@@ -4,16 +4,21 @@ import "react-datepicker/dist/react-datepicker.css";
 interface CalendarProps {
     value: Date | null;
     onChange: (date: Date | null) => void;
+    className?: string;
+    minDate?: Date;
+    placeholderText?: string;
 }
 
 
-export function Calendar({ value, onChange }: CalendarProps) {
+export function Calendar({ value, onChange, className, minDate, placeholderText}: CalendarProps) {
     return (
         <DatePicker
             selected={value as Date | null | undefined}
             onChange={onChange}
             dateFormat={"dd-MM-yyyy"}
-            className={"text-[#2D4B48] w-[100px] text-sm outline-none"}
+            className={className}
+            placeholderText={placeholderText}
+            minDate={minDate}
         />
     );
 }
