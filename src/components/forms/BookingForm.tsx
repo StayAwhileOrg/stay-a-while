@@ -16,41 +16,55 @@ type BookingFormProps = {
 export function BookingForm({ id, price, ownerFirst, ownerLast, ownerImg, }: BookingFormProps) {
   const [checkIn, setCheckIn] = useState<Date | null>(null);
   const [checkOut, setCheckOut] = useState<Date | null>(null);
+  const [checkInError, setCheckInError] = useState(false);
+  const [checkOutError, setCheckOutError] = useState(false);
 
   const totalPrice = useTotalPrice(checkIn, checkOut, price);
 
-    const handleSubmit = async () => {
-      if (!checkIn || !checkOut) {
-        alert('Please select both check-in and check-out dates.');
+  const handleSubmit = async () => {
+    let hasError = false;
+
+    if (!checkIn) {
+      setCheckInError(true);
+      hasError = true;
+    } else {
+      setCheckInError(false);
+    }
+
+    if (!checkOut) {
+      setCheckOutError(true);
+      hasError = true;
+    } else {
+      setCheckOutError(false);
+    }
+
+    if (hasError) return;
+
+    try {
+      if (totalPrice === null) {
         return;
       }
-
-      try {
-        if (totalPrice === null) {
-          alert('Total price calculation failed. Please try again.');
-          return;
-        }
-        await postBooking(checkIn, checkOut, Number(id), totalPrice);
-        alert('Booking successful!');
-        document.location.href = "/bookingsuccess"
-      } catch (error) {
-        let errorMessage = 'Booking failed. Please try again.';
-
-        if (error instanceof Error) {
-          errorMessage = `Booking failed: ${error.message}`;
-        }
-
-        if (error instanceof Response) {
-          const errorData = await error.json().catch(() => ({}));
-          errorMessage = `Booking failed (Status ${error.status}): ${
-              errorData.message || 'Unknown server error'
-          }`;
-        }
-
-        alert(errorMessage);
+      if (checkIn && checkOut) {
+        await postBooking(checkIn, checkOut, String(id), totalPrice);
       }
-    };
+      document.location.href = "/bookingsuccess";
+    } catch (error) {
+      let errorMessage = 'Booking failed. Please try again.';
 
+      if (error instanceof Error) {
+        errorMessage = `Booking failed: ${error.message}`;
+      }
+
+      if (error instanceof Response) {
+        const errorData = await error.json().catch(() => ({}));
+        errorMessage = `Booking failed (Status ${error.status}): ${
+            errorData.message || 'Unknown server error'
+        }`;
+      }
+
+      alert(errorMessage);
+    }
+  };
 
   return (
       <>
@@ -66,6 +80,8 @@ export function BookingForm({ id, price, ownerFirst, ownerLast, ownerImg, }: Boo
             ownerFirst={ownerFirst}
             ownerLast={ownerLast}
             ownerImg={ownerImg}
+            checkInError={checkInError}
+            checkOutError={checkOutError}
         />
         <ToastContainer />
       </>

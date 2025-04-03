@@ -135,7 +135,7 @@ export function Profile({ profile }: ProfileProps) {
                     {profile.profile.bookedCabins.length > 0 ? (
                         <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-8">
                             {profile.profile.bookedCabins
-                                .filter((cabin) => cabin.cabin !== null)
+                                .filter((cabin) => cabin.cabin !== null && cabin.status !== 'cancelled')
                                 .map((cabin) => (
                                     <Link
                                         to={`/manageBookings/${cabin._id}`}
@@ -190,7 +190,7 @@ export function Profile({ profile }: ProfileProps) {
                     {profile.profile.postedBookings.length > 0 ? (
                         <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-8">
                             {profile.profile.postedBookings
-                                .filter((booking) => booking.cabin !== null)
+                                .filter((booking) => booking.cabin !== null && booking.status !== 'cancelled')
                                 .map((booking) => (
                                     <Link
                                         to={`/manageBookings/${booking._id}`}

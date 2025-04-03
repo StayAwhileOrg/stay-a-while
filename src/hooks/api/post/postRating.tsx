@@ -15,6 +15,5 @@ export async function postRating(cabinId: string, rating: number): Promise<any> 
     }
 
     const result = await res.json();
-    console.log("Rating submitted:", result);
     return result;
 }
