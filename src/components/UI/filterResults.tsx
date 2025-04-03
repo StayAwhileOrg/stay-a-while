@@ -25,27 +25,24 @@ export function FilterResults() {
 
     useEffect(() => {
         getCabins()
-            .then((data) => setCabins(data.cabins))
+            .then((data) => {
+                setCabins(data.cabins);
+            })
             .catch((error) => console.error("Error getting cabins:", error));
-    }, []);
+    }, [location.search]);
 
     useEffect(() => {
         let filtered = cabins;
 
-        if (queryLocation.trim()) {
-            filtered = filtered.filter((cabin) =>
-                `${cabin.location?.city}, ${cabin.location?.country}`
-                    .toLowerCase()
-                    .includes(queryLocation.toLowerCase())
-            );
-        }
+        console.log("Cabins loaded:", cabins.length);
+        cabins.forEach(cabin => {
+        });
 
         if (queryGuests) {
             const guests = parseInt(queryGuests);
-            filtered = filtered.filter((cabin) => {
-                const capacity = cabin.capacity ?? 0;
-                return capacity >= guests;
-            });
+            if (!isNaN(guests)) {
+                filtered = filtered.filter((cabin) => (cabin.facilities?.capacity ?? 0) >= guests);
+            }
         }
 
         if (queryPets) {
@@ -66,7 +63,6 @@ export function FilterResults() {
         if (queryJacuzzi) {
             filtered = filtered.filter((cabin) => cabin.facilities?.jacuzzi === true);
         }
-
         setFilteredCabins(filtered);
     }, [
         queryLocation,

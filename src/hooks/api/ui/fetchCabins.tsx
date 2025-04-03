@@ -5,7 +5,6 @@ export interface Cabin {
   title: string;
   pricePerNight: number;
   averageRating: number;
-  capacity: number;
   location: {
     city: string;
     country: string;
@@ -15,6 +14,7 @@ export interface Cabin {
     imgAlt?: string;
   }[];
   facilities: {
+    capacity: number;
     beds: number;
     smokingAllowed: boolean;
     petsAllowed: boolean;
@@ -23,7 +23,7 @@ export interface Cabin {
     water: boolean;
     jacuzzi: boolean;
   };
-};
+}
 
 type Pagination = {
   totalPages: number;

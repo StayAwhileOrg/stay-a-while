@@ -2,7 +2,7 @@ import { GrInstagram } from 'react-icons/gr';
 import { FaFacebookSquare } from 'react-icons/fa';
 import { FaLinkedin } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../hooks/auth/useAuth'; // adjust the path if needed
+import { useAuth } from '../../hooks/auth/useAuth';
 
 export function Footer() {
   const navigate = useNavigate();

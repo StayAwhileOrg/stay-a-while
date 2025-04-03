@@ -207,8 +207,7 @@ export function Search({onClose}: SearchProps) {
                 <div className={"relative"}>
                     {showFilterDropdown && (
                         <div
-                            className="flex flex-col top-full border border-[#2D4B4850] h-auto lg:h-[250px] w-[300px] z-20 bg-white rounded-lg p-4 lg:px-4 lg:py-8 lg:gap-4 lg:absolute lg:right-0 lg:top-13 lg:justify-center"
-                        >
+                            className="flex flex-col top-full border border-[#2D4B4850] h-auto lg:h-[250px] w-[300px] z-20 bg-white rounded-lg p-4 lg:px-4 lg:py-8 lg:gap-4 lg:absolute lg:right-0 lg:top-13 lg:justify-center">
                             <button
                                 type={"button"}
                                 onClick={() => setShowFilterDropdown(false)}
