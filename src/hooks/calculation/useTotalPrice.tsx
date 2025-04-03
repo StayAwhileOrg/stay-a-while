@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 
-// Define the hook
 export function useTotalPrice(
     checkIn: Date | null,
     checkOut: Date | null,

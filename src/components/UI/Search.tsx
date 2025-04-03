@@ -2,6 +2,7 @@ import {Calendar} from "./Calendar.tsx";
 import {useEffect, useState} from "react";
 import {getCabins} from "../../hooks/api/ui/fetchCabins.tsx";
 import {useLocation, Link} from "react-router-dom";
+import {Cabin} from "../../hooks/api/ui/fetchCabins.tsx";
 
 import {IoFilterOutline} from "react-icons/io5";
 import {MdClose} from "react-icons/md";
@@ -25,10 +26,10 @@ export function Search({onClose}: SearchProps) {
     const [showLocationDropdown, setShowLocationDropdown] = useState(false);
     const [showFilterDropdown, setShowFilterDropdown] = useState(false);
 
-    const [cabins, setCabins] = useState([]);
+    const [cabins, setCabins] = useState<Cabin[]>([]);
+    const [filteredLocations, setFilteredLocations] = useState<string[]>([]);
     const [query, setQuery] = useState(initialQuery);
-    const [guests, setGuests] = useState(initialGuests);
-    const [filteredLocations, setFilteredLocations] = useState([]);
+    const [guests, setGuests] = useState(initialGuests || "");
     const [checkInDate, setCheckInDate] = useState<Date | null>(null);
     const [checkOutDate, setCheckOutDate] = useState<Date | null>(null);
 
@@ -154,11 +155,25 @@ export function Search({onClose}: SearchProps) {
                         <div className={"Search flex flex-row gap-2 justify-between"}>
                             <div className={"flex flex-col"}>
                                 <span className={"text-xs text-[#2D4B4898] font-medium"}>Check In</span>
-                                <Calendar value={checkInDate} onChange={setCheckInDate} className={"text-xs"}/>
+                                <Calendar
+                                    value={checkInDate}
+                                    onChange={(date) => {
+                                        setCheckInDate(date);
+                                        if (checkOutDate && date && checkOutDate <= date) {
+                                            const newCheckout = new Date(date);
+                                            newCheckout.setDate(date.getDate() + 1);
+                                            setCheckOutDate(newCheckout);
+                                        }
+                                    }}
+                                    className={"text-[#2D4B48] w-[100px] text-sm outline-none"}
+                                />
                             </div>
                             <div className={"flex flex-col"}>
                                 <span className={"text-xs text-[#2D4B4898] font-medium"}>Check Out</span>
-                                <Calendar value={checkOutDate} onChange={setCheckOutDate}/>
+                                <Calendar value={checkOutDate}
+                                          onChange={setCheckOutDate}
+                                          className={"text-[#2D4B48] w-[100px] text-sm outline-none"}
+                                          minDate={checkInDate ? new Date(checkInDate.getTime() + 86400000) : new Date()}/>
                             </div>
                         </div>
                     </div>
@@ -167,9 +182,8 @@ export function Search({onClose}: SearchProps) {
                         <label className={"text-xs text-[#2D4B4898] font-medium"}>Guests</label>
                         <select className={"cursor-pointer outline-none text-sm text-[#2D4B48]"}
                                 value={guests}
-                                onChange={(e) => setGuests(e.target.value)}
-                                placeholder={"Select Amount of Guests"}>
-                            <option disabled>Select amount of guests</option>
+                                onChange={(e) => setGuests(e.target.value)}>
+                            <option value="" disabled>Select amount of guests</option>
                             <option value="1">1 guest</option>
                             <option value="2">2 guests</option>
                             <option value="3">3 guests</option>
