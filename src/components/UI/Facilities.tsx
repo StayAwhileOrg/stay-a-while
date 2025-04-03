@@ -33,73 +33,46 @@ export function Facilities({
 }:FacilitiesProps) {
     return (
         <div>
-            <ul className="lg:w-[575px] w-[70vw] flex justify-center overflow-clip pt-[20px] flex-wrap gap-y-[16px] gap-x-[32px]">
+            <ul className="lg:w-[575px] w-[70vw] grid grid-cols-3 lg:grid-cols-4 gap-x-[32px] gap-y-[16px] pt-[20px]">
                 <li className="text-[16px] font-light flex items-center gap-[4px]">
-                    <LiaBedSolid />{' '}
-                    <span className="text-[10px]">{beds} Beds</span>
+                    <LiaBedSolid /> <span className="text-[10px]">{beds} Beds</span>
                 </li>
                 <li className="text-[16px] font-light flex items-center gap-[4px]">
-                    <LiaUserFriendsSolid />{' '}
-                    <span className="text-[10px]">Capacity {capacity}</span>
+                    <LiaUserFriendsSolid /> <span className="text-[10px]">Capacity {capacity}</span>
                 </li>
                 <li className="text-[16px] font-light flex items-center gap-[4px]">
                     {smokingAllowed ? (
                         <>
-                            <LiaSmokingSolid />{' '}
-                            <span className="text-[10px]">Smoking Allowed</span>
+                            <LiaSmokingSolid /> <span className="text-[10px]">Smoking allowed</span>
                         </>
                     ) : (
                         <>
-                            <LiaSmokingBanSolid />{' '}
-                            <span className="text-[10px]">
-                                Smoking Not Allowed
-                            </span>
+                            <LiaSmokingBanSolid /> <span className="text-[10px]">Not allowed</span>
                         </>
                     )}
                 </li>
                 <li className="text-[16px] font-light flex items-center gap-[4px]">
                     <LiaPawSolid />
-                    {petsAllowed ? (
-                        <span className="text-[10px]">Pets Allowed</span>
-                    ) : (
-                        <span className="text-[10px]">Pets Not Allowed</span>
-                    )}
+                    {petsAllowed ? <span className="text-[10px]">Pets allowed</span> : <span className="text-[10px]">Pets not allowed</span>}
                 </li>
                 <li className="text-[16px] font-light flex items-center gap-[4px]">
                     <LiaWaterSolid />
-                    {water ? (
-                        <span className="text-[10px]">Water Available</span>
-                    ) : (
-                        <span className="text-[10px]">No Water</span>
-                    )}
+                    {water ? <span className="text-[10px]">Water</span> : <span className="text-[10px]">No nater</span>}
                 </li>
                 <li className="text-[16px] font-light flex items-center gap-[4px]">
                     <LiaWifiSolid />
-                    {wifi ? (
-                        <span className="text-[10px]">WiFi Available</span>
-                    ) : (
-                        <span className="text-[10px]">No WiFi</span>
-                    )}
+                    {wifi ? <span className="text-[10px]">WiFi</span> : <span className="text-[10px]">No WiFi</span>}
                 </li>
                 <li className="text-[16px] font-light flex items-center gap-[4px]">
                     <LiaBoltSolid />
-                    {electricity ? (
-                        <span className="text-[10px]">
-                            Electricity Available
-                        </span>
-                    ) : (
-                        <span className="text-[10px]">No Electricity</span>
-                    )}
+                    {electricity ? <span className="text-[10px]">Electricity</span> : <span className="text-[10px]">No electricity</span>}
                 </li>
                 <li className="text-[16px] font-light flex items-center gap-[4px]">
                     <LiaHotTubSolid />
-                    {jacuzzi ? (
-                        <span className="text-[10px]">Jacuzzi Available</span>
-                    ) : (
-                        <span className="text-[10px]">No jacuzzi</span>
-                    )}
+                    {jacuzzi ? <span className="text-[10px]">Jacuzzi</span> : <span className="text-[10px]">No jacuzzi</span>}
                 </li>
             </ul>
+
         </div>
     );
 }

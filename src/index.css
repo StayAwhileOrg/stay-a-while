@@ -11,3 +11,6 @@ body {
     @apply font-primary;
 }
 
+html {
+    overflow-x: hidden;
+}

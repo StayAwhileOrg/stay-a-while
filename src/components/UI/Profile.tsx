@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ProfileForm } from './updateProfile';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface Profile {
     _id: string;
@@ -62,7 +62,13 @@ interface ProfileProps {
     };
 }
 
+
+
 export function Profile({ profile }: ProfileProps) {
+    useEffect(() => {
+        document.title = 'Profile page';
+    })
+
     const [isEditing, setIsEditing] = useState(false);
 
     const handleButtonClick = () => {
@@ -70,7 +76,6 @@ export function Profile({ profile }: ProfileProps) {
     };
 
     const averageRating = profile.profile.averageRating ?? 'N/A';
-
 
     return (
         <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg my-16">
@@ -130,7 +135,7 @@ export function Profile({ profile }: ProfileProps) {
                     {profile.profile.bookedCabins.length > 0 ? (
                         <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-8">
                             {profile.profile.bookedCabins
-                                .filter((cabin) => cabin.cabin !== null && cabin.status !== 'cancelled')
+                                .filter((cabin) => cabin.cabin !== null)
                                 .map((cabin) => (
                                     <Link
                                         to={`/manageBookings/${cabin._id}`}
@@ -156,9 +161,13 @@ export function Profile({ profile }: ProfileProps) {
                                             </h4>
                                             <p className="text-gray-600 text-sm">
                                                 {' '}
-                                                {new Date(cabin.startDate).toLocaleDateString('en-GB')}{' '}
+                                                {new Date(
+                                                    cabin.startDate
+                                                ).toLocaleDateString()}{' '}
                                                 - {' '}
-                                                {new Date(cabin.endDate).toLocaleDateString('en-GB')}
+                                                {new Date(
+                                                    cabin.endDate
+                                                ).toLocaleDateString()}
                                             </p>
                                             <p className="text-gray-700 font-medium">
                                                 {cabin.totalPrice} Kr
@@ -181,7 +190,7 @@ export function Profile({ profile }: ProfileProps) {
                     {profile.profile.postedBookings.length > 0 ? (
                         <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-8">
                             {profile.profile.postedBookings
-                                .filter((booking) => booking.cabin !== null && booking.status !== 'cancelled')
+                                .filter((booking) => booking.cabin !== null)
                                 .map((booking) => (
                                     <Link
                                         to={`/manageBookings/${booking._id}`}
@@ -204,9 +213,13 @@ export function Profile({ profile }: ProfileProps) {
                                             </h4>
                                             <p className="text-gray-600 text-sm">
                                                 {' '}
-                                                {new Date(booking.startDate).toLocaleDateString('en-GB')}{' '}
+                                                {new Date(
+                                                    booking.startDate
+                                                ).toLocaleDateString()}{' '}
                                                 - {' '}
-                                                {new Date(booking.endDate).toLocaleDateString('en-GB')}
+                                                {new Date(
+                                                    booking.endDate
+                                                ).toLocaleDateString()}
                                             </p>
                                             <p className="text-gray-700 font-medium">
                                                 {booking.totalPrice} Kr

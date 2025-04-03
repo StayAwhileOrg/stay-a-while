@@ -10,6 +10,8 @@ export function ManageBooking() {
     const [isOwner, setIsOwner] = useState(false);
 
     useEffect(() => {
+        document.title = 'Manage bookings';
+
         async function fetchBooking() {
             try {
                 const response = await fetch(`${API_BOOKING}${bookingId}`, {

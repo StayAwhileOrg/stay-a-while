@@ -46,6 +46,8 @@ export function RenderHome() {
     };
 
     useEffect(() => {
+        document.title = 'Stay A While';
+
         const token = localStorage.getItem('token');
         if (token) {
             const justLoggedIn = localStorage.getItem('justLoggedIn');

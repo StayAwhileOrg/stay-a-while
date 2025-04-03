@@ -14,8 +14,9 @@ import {
     RenderManageBookings,
     RenderPostCabin,
 } from "./routes";
-import {Header, Footer} from "./components/Layout";
-import {FilterResults} from "./components/UI/filterResults.tsx";
+import { Header, Footer } from "./components/Layout";
+import { FilterResults } from "./components/UI/filterResults.tsx";
+import { ProfileForm } from './components/UI/updateProfile.tsx';
 
 const Layout = () => (
     <>
@@ -75,7 +76,11 @@ const router = createBrowserRouter([
             {
                 path: '/filterResults',
                 element: <FilterResults />,
-            }
+            },
+            {
+                path: '/profile/update',
+                element: <ProfileForm />,
+            },
         ],
     },
 ] as RouteObject[]);
