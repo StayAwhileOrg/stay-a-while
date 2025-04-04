@@ -180,7 +180,7 @@ export function RenderCabin() {
                     )}
                   </div>
                 </div>
-                <p className="pt-[20px]">{cabin.description}</p>
+                <p className="pt-[20px] max-w-[580px]">{cabin.description}</p>
 
                 <Facilities
                     beds={cabin.facilities.beds}
