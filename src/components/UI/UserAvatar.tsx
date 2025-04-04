@@ -40,7 +40,7 @@ export function UserAvatar({ user, dropdownVisible, setDropdownVisible, onClose 
             {dropdownVisible && (
                 <div
                     className={
-                        "bg-[#E2E7E1] text-sm right-0 z-20 p-5 pt-20 top-18 lg:top-24 h-screen w-screen fixed mt-2 dropdown shadow-md flex flex-col gap-4 items-center lg:w-fit lg:px-20 lg:py-20"
+                        "fixed z-20 bg-[#E2E7E1] text-sm p-5 pt-20 top-0 right-0 lg:top-24 h-screen w-screen mt-2 dropdown shadow-md flex flex-col gap-4 items-center lg:w-fit lg:px-20 lg:py-20"
                     }
                 >
                     <button

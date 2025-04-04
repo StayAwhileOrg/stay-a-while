@@ -76,7 +76,7 @@ export function FilterResults() {
     return (
         <>
             <div className={"flex flex-col items-center gap-4 font-primary mt-[74px]"}>
-                <h1 className={"text-2xl font-medium"}>Filter Results for <span
+                <h1 className={"text-2xl font-medium font-primary"}>Filter Results for <span
                     className={"font-bold"}>{queryLocation}</span></h1>
                 <div className={"text-gray-500 font-medium"}>Filter results: <span
                     className={"font-medium text-gray-600"}>{filteredCabins.length}</span></div>

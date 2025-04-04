@@ -53,11 +53,11 @@ export function Facilities({
                 </li>
                 <li className="text-[16px] font-light flex items-center gap-[4px]">
                     <LiaPawSolid />
-                    {petsAllowed ? <span className="text-[10px]">Pets allowed</span> : <span className="text-[10px]">Pets not allowed</span>}
+                    {petsAllowed ? <span className="text-[10px]">Pets Allowed</span> : <span className="text-[10px]">Pets Not Allowed</span>}
                 </li>
                 <li className="text-[16px] font-light flex items-center gap-[4px]">
                     <LiaWaterSolid />
-                    {water ? <span className="text-[10px]">Water</span> : <span className="text-[10px]">No nater</span>}
+                    {water ? <span className="text-[10px]">Water</span> : <span className="text-[10px]">No Water</span>}
                 </li>
                 <li className="text-[16px] font-light flex items-center gap-[4px]">
                     <LiaWifiSolid />
@@ -65,11 +65,11 @@ export function Facilities({
                 </li>
                 <li className="text-[16px] font-light flex items-center gap-[4px]">
                     <LiaBoltSolid />
-                    {electricity ? <span className="text-[10px]">Electricity</span> : <span className="text-[10px]">No electricity</span>}
+                    {electricity ? <span className="text-[10px]">Electricity</span> : <span className="text-[10px]">No Electricity</span>}
                 </li>
                 <li className="text-[16px] font-light flex items-center gap-[4px]">
                     <LiaHotTubSolid />
-                    {jacuzzi ? <span className="text-[10px]">Jacuzzi</span> : <span className="text-[10px]">No jacuzzi</span>}
+                    {jacuzzi ? <span className="text-[10px]">Jacuzzi</span> : <span className="text-[10px]">No Jacuzzi</span>}
                 </li>
             </ul>
 
