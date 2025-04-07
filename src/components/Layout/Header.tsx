@@ -18,7 +18,7 @@ export function Header() {
     }, [dropdownVisible, searchVisible]);
 
     return (
-        <header className={"flex flex-col lg:px-6 relative"}>
+        <header className={"flex flex-col lg:px-6 z-20 sticky"}>
             <div className={"flex items-center justify-between px-4 bg-white relative"}>
                 <Link to={"/"}>
                     <img src={logo} alt="Stay A While Logo"/>
